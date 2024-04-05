@@ -1,0 +1,21 @@
+stages:
+  - build
+  - test
+  - deploy
+
+.school-common:
+  rules:
+    - changes:
+      - 'school/*'
+
+school-build:
+  extends: .school-common
+  stage: build
+  script: 
+    - echo "Building school"
+
+school-test:
+  extends: .school-common
+  stage: test
+  script:
+    - echo "Testing school"

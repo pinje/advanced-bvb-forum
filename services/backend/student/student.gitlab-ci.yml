@@ -1,0 +1,21 @@
+stages:
+  - build
+  - test
+  - deploy
+
+.student-common:
+  rules:
+    - changes:
+      - 'student/*'
+
+student-build:
+  extends: .student-common
+  stage: build
+  script: 
+    - echo "Building student"
+
+student-test:
+  extends: .student-common
+  stage: test
+  script:
+    - echo "Testing student"

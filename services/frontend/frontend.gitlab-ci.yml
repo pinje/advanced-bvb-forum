@@ -1,0 +1,21 @@
+stages:
+  - build
+  - test
+  - deploy
+
+.frontend-common:
+  rules:
+    - changes:
+      - 'frontend/*'
+
+frontend-build:
+  extends: .frontend-common
+  stage: build
+  script: 
+    - echo "Building frontend"
+
+frontend-test:
+  extends: .frontend-common
+  stage: test
+  script:
+    - echo "Testing frontend"
