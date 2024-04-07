@@ -27,6 +27,7 @@ sonarqube-check:
     - master
     - main
     - develop
+    - dev
 
 
 include:
