@@ -16,6 +16,9 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.1</spring-cloud.version>
+		<sonar.projectKey>I498855_borussia-dortmund-forum_06d744d4-9463-4832-a075-cc5535c8565f</sonar.projectKey>
+		<sonar.projectName>Borussia Dortmund Forum</sonar.projectName>
+		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
 	</properties>
 	<dependencies>
 		<dependency>
