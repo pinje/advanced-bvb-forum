@@ -6,13 +6,15 @@ stages:
 
 top-level-job:
   stage: build
-  tags: shell
+  tags: 
+  - shell
   script: 
     - echo "Hellow world..."
 
 sonarqube-check:
   stage: sonarqube-check
-  tags: docker
+  tags: 
+  - docker
   image: maven:3.9.6-eclipse-temurin-11
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
