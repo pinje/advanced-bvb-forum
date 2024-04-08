@@ -21,16 +21,6 @@ student-test:
   script:
     - echo "Testing student"
 
-docker-pull:
-  stage: sonarqube-check
-  tags:
-    - docker
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - docker pull docker:latest
-
 sonarqube-check:
   stage: sonarqube-check
   tags: 
@@ -38,7 +28,7 @@ sonarqube-check:
   image: maven:3.9.6-eclipse-temurin-17
   script:
     - cd services/backend/student
-    - docker compose -f student.gitlab-ci.yml up
+    - docker compose up
     - mvn verify sonar:sonar
   allow_failure: true
   only:
