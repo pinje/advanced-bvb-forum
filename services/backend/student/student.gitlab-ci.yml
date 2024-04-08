@@ -27,6 +27,7 @@ sonarqube-check:
   - docker
   image: maven:3.9.6-eclipse-temurin-11
   script:
+    - cd services/backend/student
     - mvn verify sonar:sonar
   allow_failure: true
   only:
