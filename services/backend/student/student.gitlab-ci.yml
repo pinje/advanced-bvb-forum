@@ -25,7 +25,7 @@ sonarqube-check:
   stage: sonarqube-check
   tags: 
   - docker
-  image: maven:3.9.6-eclipse-temurin-11
+  image: maven:3.9.6-eclipse-temurin-17
   script:
     - cd services/backend/student
     - mvn verify sonar:sonar
