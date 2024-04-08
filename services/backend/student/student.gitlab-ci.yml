@@ -21,17 +21,18 @@ student-test:
   script:
     - echo "Testing student"
 
-image: docker:latest
-
-services:
-  - docker:dind
-
-before_script:
-  - docker info
-  - docker-compose --version
+test:
+  stage: sonarqube-check
+  tags:
+    - docker
+  image: docker:latest
+  script:
+    - docker compose up
 
 sonarqube-check:
   stage: sonarqube-check
+  depends_on:
+    - "test"
   tags: 
   - docker
   image: maven:3.9.6-eclipse-temurin-17
