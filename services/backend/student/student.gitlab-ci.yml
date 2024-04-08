@@ -21,6 +21,15 @@ student-test:
   script:
     - echo "Testing student"
 
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - docker info
+  - docker-compose --version
+
 sonarqube-check:
   stage: sonarqube-check
   tags: 
