@@ -27,6 +27,7 @@ test:
     - docker
   image: docker:latest
   script:
+    - cd services/backend/student
     - docker compose --file="docker-compose.student.yml" up
 
 sonarqube-check:
@@ -38,7 +39,6 @@ sonarqube-check:
   image: maven:3.9.6-eclipse-temurin-17
   script:
     - cd services/backend/student
-    - docker compose up
     - mvn verify sonar:sonar
   allow_failure: true
   only:
