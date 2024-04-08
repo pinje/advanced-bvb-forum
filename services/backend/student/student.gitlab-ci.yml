@@ -26,6 +26,8 @@ test:
   tags:
     - docker
   image: docker:latest
+  services:
+  - "docker:dind"
   script:
     - cd services/backend/student
     - docker compose --file="docker-compose.student.yml" up
