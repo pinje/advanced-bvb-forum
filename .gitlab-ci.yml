@@ -6,7 +6,7 @@ stages:
 top-level-job:
   stage: build
   tags: 
-  - docker
+  - shell
   script: 
     - echo "Hellow world..."
 
