@@ -34,6 +34,7 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script: 
+    - docker run maven:3.9.6-eclipse-temurin-11
     - mvn verify sonar:sonar
   allow_failure: true
   only:
