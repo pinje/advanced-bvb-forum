@@ -20,7 +20,7 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script: 
-    - $MAVEN_HOME/mvn verify sonar:sonar
+    - mvn verify sonar:sonar
   allow_failure: true
   only:
     - merge_requests
