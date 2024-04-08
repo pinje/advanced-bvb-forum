@@ -24,7 +24,7 @@ student-test:
 sonarqube-check:
   stage: sonarqube-check
   tags: 
-  - docker
+  - shell
   image: maven:3.9.6-eclipse-temurin-11
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
