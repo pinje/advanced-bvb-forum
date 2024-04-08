@@ -28,6 +28,9 @@ test:
   image: docker:latest
   services:
   - "docker:dind"
+  variables:  # not strictly needed, depending on runner configuration
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: ""
   script:
     - cd services/backend/student
     - docker compose --file="docker-compose.student.yml" up
