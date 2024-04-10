@@ -33,6 +33,7 @@ docker-build:
   tags:
     - docker
   script:
+    - unset DOCKER_HOST
     - cd services/backend/student
     - docker build -t student .
     # - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
