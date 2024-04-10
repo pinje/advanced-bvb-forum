@@ -2,6 +2,12 @@ image: docker:20.10.12
 services:
   - docker:20.10.12-dind
 
+variables:  # not strictly needed, depending on runner configuration
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay
+  DOCKER_TLS_CERTDIR: ""
+  GIT_SSL_NO_VERIFY: "1"
+
 stages:
   - build
   - package
