@@ -33,7 +33,7 @@ test:
     DOCKER_TLS_CERTDIR: ""
   script:
     - cd services/backend/student
-    - docker compose up
+    - docker-compose up
 
 sonarqube-check:
   stage: sonarqube-check
