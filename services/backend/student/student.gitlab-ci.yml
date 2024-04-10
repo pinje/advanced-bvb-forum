@@ -25,9 +25,9 @@ test:
   stage: sonarqube-check
   tags:
     - docker
-  image: docker:latest
+  image: docker:20.10.12
   services:
-  - "docker:dind"
+    - docker:20.10.12-dind
   variables:  # not strictly needed, depending on runner configuration
     DOCKER_HOST: "tcp://docker:2375"
     DOCKER_TLS_CERTDIR: ""
@@ -47,8 +47,4 @@ sonarqube-check:
     - mvn verify sonar:sonar
   allow_failure: true
   only:
-    - merge_requests
-    - master
-    - main
-    - develop
     - dev
