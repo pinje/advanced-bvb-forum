@@ -1,6 +1,10 @@
+image: docker:20.10.12
+services:
+  - docker:20.10.12-dind
+
 stages:
   - build
-  - test
+  - package
   - deploy
 
 .student-common:
@@ -8,29 +12,25 @@ stages:
     - changes:
       - 'student/*'
 
-student-build:
+maven-build:
   extends: .student-common
   stage: build
+  tags:
+    - shell
+  image: maven:3-jdk-8
   script: 
-    - echo "Building student"
+    - mvn package -B
+  artifacts:
+    paths:
+      - target/*.jar
 
-student-test:
-  extends: .student-common
-  stage: test
-  script:
-    - echo "Testing student"
-
-deploy:
-  stage: deploy
+docker-build:
+  stage: package
   tags:
     - docker
-  image: docker:20.10.12
-  services:
-    - docker:20.10.12-dind
   script:
     - cd services/backend/student
     - docker build -t student .
     - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
     - docker tag student bvbforum.azurecr.io/student 
     - docker push bvbforum.azurecr.io/student
-
