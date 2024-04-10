@@ -1,6 +1,6 @@
-# variables:  # not strictly needed, depending on runner configuration
-#   DOCKER_HOST: tcp://docker:2375
-#   DOCKER_DRIVER: overlay
+variables:  # not strictly needed, depending on runner configuration
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay
 
 stages:
   - build
@@ -31,7 +31,6 @@ docker-build:
   image: docker:20.10.12
   services:
     - docker:20.10.12-dind
-
   script:
     - cd services/backend/student
     - docker build -t student .
