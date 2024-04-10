@@ -1,10 +1,6 @@
-image: docker:latest
-services:
-  - docker:dind
-
-variables:  # not strictly needed, depending on runner configuration
-  DOCKER_HOST: tcp://docker:2375
-  DOCKER_DRIVER: overlay
+# variables:  # not strictly needed, depending on runner configuration
+#   DOCKER_HOST: tcp://docker:2375
+#   DOCKER_DRIVER: overlay
 
 stages:
   - build
@@ -32,8 +28,11 @@ docker-build:
   stage: package
   tags:
     - docker
+  image: docker:20.10.12
+  services:
+    - docker:20.10.12-dind
+
   script:
-    - unset DOCKER_HOST
     - cd services/backend/student
     - docker build -t student .
     # - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
