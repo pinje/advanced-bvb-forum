@@ -11,6 +11,4 @@ top-level-job:
     - echo "Hellow world..."
 
 include:
-  - local: '/services/frontend/frontend.gitlab-ci.yml'
-  - local: '/services/backend/school/school.gitlab-ci.yml'
   - local: '/services/backend/student/student.gitlab-ci.yml'
