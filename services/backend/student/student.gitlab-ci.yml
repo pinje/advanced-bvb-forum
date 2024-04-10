@@ -1,6 +1,6 @@
-variables:  # not strictly needed, depending on runner configuration
-  DOCKER_HOST: tcp://docker:2375
+variables:
   DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
 
 stages:
   - build
@@ -28,9 +28,9 @@ docker-build:
   stage: package
   tags:
     - docker-2
-  image: docker:24.0.9
+  image: docker:stable
   services:
-    - docker:24.0.9-dind
+    - name: docker:24.0-dind
   script:
     - cd services/backend/student
     - docker build -t student .
