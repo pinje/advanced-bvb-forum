@@ -17,7 +17,7 @@ stages:
       - 'student/*'
 
 maven-build:
-  extends: .student-common
+  # extends: .student-common
   stage: build
   tags:
     - shell
@@ -35,6 +35,6 @@ docker-build:
   script:
     - cd services/backend/student
     - docker build -t student .
-    - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
-    - docker tag student bvbforum.azurecr.io/student 
-    - docker push bvbforum.azurecr.io/student
+    # - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    # - docker tag student bvbforum.azurecr.io/student 
+    # - docker push bvbforum.azurecr.io/student
