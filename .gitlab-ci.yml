@@ -1,7 +1,6 @@
 stages:
   - build
-  - test
-  - sonarqube-check
+  - package
   - deploy
 
 top-level-job:
