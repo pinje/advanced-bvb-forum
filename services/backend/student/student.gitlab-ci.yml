@@ -27,7 +27,7 @@ maven-build:
 docker-build:
   stage: package
   tags:
-    - docker-2
+    - docker
   image: docker:stable
   services:
     - name: docker:24.0-dind
