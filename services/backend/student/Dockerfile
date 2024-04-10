@@ -1,7 +1,21 @@
 FROM openjdk:17-jdk-alpine
 
-ARG JAR_FILE=target/*.jar
+# Set working directory in the container
+WORKDIR /app
 
-COPY ./target/student-0.0.1.jar app.jar
+# Copy Maven configuration files
+COPY pom.xml ./
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+# Download Maven dependencies
+RUN mvn dependency:resolve
+
+# Copy the entire project source
+COPY src ./src
+
+# Build the project
+RUN mvn package
+
+# Copy the built JAR file from the build stage to the runtime image
+COPY /app/target/*.jar student.jar
+
+ENTRYPOINT ["java", "-jar", "student.jar"]
