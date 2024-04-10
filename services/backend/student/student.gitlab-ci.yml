@@ -17,7 +17,7 @@ stages:
       - 'student/*'
 
 maven-build:
-  # extends: .student-common
+  extends: .student-common
   stage: build
   tags:
     - shell
