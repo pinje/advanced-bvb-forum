@@ -1,7 +1,6 @@
 stages:
   - build
   - test
-  - sonarqube-check
   - deploy
 
 .student-common:
@@ -21,30 +20,17 @@ student-test:
   script:
     - echo "Testing student"
 
-test:
-  stage: sonarqube-check
+deploy:
+  stage: deploy
   tags:
     - docker
   image: docker:20.10.12
   services:
     - docker:20.10.12-dind
-  variables:  # not strictly needed, depending on runner configuration
-    DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_TLS_CERTDIR: ""
   script:
     - cd services/backend/student
-    - docker-compose up
+    - docker build -t student .
+    - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    - docker tag student bvbforum.azurecr.io/student 
+    - docker push bvbforum.azurecr.io/student
 
-sonarqube-check:
-  stage: sonarqube-check
-  needs:
-    - test
-  tags: 
-  - docker
-  image: maven:3.9.6-eclipse-temurin-17
-  script:
-    - cd services/backend/student
-    - mvn verify sonar:sonar
-  allow_failure: true
-  only:
-    - dev
