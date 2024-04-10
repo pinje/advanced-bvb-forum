@@ -27,7 +27,7 @@ maven-build:
 docker-build:
   stage: package
   tags:
-    - docker
+    - docker-2
   image: docker:20.10.12
   services:
     - docker:20.10.12-dind
