@@ -3,12 +3,5 @@ stages:
   - package
   - deploy
 
-top-level-job:
-  stage: build
-  tags: 
-  - shell
-  script: 
-    - echo "Hellow world..."
-
 include:
   - local: '/services/backend/student/student.gitlab-ci.yml'
