@@ -28,9 +28,9 @@ docker-build:
   stage: package
   tags:
     - docker-2
-  image: docker:20.10.12
+  image: docker:24.0.9
   services:
-    - docker:20.10.12-dind
+    - docker:24.0.9-dind
   script:
     - cd services/backend/student
     - docker build -t student .
