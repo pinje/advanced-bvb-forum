@@ -21,13 +21,31 @@ student-build:
     - shell
   image: maven:3-jdk-8
   script: 
+    - mvn compile -B
+
+student-test:
+  extends: .student-common
+  stage: test
+  tags:
+    - shell
+  image: maven:3-jdk-8
+  script:
+    - mvn test
+
+student-package:
+  extends: .student-common
+  stage: package
+  tags:
+    - shell
+  image: maven:3-jdk-8
+  script:
     - mvn package -B
   artifacts:
     paths:
       - target/*.jar
 
-student-package:
-  stage: package
+student-deploy:
+  stage: deploy
   tags:
     - docker
   image: docker:stable
@@ -36,6 +54,6 @@ student-package:
   script:
     - cd services/backend/student
     - docker build -t student .
-     - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
-     - docker tag student $ACR/student 
-     - docker push $ACR/student
+    - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    - docker tag student $ACR/student
+    - docker push $ACR/student
