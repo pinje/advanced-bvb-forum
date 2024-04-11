@@ -29,12 +29,12 @@ student-test:run-db:
   stage: test
   tags:
     - docker
-  image: docker:stable
+  image: docker/compose:latest
   services:
     - name: docker:24.0-dind
   script:
     - cd services/backend/student
-    - docker-compose --file="student.docker-compose.yml" up
+    - docker-compose -f "student.docker-compose.yml" up
 
 student-test:run-test:
   extends: .student-common
