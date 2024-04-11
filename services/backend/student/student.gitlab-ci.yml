@@ -12,7 +12,7 @@ stages:
 .student-common:
   rules:
     - changes:
-      - 'student/**/*'
+      - 'services/backend/student/**/*'
 
 student-build:
   extends: .student-common
@@ -48,6 +48,7 @@ student-package:
       - target/*.jar
 
 student-deploy:
+  extends: .student-common
   stage: deploy
   tags:
     - docker
