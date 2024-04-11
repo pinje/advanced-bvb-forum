@@ -24,7 +24,19 @@ student-build:
     - cd services/backend/student
     - mvn compile
 
-student-test:
+student-test:run-db:
+  extends: .student-common
+  stage: test
+  tags:
+    - docker
+  image: docker:stable
+  services:
+    - name: docker:24.0-dind
+  script:
+    - cd services/backend/student
+    - docker compose -f "student.docker-compose.yml" up
+
+student-test:run-test:
   extends: .student-common
   stage: test
   tags:
