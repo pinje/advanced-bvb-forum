@@ -20,7 +20,8 @@ student-build:
   tags:
     - shell
   image: maven:3-jdk-8
-  script: 
+  script:
+    - cd services/backend/student
     - mvn compile -B
 
 student-test:
@@ -30,6 +31,7 @@ student-test:
     - shell
   image: maven:3-jdk-8
   script:
+    - cd services/backend/student
     - mvn test
 
 student-package:
@@ -39,6 +41,7 @@ student-package:
     - shell
   image: maven:3-jdk-8
   script:
+    - cd services/backend/student
     - mvn package -B
   artifacts:
     paths:
