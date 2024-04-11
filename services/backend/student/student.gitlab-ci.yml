@@ -24,17 +24,17 @@ student-build:
     - cd services/backend/student
     - mvn compile
 
-student-test:run-db:
-  extends: .student-common
-  stage: test
-  tags:
-    - docker
-  image: docker/compose:latest
-  services:
-    - name: docker:24.0-dind
-  script:
-    - cd services/backend/student
-    - docker-compose -f "student.docker-compose.yml" up -d
+# student-test:run-db:
+#   extends: .student-common
+#   stage: test
+#   tags:
+#     - docker
+#   image: docker/compose:latest
+#   services:
+#     - name: docker:24.0-dind
+#   script:
+#     - cd services/backend/student
+#     - docker-compose -f "student.docker-compose.yml" up -d
 
 student-test:run-test:
   extends: .student-common
@@ -45,7 +45,7 @@ student-test:run-test:
   script:
     - cd services/backend/student
     - mvn test 
-    - docker-compose down
+    # - docker-compose down
 
 student-package:
   extends: .student-common
