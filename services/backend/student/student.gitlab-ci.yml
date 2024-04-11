@@ -19,7 +19,7 @@ student-build:
   stage: build
   tags:
     - docker
-  image: maven:3.9.6-alpine
+  image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
     - mvn compile
@@ -29,7 +29,7 @@ student-test:
   stage: test
   tags:
     - docker
-  image: maven:3.9.6-alpine
+  image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
     - mvn test
@@ -39,7 +39,7 @@ student-package:
   stage: package
   tags:
     - docker
-  image: maven:3.9.6-alpine
+  image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
     - mvn package
