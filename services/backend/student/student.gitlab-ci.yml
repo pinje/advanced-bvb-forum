@@ -1,18 +1,20 @@
 variables:
-  DOCKER_DRIVER: overlay2
-  DOCKER_TLS_CERTDIR: ""
+  REGISTRY_USER: $CI_REGISTRY_USER
+  REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  ACR: $CI_ACR
 
 stages:
   - build
+  - test
   - package
   - deploy
 
 .student-common:
   rules:
     - changes:
-      - 'student/*'
+      - 'student/**/*'
 
-maven-build:
+student-build:
   extends: .student-common
   stage: build
   tags:
@@ -24,7 +26,7 @@ maven-build:
     paths:
       - target/*.jar
 
-docker-build:
+student-package:
   stage: package
   tags:
     - docker
@@ -34,6 +36,6 @@ docker-build:
   script:
     - cd services/backend/student
     - docker build -t student .
-    # - docker login bvbforum.azurecr.io -u $REGISTRY_USER -p $REGISTRY_PASSWORD
-    # - docker tag student bvbforum.azurecr.io/student 
-    # - docker push bvbforum.azurecr.io/student
+     - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+     - docker tag student $ACR/student 
+     - docker push $ACR/student
