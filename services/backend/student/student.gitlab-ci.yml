@@ -18,7 +18,7 @@ student-build:
   extends: .student-common
   stage: build
   tags:
-    - shell
+    - docker
   image: maven:3-jdk-8
   script:
     - cd services/backend/student
@@ -28,7 +28,7 @@ student-test:
   extends: .student-common
   stage: test
   tags:
-    - shell
+    - docker
   image: maven:3-jdk-8
   script:
     - cd services/backend/student
@@ -38,7 +38,7 @@ student-package:
   extends: .student-common
   stage: package
   tags:
-    - shell
+    - docker
   image: maven:3-jdk-8
   script:
     - cd services/backend/student
