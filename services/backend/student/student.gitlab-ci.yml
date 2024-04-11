@@ -22,7 +22,7 @@ student-build:
   image: maven:3-jdk-8
   script:
     - cd services/backend/student
-    - mvn compile -B
+    - mvn compile
 
 student-test:
   extends: .student-common
@@ -42,7 +42,7 @@ student-package:
   image: maven:3-jdk-8
   script:
     - cd services/backend/student
-    - mvn package -B
+    - mvn package
   artifacts:
     paths:
       - target/*.jar
