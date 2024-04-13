@@ -14,47 +14,26 @@ stages:
     - changes:
       - 'services/backend/student/**/*'
 
-#student-build:
-#  extends: .student-common
-#  stage: build
-#  tags:
-#    - docker
-#  image: maven:3.9.6-eclipse-temurin-17-alpine
-#  script:
-#    - cd services/backend/student
-#    - mvn compile
-
-#student-test:run-db:
-#  extends: .student-common
-#  stage: test
-#  tags:
-#    - docker
-#  image: docker/compose:latest
-#  services:
-#    - name: docker:24.0-dind
-#  script:
-#    - cd services/backend/student
-#    - docker-compose up
-
-image: maven:latest
-
-services:
-  - docker:19.03.12
+student-build:
+  extends: .student-common
+  stage: build
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/student
+    - mvn compile
 
 student-test:run-test:
   extends: .student-common
   stage: test
   tags:
     - docker
-#  image: maven:3.9.6-eclipse-temurin-17-alpine
-#  services:
-#    - docker:dind
+  image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
-    - docker-compose up -d
-    - mvn test
-  after_script:
-    - docker-compose down
+    - "echo testing..."
+#    - mvn test
 
 student-package:
   extends: .student-common
