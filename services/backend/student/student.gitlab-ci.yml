@@ -35,18 +35,18 @@ student-test:run-test:
     - "echo testing..."
 #    - mvn test
 
-#student-package:
-#  extends: .student-common
-#  stage: package
-#  tags:
-#    - docker
-#  image: maven:3.9.6-eclipse-temurin-17-alpine
-#  script:
-#    - cd services/backend/student
-#    - mvn package -DskipTests
-#  artifacts:
-#    paths:
-#      - services/backend/student/target/*.jar
+student-package:
+  extends: .student-common
+  stage: package
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/student
+    - mvn package -DskipTests
+  artifacts:
+    paths:
+      - services/backend/student/target/*.jar
 
 student-deploy:
   extends: .student-common
