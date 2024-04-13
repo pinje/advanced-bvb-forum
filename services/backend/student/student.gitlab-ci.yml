@@ -46,7 +46,7 @@ student-package:
     - mvn package -DskipTests
   artifacts:
     paths:
-      - target/*.jar
+      - services/backend/student/target/*.jar
 
 student-deploy:
   extends: .student-common
