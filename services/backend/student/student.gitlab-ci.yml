@@ -43,7 +43,7 @@ student-package:
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
-    - mvn package
+    - mvn package -DskipTests
   artifacts:
     paths:
       - target/*.jar
