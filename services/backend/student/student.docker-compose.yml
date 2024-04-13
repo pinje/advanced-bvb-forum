@@ -2,12 +2,11 @@ version: '3.4'
 
 services:
 
-  postgres_students:
+  postgres-students:
+    container_name: postgres-students
     image: postgres:alpine3.19
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: students
-
-

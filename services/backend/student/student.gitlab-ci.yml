@@ -34,7 +34,7 @@ student-test:run-db:
     - name: docker:24.0-dind
   script:
     - cd services/backend/student
-    - docker-compose -f "student.docker-compose.yml" up -d
+    - docker-compose up
 
 student-test:run-test:
   extends: .student-common
@@ -44,7 +44,7 @@ student-test:run-test:
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
-    - mvn test 
+    - mvn test -Ddatabase.host=postgres-students
     - docker-compose down
 
 student-package:
