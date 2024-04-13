@@ -36,6 +36,10 @@ student-build:
 #    - cd services/backend/student
 #    - docker-compose up
 
+image: docker/compose:latest
+services:
+    - name: docker:24.0-dind
+
 student-test:run-test:
   extends: .student-common
   stage: test
@@ -44,7 +48,9 @@ student-test:run-test:
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/student
+    - docker-compose up -d postgres-students
     - mvn test -Ddatabase.host=postgres-students
+    - docker-compose down
 
 student-package:
   extends: .student-common
