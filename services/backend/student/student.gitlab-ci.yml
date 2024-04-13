@@ -44,9 +44,9 @@ student-package:
   script:
     - cd services/backend/student
     - mvn clean package -DskipTests
-#  artifacts:
-#    paths:
-#      - services/backend/student/target/*.jar
+  artifacts:
+    paths:
+      - services/backend/student/target/*.jar
 
 student-deploy:
   extends: .student-common
