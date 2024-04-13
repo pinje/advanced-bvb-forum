@@ -42,9 +42,14 @@ student-test:run-test:
   tags:
     - docker
   image: maven:3.9.6-eclipse-temurin-17-alpine
+  services:
+    - docker:dind
   script:
     - cd services/backend/student
-    - mvn test -Ddatabase.host=postgres-students
+    - docker-compose up -d
+    - mvn test
+  after_script:
+    - docker-compose down
 
 student-package:
   extends: .student-common
