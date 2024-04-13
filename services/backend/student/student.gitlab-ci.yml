@@ -36,14 +36,19 @@ stages:
 #    - cd services/backend/student
 #    - docker-compose up
 
+image: maven:latest
+
+services:
+  - docker:19.03.12
+
 student-test:run-test:
   extends: .student-common
   stage: test
   tags:
     - docker
-  image: maven:3.9.6-eclipse-temurin-17-alpine
-  services:
-    - docker:dind
+#  image: maven:3.9.6-eclipse-temurin-17-alpine
+#  services:
+#    - docker:dind
   script:
     - cd services/backend/student
     - docker-compose up -d
