@@ -4,8 +4,8 @@ Feature: Registration
   So that I can access to the system's member's functionalities
 
   Scenario: Create a new user
-    Given I am a guest user
-    When I register
+    Given I am a guest user with email "user@gmail.com"
+    When I register with email "user@gmail.com" and username "user123" and password "123"
     Then I am redirected to the login page
 
 #  Scenario: Create a new user with existing email

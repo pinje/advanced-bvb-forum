@@ -1,20 +1,24 @@
 package com.bvb.user.domain;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
-@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class CreateUserRequest {
-    @NotBlank
+    @NotNull(message = "Email is mandatory")
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email is not valid")
     private String email;
-    @NotBlank
+    @NotNull(message = "Username is mandatory")
+    @NotBlank(message = "Username is mandatory")
     private String username;
-    @NotBlank
+    @NotNull(message = "Password is mandatory")
+    @NotBlank(message = "Password is mandatory")
+    @Size(min = 8, message = "Password too short, min. 8 characters")
     private String password;
 }

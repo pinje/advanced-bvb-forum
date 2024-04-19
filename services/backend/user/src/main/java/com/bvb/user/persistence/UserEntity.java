@@ -3,6 +3,7 @@ package com.bvb.user.persistence;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +38,8 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @NotNull
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
 }
