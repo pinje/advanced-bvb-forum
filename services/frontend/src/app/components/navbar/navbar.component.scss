@@ -8,7 +8,7 @@ nav {
     list-style: none;
     text-decoration: none;
     padding: 20px;
-    background-color: #272729;
+    background-color: #FFD900;
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.4);
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -49,7 +49,7 @@ li {
     justify-content: center;
     align-items: center;
     font-family: 'semibold';
-    color: #FFD900;
+    color: #272729;
     font-size: 20px;
     margin-left: 10px;
     margin-right: 10px;
@@ -57,9 +57,9 @@ li {
 }
 
 li a:hover {
-    border-bottom: 3px solid #FFD900;
+    border-bottom: 3px solid #272729;
 }
 
 li a {
-    border-bottom: 3px solid #272729;
+    border-bottom: 3px solid #FFD900;
 }

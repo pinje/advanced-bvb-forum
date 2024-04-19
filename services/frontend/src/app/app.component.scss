@@ -1,0 +1,25 @@
+.page-title {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.inner {
+    width: 100%;
+    padding: 4rem 10px 4rem;
+}
+
+.error {
+    margin-top: 15px;
+    color: #C3362B;
+  }
+  

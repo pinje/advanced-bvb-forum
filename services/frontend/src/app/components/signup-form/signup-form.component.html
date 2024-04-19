@@ -1,0 +1,25 @@
+<form>
+    <!-- <app-form-input title="Email" placeholder="Email" type="text" required></app-form-input>
+    <app-form-input title="Username" placeholder="Username" type="text" required></app-form-input>
+    <app-form-input title="Password" placeholder="Password" type="password" required></app-form-input> -->
+
+    <div>Email</div>
+    <input type="text" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
+    <div>Username</div>
+    <input type="text" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"/>
+    <div>Password</div>
+    <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+
+    <div class="error">{{ error }}</div>
+    <!-- <div>
+        <div>Username</div>
+        <input type="text" className={styles.inputtext} placeholder="Username" onChange={usernameChanged} />
+    </div>
+    <div>
+        <div>Password</div>
+        <input type="password" className={styles.inputtext} placeholder="Password" onChange={passwordChanged} />
+    </div> -->
+    <div class="submitbox">
+        <app-button title="Sign up" (click)="onSubmit()"></app-button>
+    </div>
+</form>

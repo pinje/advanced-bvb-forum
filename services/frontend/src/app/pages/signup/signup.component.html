@@ -1,1 +1,9 @@
-<p>signup works!</p>
+<div class="container">
+    <div class="inner">
+        <div>
+            <div class="page-title">Sign up</div>
+            <!-- <SignupForm addItem={addItem}/> -->
+            <app-signup-form (onSubmitNewUser)="createNewUser($event)"></app-signup-form>
+        </div>
+    </div>
+</div>
