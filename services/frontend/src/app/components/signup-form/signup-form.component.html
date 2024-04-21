@@ -1,25 +1,25 @@
 <form>
-    <!-- <app-form-input title="Email" placeholder="Email" type="text" required></app-form-input>
-    <app-form-input title="Username" placeholder="Username" type="text" required></app-form-input>
-    <app-form-input title="Password" placeholder="Password" type="password" required></app-form-input> -->
-
-    <div>Email</div>
-    <input type="text" placeholder="Email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"/>
-    <div>Username</div>
-    <input type="text" placeholder="Username" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"/>
-    <div>Password</div>
-    <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
-
-    <div class="error">{{ error }}</div>
-    <!-- <div>
+    <div class="formbox">
+        <div>Email</div>
+        <input type="email" placeholder="email@example.com" [(ngModel)]="registerRequest.email"
+            [ngModelOptions]="{standalone: true}" />
         <div>Username</div>
-        <input type="text" className={styles.inputtext} placeholder="Username" onChange={usernameChanged} />
-    </div>
-    <div>
+        <input type="text" placeholder="Username" [(ngModel)]="registerRequest.username"
+            [ngModelOptions]="{standalone: true}" />
         <div>Password</div>
-        <input type="password" className={styles.inputtext} placeholder="Password" onChange={passwordChanged} />
-    </div> -->
+        <input type="password" placeholder="Password" [(ngModel)]="registerRequest.password"
+            [ngModelOptions]="{standalone: true}" />
+
+        <div class="error" *ngIf="error.length">
+            Invalid Entry
+            <div *ngFor="let msg of error">{{ msg }}</div>
+        </div>
+    </div>
     <div class="submitbox">
-        <app-button title="Sign up" (click)="onSubmit()"></app-button>
+        <app-button-active title="Sign up" (click)="onSubmit()"></app-button-active>
+        <app-button-passive title="I already have an account" (click)="redirectToLogin()"></app-button-passive>
+        <!-- <div>
+            Already have an account? <a routerLink="/login">Login</a>
+        </div> -->
     </div>
 </form>

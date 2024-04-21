@@ -18,8 +18,26 @@
     padding: 4rem 10px 4rem;
 }
 
-.error {
-    margin-top: 15px;
-    color: #C3362B;
-  }
-  
+@media (min-width: 576px) {
+    body {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    body {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        max-width: 1140px;
+    }
+}

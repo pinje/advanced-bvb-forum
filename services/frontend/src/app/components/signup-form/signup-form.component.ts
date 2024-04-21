@@ -1,32 +1,41 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ButtonComponent } from '../button/button.component';
 import { FormsModule } from '@angular/forms';
-import { CreateUser } from '../../models/request/create-user.interface';
+import { RegistrationRequest } from '../../models/request/registration-request';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { ButtonActiveComponent } from '../button-active/button-active.component';
+import { ButtonPassiveComponent } from '../button-passive/button-passive.component';
 
 @Component({
   selector: 'app-signup-form',
   standalone: true,
-  imports: [ButtonComponent, FormsModule],
+  imports: [
+    ButtonActiveComponent, 
+    ButtonPassiveComponent,
+    FormsModule,
+    CommonModule,
+    RouterModule
+],
   templateUrl: './signup-form.component.html',
   styleUrl: './signup-form.component.scss'
 })
 export class SignupFormComponent {
-  @Output() onSubmitNewUser: EventEmitter<CreateUser> = new EventEmitter();
+  @Output() onSubmitNewUser: EventEmitter<RegistrationRequest> = new EventEmitter();
+  @Input() error: Array<string> = [];
 
-  error: string = "";
-  email: string = "";
-  username: string = "";
-  password: string = "";
+  registerRequest: RegistrationRequest = {
+    email: '',
+    username: '',
+    password: ''
+  }
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   onSubmit() {
-    let newUser: CreateUser = {
-      "email": this.email,
-      "username": this.username,
-      "password": this.password
-    }
+    this.onSubmitNewUser.emit(this.registerRequest);
+  }
 
-    this.onSubmitNewUser.emit(newUser);
+  redirectToLogin() {
+    this.router.navigate(['login']);
   }
 }

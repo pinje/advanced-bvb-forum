@@ -1,0 +1,18 @@
+<form>
+    <div class="formbox">
+        <div>Email</div>
+        <input type="email" placeholder="email@example.com" [(ngModel)]="authRequest.email"
+            [ngModelOptions]="{standalone: true}" />
+        <div>Password</div>
+        <input type="password" placeholder="Password" [(ngModel)]="authRequest.password"
+            [ngModelOptions]="{standalone: true}" />
+
+        <div class="error" *ngIf="error.length">
+            <div *ngFor="let msg of error">{{ msg }}</div>
+        </div>
+    </div>
+    <div class="submitbox">
+        <app-button-active title="Login" (click)="onSubmit()"></app-button-active>
+        <app-button-passive title="I don't have an account yet" (click)="redirectToRegister()"></app-button-passive>
+    </div>
+</form>

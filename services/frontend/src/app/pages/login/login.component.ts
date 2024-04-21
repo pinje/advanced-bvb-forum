@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import { SignupFormComponent } from '../../components/signup-form/signup-form.component';
-import { RegistrationRequest } from '../../models/request/registration-request';
+import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { AuthenticationRequest } from '../../models/request/authentication-request';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-login',
   standalone: true,
   imports: [
-    SignupFormComponent,
+    LoginFormComponent,
     RouterModule
   ],
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss', '../../app.component.scss']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss', '../../app.component.scss']
 })
-export class SignupComponent {
+export class LoginComponent {
   constructor(
     private authService: AuthenticationService,
     private router: Router
@@ -22,15 +22,15 @@ export class SignupComponent {
 
   error: Array<string> = [];
 
-  register($event: RegistrationRequest): void {
+  login($event: AuthenticationRequest): void {
     this.error = [];
-    this.authService.register($event).subscribe({
+    this.authService.login($event).subscribe({
       next: () => {
-        this.router.navigate(['login']);
+        this.router.navigate(['']);
       },
       error: (err) => {
         this.error = err.error.validationErrors;
       }
-    });
+    })
   }
 }
