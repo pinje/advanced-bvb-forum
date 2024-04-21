@@ -18,7 +18,6 @@
 		<sonar.projectKey>I498855_borussia-dortmund-forum_15c21cbc-d0ff-462d-ac83-df85c3d2eb8d</sonar.projectKey>
 		<sonar.projectName>Borussia Dortmund Forum</sonar.projectName>
 		<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
-		<sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
