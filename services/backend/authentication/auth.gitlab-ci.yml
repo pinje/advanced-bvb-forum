@@ -38,6 +38,7 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script:
+    - cd services/backend/authentication
     - mvn verify sonar:sonar
   allow_failure: true
 #  only:
