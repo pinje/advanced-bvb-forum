@@ -39,5 +39,5 @@ sonarqube-check:
       - .sonar/cache
   script:
     - cd services/backend/authentication
-    - mvn verify sonar:sonar
+    - mvn verify sonar:sonar -e
   allow_failure: true
