@@ -2,6 +2,7 @@ variables:
   REGISTRY_USER: $CI_REGISTRY_USER
   REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
   ACR: $CI_ACR
+  SONAR_TOKEN: $SONAR_TOKEN
 
 stages:
   - build
@@ -32,5 +33,5 @@ sonarqube-check:
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/authentication
-    - mvn verify sonar:sonar -Dsonar.token=sqa_77a0622e343a4e64fa99581761d21a517d8cc906
+    - mvn verify sonar:sonar -Dsonar.token=$SONAR_TOKEN
   allow_failure: true
