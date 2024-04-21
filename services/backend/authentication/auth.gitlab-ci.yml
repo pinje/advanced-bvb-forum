@@ -28,8 +28,7 @@ sonarqube-check:
   extends: .auth-common
   stage: test
   tags:
-    - docker
-  image: maven:3-eclipse-temurin-17
+    - shell
   script:
     - cd services/backend/authentication
     - mvn verify sonar:sonar
