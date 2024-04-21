@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,8 +31,7 @@ public class GlobalExceptionHandler {
                 .status(ex.getStatusCode())
                 .body(
                         ExceptionResponse.builder()
-                                .businessErrorCode(BusinessErrorCodes.DUPLICATE_EMAIL.getCode())
-                                .businessErrorDescription(BusinessErrorCodes.DUPLICATE_EMAIL.getDescription())
+                                .validationErrors(Collections.singleton(BusinessErrorCodes.DUPLICATE_EMAIL.getDescription()))
                                 .build()
                 );
     }

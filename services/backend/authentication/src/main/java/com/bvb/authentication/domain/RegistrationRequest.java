@@ -3,6 +3,7 @@ package com.bvb.authentication.domain;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class RegistrationRequest {
     @NotBlank(message = "Username required")
     @Length(min = 2, message = "Username too short, min. 2 characters")
     @Length(max = 20, message = "Username too long, max. 20 characters")
+    @Pattern(regexp = "^[A-Za-z0-9]*$", message = "Only letters and numbers are allowed")
     private String username;
 
     @NotEmpty(message = "Password required")

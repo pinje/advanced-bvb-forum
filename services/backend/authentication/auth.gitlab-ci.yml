@@ -1,0 +1,47 @@
+variables:
+  REGISTRY_USER: $CI_REGISTRY_USER
+  REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  ACR: $CI_ACR
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+
+.auth-common:
+  rules:
+    - changes:
+        - 'services/backend/authentication/**/*'
+
+authentication-build:
+  extends: .auth-common
+  stage: build
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/authentication
+    - mvn clean install
+
+sonarqube-check:
+  extends: .auth-common
+  stage: test
+  tags:
+    - docker
+  image: maven:3-eclipse-temurin-17
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn verify sonar:sonar
+  allow_failure: true
+#  only:
+#    - merge_requests
+#    - master
+#    - main
+#    - develop

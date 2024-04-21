@@ -5,4 +5,4 @@ stages:
   - deploy
 
 include:
-  - local: '/services/backend/student/student.gitlab-ci.yml'
+  - local: '/services/backend/authentication/auth.gitlab-ci.yml'
