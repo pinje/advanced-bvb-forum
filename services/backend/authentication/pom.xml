@@ -102,6 +102,13 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.11</version>
+				<configuration>
+					<excludes>
+						<exclude>com/bvb/authentication/config/**</exclude>
+						<exclude>com/bvb/authentication/domain/**</exclude>
+						<exclude>com/bvb/authentication/persistence/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -117,7 +124,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
