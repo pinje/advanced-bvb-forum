@@ -50,7 +50,7 @@ public class User implements UserDetails, Principal {
         return this.roles
                 .stream()
                 .map(r -> new SimpleGrantedAuthority(r.getName()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
