@@ -2,8 +2,6 @@ package com.bvb.authentication;
 
 import com.bvb.authentication.persistence.User;
 import com.bvb.authentication.persistence.UserRepository;
-import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserRepositoryTest {
-    @Autowired
-    private EntityManager entityManager;
     @Autowired
     private UserRepository userRepository;
 
