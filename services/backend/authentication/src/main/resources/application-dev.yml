@@ -7,12 +7,13 @@ spring:
   jpa:
     properties:
       hibernate:
-        ddl-auto: create
         connection:
           autocommit: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
+    hibernate:
+      ddl-auto: create-drop
 
 application:
   security:

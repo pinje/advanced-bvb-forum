@@ -51,7 +51,6 @@ public class User implements UserDetails, Principal {
                 .stream()
                 .map(r -> new SimpleGrantedAuthority(r.getName()))
                 .collect(Collectors.toList());
-
     }
 
     @Override

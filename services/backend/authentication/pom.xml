@@ -110,8 +110,7 @@
 				<configuration>
 					<excludes>
 						<exclude>com/bvb/authentication/config/**</exclude>
-						<exclude>com/bvb/authentication/domain/**</exclude>
-						<exclude>com/bvb/authentication/persistence/**</exclude>
+						<exclude>com/bvb/authentication/business/exception/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>

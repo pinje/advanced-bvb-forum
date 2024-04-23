@@ -1,6 +1,7 @@
 package com.bvb.authentication;
 
 import com.bvb.authentication.business.AuthenticationService;
+import com.bvb.authentication.config.security.JwtFilter;
 import com.bvb.authentication.domain.AuthenticationRequest;
 import com.bvb.authentication.domain.AuthenticationResponse;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -19,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AuthenticationControllerTest {
