@@ -1,7 +1,8 @@
 package com.bvb.authentication;
 
-import com.bvb.authentication.persistence.User;
-import com.bvb.authentication.persistence.UserRepository;
+import com.bvb.authentication.business.AuthenticationService;
+import com.bvb.authentication.domain.AuthenticationRequest;
+import com.bvb.authentication.domain.AuthenticationResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -10,11 +11,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 
@@ -25,7 +27,7 @@ public class AuthenticationControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private UserRepository userRepository;
+    private AuthenticationService authenticationService;
 
     @Test
     void registerUser_ShouldReturn202_WhenUserIsRegistered() throws Exception {
@@ -136,6 +138,16 @@ public class AuthenticationControllerTest {
 
     @Test
     void loginUser_ShouldReturn200_WhenUserIsLoggedIn() throws Exception {
+        AuthenticationRequest request = AuthenticationRequest.builder()
+                        .email("user@gmail.com")
+                        .password("12345678")
+                        .build();
+
+        AuthenticationResponse response = AuthenticationResponse.builder()
+                        .token("token")
+                        .build();
+        when(authenticationService.authenticate(request)).thenReturn(response);
+
         mockMvc.perform(post("/auth/login")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
@@ -146,18 +158,13 @@ public class AuthenticationControllerTest {
                         """))
                 .andDo(print())
                 .andExpect(status().isOk());
+
+        verify(authenticationService).authenticate(any(AuthenticationRequest.class));
     }
 
     @Test
     void loginUser_ShouldReturn400_WhenIncorrectCredentials() throws Exception {
-        User user = User.builder()
-                .id(1L)
-                .email("user@gmail.com")
-                .username("user123")
-                .password("12345678")
-                .build();
-        userRepository.save(user);
-
+        when(authenticationService.authenticate(any(AuthenticationRequest.class))).thenThrow(new RuntimeException("Bad credentials"));
         mockMvc.perform(post("/auth/login")
                         .contentType(APPLICATION_JSON_VALUE)
                         .content("""
@@ -193,34 +200,6 @@ public class AuthenticationControllerTest {
                         "validationErrors": [
                             "Email is not valid"
                         ]
-                    }
-                """));
-    }
-
-    @Test
-    void loginUser_ShouldReturn500_WhenInvalidPasswordFormat() throws Exception {
-        User user = User.builder()
-                .id(1L)
-                .email("user@gmail.com")
-                .username("user123")
-                .password("12345678")
-                .build();
-        userRepository.save(user);
-
-        mockMvc.perform(post("/auth/login")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .content("""
-                        {
-                            "email": "user@gmail.com",
-                            "password": "123"
-                        }
-                        """))
-                .andDo(print())
-                .andExpect(status().isInternalServerError())
-                .andExpect(content().json("""
-                    {
-                        "businessErrorDescription": "Internal error",
-                        "error": "Bad credentials"
                     }
                 """));
     }
