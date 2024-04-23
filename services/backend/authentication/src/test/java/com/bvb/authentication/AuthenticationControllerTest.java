@@ -12,8 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -138,15 +137,10 @@ public class AuthenticationControllerTest {
 
     @Test
     void loginUser_ShouldReturn200_WhenUserIsLoggedIn() throws Exception {
-        AuthenticationRequest request = AuthenticationRequest.builder()
-                        .email("user@gmail.com")
-                        .password("12345678")
-                        .build();
-
         AuthenticationResponse response = AuthenticationResponse.builder()
                         .token("token")
                         .build();
-        when(authenticationService.authenticate(request)).thenReturn(response);
+        when(authenticationService.authenticate(any(AuthenticationRequest.class))).thenReturn(response);
 
         mockMvc.perform(post("/auth/login")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -159,7 +153,7 @@ public class AuthenticationControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(authenticationService).authenticate(any(AuthenticationRequest.class));
+        verify(authenticationService, times(1)).authenticate(any(AuthenticationRequest.class));
     }
 
     @Test
@@ -181,6 +175,8 @@ public class AuthenticationControllerTest {
                         "error": "Bad credentials"
                     }
                 """));
+
+        verify(authenticationService, times(1)).authenticate(any(AuthenticationRequest.class));
     }
 
     @Test
