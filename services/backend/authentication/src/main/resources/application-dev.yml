@@ -5,8 +5,11 @@ spring:
     password: password
     driver-class-name: org.postgresql.Driver
   jpa:
-    hibernate:
-      ddl-auto: create
+    properties:
+      hibernate:
+        ddl-auto: create
+        connection:
+          autocommit: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
