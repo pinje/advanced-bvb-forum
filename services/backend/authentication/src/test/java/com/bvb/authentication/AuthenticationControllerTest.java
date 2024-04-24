@@ -59,7 +59,7 @@ class AuthenticationControllerTest {
                 .andExpect(content().json("""
                      {
                          "validationErrors": [
-                             "Email is not valid"
+                             "Email: not valid"
                          ]
                      }
                  """));
@@ -81,7 +81,7 @@ class AuthenticationControllerTest {
                 .andExpect(content().json("""
                      {
                          "validationErrors": [
-                             "Password too short, min. 8 characters"
+                             "Password: too short (min. 8 characters)"
                          ]
                      }
                  """));
@@ -103,7 +103,7 @@ class AuthenticationControllerTest {
                 .andExpect(content().json("""
                      {
                          "validationErrors": [
-                             "Only letters and numbers are allowed"
+                             "Username: only letters and numbers allowed"
                          ]
                      }
                  """));
@@ -125,11 +125,11 @@ class AuthenticationControllerTest {
                 .andExpect(content().json("""
                      {
                          "validationErrors": [
-                             "Password required",
-                             "Username too short, min. 2 characters",
-                             "Password too short, min. 8 characters",
-                             "Email required",
-                             "Username required"
+                             "Password: required",
+                             "Username: too short (min. 2 characters)",
+                             "Password: too short (min. 8 characters)",
+                             "Email: required",
+                             "Username: required"
                          ]
                      }
                  """));
