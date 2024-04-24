@@ -19,8 +19,7 @@ public class GlobalExceptionHandler {
                 .status(ex.getStatusCode())
                 .body(
                         ExceptionResponse.builder()
-                                .businessErrorCode(BusinessErrorCodes.DUPLICATE_USERNAME.getCode())
-                                .businessErrorDescription(BusinessErrorCodes.DUPLICATE_USERNAME.getDescription())
+                                .validationErrors(Collections.singleton(BusinessErrorCodes.DUPLICATE_USERNAME.getDescription()))
                                 .build()
                 );
     }

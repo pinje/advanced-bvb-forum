@@ -1,7 +1,7 @@
 Feature: Registration
   As a guest user,
   I want to register to the website,
-  So that I can access to the system's member's functionalities
+  So that I can authentication to the system
 
   Scenario: Create a new user
     Given I am a guest user

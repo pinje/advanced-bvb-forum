@@ -11,7 +11,6 @@
             [ngModelOptions]="{standalone: true}" />
 
         <div class="error" *ngIf="error.length">
-            Invalid Entry
             <div *ngFor="let msg of error">{{ msg }}</div>
         </div>
     </div>
