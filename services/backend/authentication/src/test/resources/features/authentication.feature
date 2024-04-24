@@ -13,3 +13,13 @@ Feature: Authentication
     Given I am a guest user
     When I login with incorrect credentials
     Then I see an error message
+
+  Scenario: Login with empty credentials
+    Given I am a guest user
+    When I login with empty credentials
+    Then I see an error message
+
+  Scenario: Login with invalid credentials
+    Given I am a guest user
+    When I login with invalid credentials
+    Then I see an error message
