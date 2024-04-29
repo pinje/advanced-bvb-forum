@@ -2,7 +2,7 @@ variables:
   REGISTRY_USER: $CI_REGISTRY_USER
   REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
   ACR: $CI_ACR
-  SONAR_TOKEN: $SONAR_TOKEN
+  AZ_PASSWORD: $CI_AZ_PASSWORD
 
 stages:
   - build
@@ -23,4 +23,72 @@ authentication-build:
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
     - cd services/backend/authentication
-    - mvn clean install
+    - mvn clean compile
+
+authentication-test:
+  extends: .auth-common
+  stage: test
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/authentication
+    - mvn clean test
+
+authentication-package:
+  stage: package
+  tags:
+    - docker
+  image: docker:20.10.12
+  services:
+    - docker:20.10.12-dind
+  variables:
+    PROFILE: "prod"
+  script:
+    - cd services/backend/authentication
+    - docker build --build-arg PROFILE=$PROFILE -t authentication .
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/authentication/**/*'
+
+authentication-deploy-acr:
+  stage: deploy
+  tags:
+    - docker
+  image: docker:20.10.12
+  services:
+    - docker:20.10.12-dind
+  script:
+    - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    - docker tag authentication $ACR/authentication
+    - docker push $ACR/authentication
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/authentication/**/*'
+
+authentication-deploy-aks:
+  extends: .flight-common
+  stage: deploy
+  tags:
+    - docker
+  image: mcr.microsoft.com/azure-cli
+  before_script:
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+  script:
+    - cd services/backend/authentication
+    - az login -u 498855@student.fontys.nl -p $AZ_PASSWORD
+    - az account set --subscription "Azure for Students"
+    - az aks get-credentials --resource-group BVB_Forum --name SwiftAKS
+    - kubectl apply -f authentication-deployment.yml
+    - kubectl apply -f authentication-service.yml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 'services/backend/authentication/**/*'
+
+
