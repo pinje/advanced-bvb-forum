@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/season
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          autocommit: false
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+#
+#application:
+#  security:
+#    jwt:
+#      secret-key: E91E158E4C6656F68B1B5D1C316766DE98D2AD6EF3BFB44F78E9CFCDF5
+#      expiration: 86400000 # 1 day
+#  cors:
+#    origins: http://localhost:4200
+#    # add http://<ip>:8082
+#
