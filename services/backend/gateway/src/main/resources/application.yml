@@ -1,0 +1,6 @@
+server:
+  port: 8222
+
+spring:
+  profiles:
+    active: dev

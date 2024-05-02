@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: season
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/season/**
+          filters:
+            - AuthFilter
+        - id: authentication
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/auth/**
+application:
+  security:
+    jwt:
+      secret-key: E91E158E4C6656F68B1B5D1C316766DE98D2AD6EF3BFB44F78E9CFCDF5
+      expiration: 86400000 # 1 day

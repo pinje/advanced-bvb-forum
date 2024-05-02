@@ -8,6 +8,7 @@ import com.bvb.season.domain.GetAllSeasonsResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -15,12 +16,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("season")
 @AllArgsConstructor
 @Tag(name = "Season Management")
-
 public class SeasonController {
     private final CreateSeasonService createSeasonService;
     private final GetAllSeasonsService getAllSeasonsService;
     private final DeleteSeasonService deleteSeasonService;
 
+    @PreAuthorize("hasAuthority('[MEMBER]')")
     @PostMapping()
     public ResponseEntity<Void> createSeason(@RequestBody @Valid CreateSeasonRequest request) {
         createSeasonService.createSeason(request);
@@ -32,6 +33,7 @@ public class SeasonController {
         return ResponseEntity.ok(getAllSeasonsService.getAllSeasons());
     }
 
+    @PreAuthorize("hasAuthority('[MEMBER]')")
     @DeleteMapping("{seasonId}")
     public ResponseEntity<Void> deleteSeason(@PathVariable long seasonId) {
         deleteSeasonService.deleteSeason(seasonId);
