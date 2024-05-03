@@ -20,6 +20,3 @@ application:
     jwt:
       secret-key: E91E158E4C6656F68B1B5D1C316766DE98D2AD6EF3BFB44F78E9CFCDF5
       expiration: 86400000 # 1 day
-  cors:
-    origins: http://localhost:4200
-    # add http://<ip>:8081
