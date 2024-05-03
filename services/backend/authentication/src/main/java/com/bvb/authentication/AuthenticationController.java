@@ -5,8 +5,10 @@ import com.bvb.authentication.domain.AuthenticationRequest;
 import com.bvb.authentication.domain.AuthenticationResponse;
 import com.bvb.authentication.domain.RegistrationRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ResponseEntity<Void> authenticate(
+            @RequestBody @Valid AuthenticationRequest request,
+            HttpServletResponse response) {
+        response.addHeader(HttpHeaders.SET_COOKIE, authenticationService.authenticate(request).getCookie().toString());
+        return ResponseEntity.ok().build();
     }
 }

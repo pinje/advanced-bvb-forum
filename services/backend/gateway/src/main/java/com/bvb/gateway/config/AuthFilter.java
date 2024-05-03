@@ -2,7 +2,6 @@ package com.bvb.gateway.config;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 
@@ -33,15 +32,13 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
             ServerHttpRequest request = null;
 
-            if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                throw new RuntimeException("Missing authorization header");
+            // get cookie from request and check if empty
+            if (!exchange.getRequest().getCookies().containsKey("accessToken")) {
+                throw new RuntimeException("Missing authorization");
             }
 
-            String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                authHeader = authHeader.substring(7);
-            }
+            // get cookie from request
+            String authHeader = exchange.getRequest().getCookies().get("accessToken").get(0).getValue();
 
             try {
                 // validate token

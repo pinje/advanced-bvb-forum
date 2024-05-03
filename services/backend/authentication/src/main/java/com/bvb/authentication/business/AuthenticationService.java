@@ -10,6 +10,7 @@ import com.bvb.authentication.persistence.RoleRepository;
 import com.bvb.authentication.persistence.User;
 import com.bvb.authentication.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,7 +64,17 @@ public class AuthenticationService {
         var user = ((User)auth.getPrincipal());
         claims.put("username", user.getUsername());
         var jwtToken = jwtService.generateToken(claims, user);
+
+        // set jwt token to cookie header
+        ResponseCookie cookie = ResponseCookie.from("accessToken", jwtToken)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(3600)
+                .build();
+
         return AuthenticationResponse.builder()
-                .token(jwtToken).build();
+                .cookie(cookie)
+                .build();
     }
 }
