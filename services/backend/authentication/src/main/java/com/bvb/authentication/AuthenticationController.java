@@ -46,4 +46,10 @@ public class AuthenticationController {
     public ResponseEntity<AuthorizationResponse> username(HttpServletRequest request) {
         return ResponseEntity.ok(authenticationService.getUsername(request));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<AuthenticationResponse> logout(HttpServletResponse response) {
+        response.addHeader(HttpHeaders.SET_COOKIE, authenticationService.logout().getJwtCookie().toString());
+        return ResponseEntity.ok(authenticationService.logout());
+    }
 }

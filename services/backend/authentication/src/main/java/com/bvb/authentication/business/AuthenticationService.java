@@ -101,4 +101,18 @@ public class AuthenticationService {
 
         return AuthorizationResponse.builder().userInfo(username).build();
     }
+
+    public AuthenticationResponse logout() {
+        ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", "")
+                .httpOnly(true)
+//                .secure(true)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        return AuthenticationResponse.builder()
+                .jwtCookie(jwtCookie)
+                .build();
+    }
 }
