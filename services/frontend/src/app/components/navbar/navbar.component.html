@@ -2,11 +2,26 @@
     <nav>
         <div class="logo"><img src="../../../assets/images/bvb.png"/></div>
         <div class="navbox">
-            <div class="navelement">
-                <li><a routerLink="/signup">Signup</a></li>
-                <li><a routerLink="/login">Login</a></li>
-                <li><a routerLink="/seasons">Seasons</a></li>
-            </div>
+            <!-- <div class="navelement" *ngIf="getUserRole() === 'MEMBER' then member else admin"></div> -->
+            <div class="navelement" *ngIf="userRole === 'MEMBER' then member else admin"></div>
+                <ng-template #admin>
+                    <li><a routerLink="/signup">Signup</a></li>
+                    <li><a routerLink="/login">Login</a></li>
+                    <li><a routerLink="/seasons">Seasons</a></li>
+                    <li><a routerLink="/admin">Admin</a></li>
+                </ng-template>
+                <ng-template #member>
+                    <li><a routerLink="/signup">Signup</a></li>
+                    <li><a routerLink="/login">Login</a></li>
+                    <li><a routerLink="/seasons">Seasons</a></li>
+                    <li><a routerLink="/admin">Member</a></li>
+                </ng-template>
+                <ng-template>
+                    <li><a routerLink="/signup">Signup</a></li>
+                    <li><a routerLink="/login">Login</a></li>
+                </ng-template>
+                <!-- <li><a routerLink="/login">Login</a></li>
+                <li><a routerLink="/seasons">Seasons</a></li> -->
             <div class="searchbox">
                 <!-- <SearchBar/> -->
             </div>

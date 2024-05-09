@@ -1,0 +1,21 @@
+<form>
+    <div class="formbox">
+        <div>Start Year</div>
+        <input type="text" placeholder="e.g. 2024" [(ngModel)]="addSeasonRequest.startYear"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="updateEndYear()"/>
+        <div>End Year</div>
+        <input type="text" [(ngModel)]="addSeasonRequest.endYear"
+            [ngModelOptions]="{standalone: true}" [disabled]="true"/>
+
+        <div class="error" *ngIf="error">
+            <div>{{ error }}</div>
+        </div>
+
+        <div class="success" *ngIf="success">
+            <div>Season added succesfully</div>
+        </div>
+    </div>
+    <div class="submitbox">
+        <app-button-active title="Add Season" (click)="onSubmit()"></app-button-active>
+    </div>
+</form>

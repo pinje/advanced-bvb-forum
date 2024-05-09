@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="inner">
+        <div class="page-title">Admin page</div>
+        <div class="page-sub-title">Season management</div>
+        <ui-tabs>
+            <ui-tab-item
+                [tabName]="addSeasonTitle"
+                [templateRef]="addSeasonTemplate"
+            ></ui-tab-item>
+            <ui-tab-item
+                [tabName]="deleteSeasonTitle"
+                [templateRef]="deleteSeasonTemplate"
+            ></ui-tab-item>
+        </ui-tabs>
+        <ng-template #addSeasonTemplate let-content="content">
+            <app-add-season-form></app-add-season-form>
+        </ng-template>
+
+        <ng-template #deleteSeasonTemplate let-content="content">
+            <app-delete-season-form></app-delete-season-form>
+        </ng-template>
+    </div>
+</div>

@@ -6,6 +6,15 @@
     text-transform: uppercase;
 }
 
+.page-sub-title {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-family: semibold;
+    text-transform: uppercase;
+    margin-top: 15px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
