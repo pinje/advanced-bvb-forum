@@ -21,16 +21,8 @@ export class AuthenticationService {
     return this.http.post(this.apiUrl + 'login', body, {withCredentials: true});
   }
 
-  refresh(): Observable<any> {
-    return this.http.post(this.apiUrl + 'refresh-token', {});
-  }
-
   // implement in backend
   logout(): Observable<any> {
     return this.http.post(this.apiUrl + 'logout', {});
-  }
-
-  getUsername(): Observable<any> {
-    return this.http.post(this.apiUrl + 'authorities', {})
   }
 }

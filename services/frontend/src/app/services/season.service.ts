@@ -14,14 +14,14 @@ export class SeasonService {
   constructor(private http: HttpClient) {}
 
   getAllSeasons(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(this.apiUrl, {withCredentials: true});
   }
 
   addSeason(body: AddSeasonRequest): Observable<any> {
-    return this.http.post(this.apiUrl, body);
+    return this.http.post(this.apiUrl, body, {withCredentials: true});
   }
 
   deleteSeason(body: DeleteSeasonRequest):  Observable<any> {
-    return this.http.delete(this.apiUrl + '/' + body.seasonId);
+    return this.http.delete(this.apiUrl + '/' + body.seasonId, {withCredentials: true});
   }
 }

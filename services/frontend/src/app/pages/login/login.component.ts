@@ -3,7 +3,6 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AuthenticationRequest } from '../../models/request/authentication-request';
-import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,6 @@ export class LoginComponent {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private tokenService: TokenService
   ) {}
 
   error: Array<string> = [];
@@ -27,8 +25,7 @@ export class LoginComponent {
   login($event: AuthenticationRequest): void {
     this.error = [];
     this.authService.login($event).subscribe({
-      next: (res) => {
-        this.tokenService.token = res.accessToken as string;
+      next: () => {
         this.router.navigate(['']);
       },
       error: (err) => {

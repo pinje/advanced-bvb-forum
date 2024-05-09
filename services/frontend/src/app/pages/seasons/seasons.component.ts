@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { TokenService } from '../../services/token.service';
-import { catchError, of, switchMap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SeasonCollapsibleComponent } from '../../components/season-collapsible/season-collapsible.component';
 
@@ -20,8 +19,7 @@ export class SeasonsComponent implements OnInit {
 
   constructor(
     private seasonService: SeasonService,
-    private authService: AuthenticationService,
-    private tokenService: TokenService
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -33,20 +31,6 @@ export class SeasonsComponent implements OnInit {
   // need to clear up
   getSeasons(): void {
     this.seasonService.getAllSeasons().pipe(
-      catchError((error) => {
-        if (error.status === 500) {
-          return this.authService.refresh().pipe(
-            switchMap((res) => {
-              // Store the refreshed data in local storage
-              this.tokenService.token = res.accessToken as string;
-              // redo getSeasons
-              return this.seasonService.getAllSeasons();
-            })
-          )
-        } else {
-          throw error; // Re-throw the error if it's not a 500 error
-        }
-      }),
       switchMap((res) => {
         // Handle success
         console.log(res.seasons[0])
