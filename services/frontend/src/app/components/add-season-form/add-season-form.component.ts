@@ -18,7 +18,8 @@ import { SeasonService } from '../../services/season.service';
 })
 export class AddSeasonFormComponent {
 
-  error: Array<string> = [];
+  error: string = "";
+  validationErrors: Array<string> = [];
   success: boolean = false;
 
   addSeasonRequest: AddSeasonRequest = {
@@ -38,7 +39,8 @@ export class AddSeasonFormComponent {
   }
 
   onSubmit() {
-    this.error = [];
+    this.error = "";
+    this.validationErrors = [];
     this.success = false;
     this.seasonService.addSeason(this.addSeasonRequest).subscribe({
       next: () => {
@@ -48,8 +50,10 @@ export class AddSeasonFormComponent {
         this.success = true;
       },
       error: (err) => {
-        if (err.error) {
-          this.error = err.error.error
+        if (err.error.error) {
+          this.error = err.error.error;
+        } else if (err.error.validationErrors) {
+          this.validationErrors = err.error.validationErrors;
         }
       }
     })

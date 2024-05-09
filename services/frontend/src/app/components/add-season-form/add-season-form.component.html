@@ -16,6 +16,10 @@
             <div>{{ error }}</div>
         </div>
 
+        <div class="error" *ngIf="validationErrors">
+            <div *ngFor="let msg of validationErrors">{{ msg }}</div>
+        </div>
+
         <div class="success" *ngIf="success">
             <div>Season added succesfully</div>
         </div>
