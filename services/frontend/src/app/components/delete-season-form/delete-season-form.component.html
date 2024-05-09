@@ -1,10 +1,12 @@
 <form>
     <div class="formbox">
-        <div>Delete Season</div>
-        <select name="season" id="season" [(ngModel)]="deleteSeasonRequest.seasonId" [ngModelOptions]="{standalone: true}">
-            <option value="-1">Select season</option>
-            <option value="{{season.id}}" *ngFor="let season of seasons">Season {{season.startYear}}-{{season.endYear}}</option>
-        </select>
+        <div class="inputfield">
+            <div>Delete season</div>
+            <select name="season" id="season" [(ngModel)]="deleteSeasonRequest.seasonId" [ngModelOptions]="{standalone: true}">
+                <option value="-1">Select season</option>
+                <option value="{{season.id}}" *ngFor="let season of seasons">Season {{season.startYear}}-{{season.endYear}}</option>
+            </select>
+        </div>
         <div class="error" *ngIf="error">
             <div>{{ error }}</div>
         </div>

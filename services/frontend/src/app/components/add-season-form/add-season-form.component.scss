@@ -25,16 +25,18 @@ button {
 }
 
 input {
-    height: 45px;
-    outline: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: 400;
-    width: 20%;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #ccc;
+    background-color: #272729;
+    color: #CECECE;
+    box-shadow: 1px 3px 1px 0px rgba(0, 0, 0, 0.4);
+    border: 0;
+    padding: 10px;
     text-align: center;
+    font-family: semibold;
+    margin-bottom: 10px;
+}
+
+input:focus {
+    outline: 1px solid#FFD900;
 }
 
 .error {

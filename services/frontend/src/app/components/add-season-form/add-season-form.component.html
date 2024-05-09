@@ -1,11 +1,16 @@
 <form>
     <div class="formbox">
-        <div>Start Year</div>
-        <input type="text" placeholder="e.g. 2024" [(ngModel)]="addSeasonRequest.startYear"
+        <div class="inputfield">
+            <div>Start Year</div>
+            <input type="text" placeholder="e.g. 2024" [(ngModel)]="addSeasonRequest.startYear"
             [ngModelOptions]="{standalone: true}" (ngModelChange)="updateEndYear()"/>
-        <div>End Year</div>
-        <input type="text" [(ngModel)]="addSeasonRequest.endYear"
+        </div>
+
+        <div class="inputfield">
+            <div>End Year</div>
+            <input type="text" [(ngModel)]="addSeasonRequest.endYear"
             [ngModelOptions]="{standalone: true}" [disabled]="true"/>
+        </div>
 
         <div class="error" *ngIf="error">
             <div>{{ error }}</div>
