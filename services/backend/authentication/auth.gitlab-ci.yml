@@ -69,7 +69,6 @@ authentication-deploy-acr:
         - 'services/backend/authentication/**/*'
 
 authentication-deploy-aks:
-  extends: .flight-common
   stage: deploy
   tags:
     - docker
