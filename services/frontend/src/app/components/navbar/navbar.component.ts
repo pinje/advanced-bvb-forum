@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthorizationService } from '../../services/authorization.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Observable, catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -13,25 +12,32 @@ import { Observable, catchError, of, switchMap } from 'rxjs';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
+  
+  isAuthenticated: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
-    private authorizationService: AuthorizationService
+    private authorizationService: AuthorizationService,
+    private authService: AuthenticationService
   ) {}
 
-  // getUserRole() {
-  //   return 'MEMBER';
-  // }
-
   ngOnInit(): void {
-    this.getUserRole();
+    this.authorizationService.checkUserRole();
+
+    this.authorizationService.isAuthenticated$.subscribe((isAuthenticated: boolean) => {
+      this.isAuthenticated = isAuthenticated;
+    });
+
+    this.authorizationService.isAdmin$.subscribe((isAdmin: boolean) => {
+      this.isAdmin = isAdmin;
+    });
   }
 
-  userRole: string = "";
-
-  getUserRole(): any {
-    this.authorizationService.getUserRole().subscribe({
-      next: (res) => {
-        this.userRole = res.userInfo;
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.authorizationService.updateAuthenticationStatus(false);
+        this.authorizationService.updateAdminStatus(false);
       }
     })
   }

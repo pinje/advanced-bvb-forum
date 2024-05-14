@@ -9,7 +9,6 @@ import { AdminComponent } from './pages/admin/admin.component';
 export const routes: Routes = [
     { path: 'signup', component: SignupComponent},
     { path: 'login', component: LoginComponent },
-    // { path: 'seasons', component: SeasonsComponent, canActivate: [authGuard]}
     { path: 'seasons', component: SeasonsComponent},
-    { path: 'admin', component: AdminComponent}
+    { path: 'admin', component: AdminComponent, canActivate: [adminGuard]}
 ];

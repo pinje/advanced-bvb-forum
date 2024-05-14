@@ -21,8 +21,7 @@ export class AuthenticationService {
     return this.http.post(this.apiUrl + 'login', body, {withCredentials: true});
   }
 
-  // implement in backend
   logout(): Observable<any> {
-    return this.http.post(this.apiUrl + 'logout', {});
+    return this.http.post(this.apiUrl + 'logout', {}, {withCredentials: true});
   }
 }

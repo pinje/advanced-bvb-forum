@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SeasonService } from '../../services/season.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { of, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SeasonCollapsibleComponent } from '../../components/season-collapsible/season-collapsible.component';
@@ -18,8 +17,7 @@ import { SeasonCollapsibleComponent } from '../../components/season-collapsible/
 export class SeasonsComponent implements OnInit {
 
   constructor(
-    private seasonService: SeasonService,
-    private authService: AuthenticationService
+    private seasonService: SeasonService
   ) {}
 
   ngOnInit(): void {
@@ -33,12 +31,11 @@ export class SeasonsComponent implements OnInit {
     this.seasonService.getAllSeasons().pipe(
       switchMap((res) => {
         // Handle success
-        console.log(res.seasons[0])
         this.seasons = res.seasons;
         // reorder
         this.seasons.sort((a, b) => {
-          return this.seasons.indexOf(a.startYear) - this.seasons.indexOf(b.startYear);
-        }); 
+          return a.startYear - b.startYear;
+        });
 
         return of(res); // Return whatever you need from the success response
       })

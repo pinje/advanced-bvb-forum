@@ -37,7 +37,7 @@ export class DeleteSeasonFormComponent implements OnInit {
       next: (res) => {
         this.seasons = res.seasons;
         this.seasons.sort((a, b) => {
-          return this.seasons.indexOf(a.startYear) - this.seasons.indexOf(b.startYear);
+          return a.startYear - b.startYear;
         });
       }
     })
