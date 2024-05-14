@@ -21,7 +21,7 @@ public class SeasonController {
     private final GetAllSeasonsService getAllSeasonsService;
     private final DeleteSeasonService deleteSeasonService;
 
-    @PreAuthorize("hasAuthority('[MEMBER]')")
+    @PreAuthorize("hasAuthority('[ADMIN]')")
     @PostMapping()
     public ResponseEntity<Void> createSeason(@RequestBody @Valid CreateSeasonRequest request) {
         createSeasonService.createSeason(request);
@@ -33,7 +33,7 @@ public class SeasonController {
         return ResponseEntity.ok(getAllSeasonsService.getAllSeasons());
     }
 
-    @PreAuthorize("hasAuthority('[MEMBER]')")
+    @PreAuthorize("hasAuthority('[ADMIN]')")
     @DeleteMapping("{seasonId}")
     public ResponseEntity<Void> deleteSeason(@PathVariable long seasonId) {
         deleteSeasonService.deleteSeason(seasonId);
