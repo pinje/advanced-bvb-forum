@@ -9,7 +9,7 @@ import { AuthenticationRequest } from '../models/request/authentication-request'
 })
 export class AuthenticationService {
 
-  private apiUrl = 'http://localhost:8081/api/v1/auth/';
+  private apiUrl = 'http://localhost:8222/api/v1/auth/';
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +18,10 @@ export class AuthenticationService {
   };
 
   login(body: AuthenticationRequest): Observable<any> {
-    return this.http.post(this.apiUrl + 'login', body);
+    return this.http.post(this.apiUrl + 'login', body, {withCredentials: true});
+  }
+
+  logout(): Observable<any> {
+    return this.http.post(this.apiUrl + 'logout', {}, {withCredentials: true});
   }
 }

@@ -5,11 +5,14 @@ import com.bvb.authentication.business.exception.UsernameAlreadyExistsException;
 import com.bvb.authentication.config.security.JwtService;
 import com.bvb.authentication.domain.AuthenticationRequest;
 import com.bvb.authentication.domain.AuthenticationResponse;
+import com.bvb.authentication.domain.AuthorizationResponse;
 import com.bvb.authentication.domain.RegistrationRequest;
 import com.bvb.authentication.persistence.RoleRepository;
 import com.bvb.authentication.persistence.User;
 import com.bvb.authentication.persistence.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,7 +66,53 @@ public class AuthenticationService {
         var user = ((User)auth.getPrincipal());
         claims.put("username", user.getUsername());
         var jwtToken = jwtService.generateToken(claims, user);
+
+        ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", jwtToken)
+                .httpOnly(true)
+//                .secure(true)
+                .path("/")
+                .maxAge(604800)
+                .sameSite("Strict")
+                .build();
+
         return AuthenticationResponse.builder()
-                .token(jwtToken).build();
+                .jwtCookie(jwtCookie)
+                .build();
+    }
+
+    public AuthorizationResponse getUserRole(HttpServletRequest request) {
+        if (request.getCookies() == null || request.getCookies().length == 0) {
+            throw new RuntimeException("Missing cookie");
+        }
+
+        String token = request.getCookies()[0].getValue();
+        String username = jwtService.extractRole(token);
+
+        return AuthorizationResponse.builder().userInfo(username).build();
+    }
+
+    public AuthorizationResponse getUsername(HttpServletRequest request) {
+        if (request.getCookies() == null || request.getCookies().length == 0) {
+            throw new RuntimeException("Missing cookie");
+        }
+
+        String token = request.getCookies()[0].getValue();
+        String username = jwtService.extractUsername(token);
+
+        return AuthorizationResponse.builder().userInfo(username).build();
+    }
+
+    public AuthenticationResponse logout() {
+        ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", "")
+                .httpOnly(true)
+//                .secure(true)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        return AuthenticationResponse.builder()
+                .jwtCookie(jwtCookie)
+                .build();
     }
 }

@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/season
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          autocommit: false
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
