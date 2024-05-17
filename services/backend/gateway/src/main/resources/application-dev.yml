@@ -31,6 +31,12 @@ spring:
             - Path=/api/v1/team/**
           filters:
             - AuthFilter
+        - id: match
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/v1/match/**
+          filters:
+            - AuthFilter
         - id: authentication
           uri: http://localhost:8081
           predicates:
