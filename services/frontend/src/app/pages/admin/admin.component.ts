@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { UiTabsComponent } from '../../components/ui-tabs/ui-tabs.component';
 import { UiTabItemComponent } from '../../components/ui-tab-item/ui-tab-item.component';
-import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { SignupComponent } from '../signup/signup.component';
-import { SignupFormComponent } from '../../components/signup-form/signup-form.component';
 import { AddSeasonFormComponent } from '../../components/add-season-form/add-season-form.component';
 import { DeleteSeasonFormComponent } from '../../components/delete-season-form/delete-season-form.component';
-import { AddSeasonRequest } from '../../models/request/addaseason-request';
-import { SeasonService } from '../../services/season.service';
+import { AddTournamentFormComponent } from '../../components/add-tournament-form/add-tournament-form.component';
+import { DeleteTournamentFormComponent } from '../../components/delete-tournament-form/delete-tournament-form.component';
+import { TournamentListComponent } from '../../components/tournament-list/tournament-list.component';
 
 @Component({
   selector: 'app-admin',
@@ -16,7 +14,10 @@ import { SeasonService } from '../../services/season.service';
     UiTabsComponent,
     UiTabItemComponent,
     AddSeasonFormComponent,
-    DeleteSeasonFormComponent
+    DeleteSeasonFormComponent,
+    AddTournamentFormComponent,
+    DeleteTournamentFormComponent,
+    TournamentListComponent
   ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss', '../../app.component.scss']
@@ -24,4 +25,8 @@ import { SeasonService } from '../../services/season.service';
 export class AdminComponent {
   addSeasonTitle = 'Add season';
   deleteSeasonTitle = 'Delete season';
+
+  addTournamentTitle = 'Add tournament';
+  deleteTournamentTitle = 'Delete tournament';
+  tournamentListTitle = 'Tournament List';
 }

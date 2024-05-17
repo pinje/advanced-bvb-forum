@@ -1,0 +1,30 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0 10px 0;
+
+    div {
+        margin-right: 20px;
+    }
+}
+
+.logo {
+    background-color: #CECECE;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+img {
+    height: 40px;
+    width: 40px;
+}

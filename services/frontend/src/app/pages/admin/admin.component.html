@@ -19,5 +19,32 @@
         <ng-template #deleteSeasonTemplate let-content="content">
             <app-delete-season-form></app-delete-season-form>
         </ng-template>
+
+        <div class="page-sub-title">Tournament management</div>
+        <ui-tabs>
+            <ui-tab-item
+                [tabName]="addTournamentTitle"
+                [templateRef]="addTournamentTemplate"
+            ></ui-tab-item>
+            <ui-tab-item
+                [tabName]="deleteTournamentTitle"
+                [templateRef]="deleteTournamentTemplate"
+            ></ui-tab-item>
+            <ui-tab-item
+                [tabName]="tournamentListTitle"
+                [templateRef]="tournamentListTemplate"
+            ></ui-tab-item>
+        </ui-tabs>
+        <ng-template #addTournamentTemplate let-content="content">
+            <app-add-tournament-form></app-add-tournament-form>
+        </ng-template>
+
+        <ng-template #deleteTournamentTemplate let-content="content">
+            <app-delete-tournament-form></app-delete-tournament-form>
+        </ng-template>
+
+        <ng-template #tournamentListTemplate let-content="content">
+            <app-tournament-list></app-tournament-list>
+        </ng-template>
     </div>
 </div>

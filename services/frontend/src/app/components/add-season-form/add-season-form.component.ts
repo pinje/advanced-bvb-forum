@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AddSeasonRequest } from '../../models/request/addaseason-request';
+import { Component } from '@angular/core';
+import { AddSeasonRequest } from '../../models/request/addseason-request';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../button-active/button-active.component';

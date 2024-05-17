@@ -1,0 +1,21 @@
+<form>
+    <div class="formbox">
+        <div class="inputfield">
+            <div>Delete tournament</div>
+            <select name="tournament" id="tournament" [(ngModel)]="deleteTournamentRequest.tournamentId" [ngModelOptions]="{standalone: true}">
+                <option value="-1" selected disabled>Select tournament</option>
+                <option value="{{tournament.id}}" *ngFor="let tournament of tournaments">{{tournament.tournamentName}}</option>
+            </select>
+        </div>
+        <div class="error" *ngIf="error">
+            <div>{{ error }}</div>
+        </div>
+
+        <div class="success" *ngIf="success">
+            <div>Tournament deleted succesfully</div>
+        </div>
+    </div>
+    <div class="submitbox">
+        <app-button-active title="Delete Tournament" (click)="onSubmit()"></app-button-active>
+    </div>
+</form>

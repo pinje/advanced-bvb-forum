@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddSeasonRequest } from '../models/request/addaseason-request';
+import { AddSeasonRequest } from '../models/request/addseason-request';
 import { DeleteSeasonRequest } from '../models/request/deleteseason-request';
 
 @Injectable({

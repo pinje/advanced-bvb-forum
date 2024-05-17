@@ -19,6 +19,12 @@ spring:
             - Path=/api/v1/season/**
           filters:
             - AuthFilter
+        - id: tournament
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v1/tournament/**
+          filters:
+            - AuthFilter
         - id: authentication
           uri: http://localhost:8081
           predicates:
