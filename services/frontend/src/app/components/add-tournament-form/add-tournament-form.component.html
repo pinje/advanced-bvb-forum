@@ -1,0 +1,40 @@
+<form>
+    <div class="formbox">
+        <div class="inputfield">
+            <div>Tournament Name</div>
+            <input type="text" placeholder="Tournament name" [(ngModel)]="addTournamentRequest.tournamentName"
+            [ngModelOptions]="{standalone: true}"/>
+        </div>
+
+        <div class="inputfield">
+            <div>Category</div>
+            <select [(ngModel)]="addTournamentRequest.category" [ngModelOptions]="{standalone: true}">
+                <option value="" selected disabled>Select season</option>
+                <option value="LEAGUE">LEAGUE</option>
+                <option value="CUP">CUP</option>
+                <option value="TOURNAMENT">TOURNAMENT</option>
+                <option value="FRIENDLY">FRIENDLY</option>
+            </select>
+        </div>
+
+        <div class="inputfield">
+            <div>Tournament Logo</div>
+            <input #fileInput type="file" accept="image/png" (change)="onFileSelected($event)" required/>
+        </div>
+
+        <div class="error" *ngIf="error">
+            <div>{{ error }}</div>
+        </div>
+
+        <div class="error" *ngIf="validationErrors">
+            <div *ngFor="let msg of validationErrors">{{ msg }}</div>
+        </div>
+
+        <div class="success" *ngIf="success">
+            <div>Tournament added succesfully</div>
+        </div>
+    </div>
+    <div class="submitbox">
+        <app-button-active title="Add Tournament" (click)="onSubmit()"></app-button-active>
+    </div>
+</form>
