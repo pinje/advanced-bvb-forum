@@ -46,5 +46,30 @@
         <ng-template #tournamentListTemplate let-content="content">
             <app-tournament-list></app-tournament-list>
         </ng-template>
+
+        <div class="page-sub-title">Team management</div>
+        <ui-tabs>
+            <ui-tab-item
+                [tabName]="addTeamTitle"
+                [templateRef]="addTeamTemplate"
+            ></ui-tab-item>
+            <ui-tab-item
+                [tabName]="deleteTeamTitle"
+                [templateRef]="deleteTeamTemplate"
+            ></ui-tab-item>
+            <ui-tab-item
+                [tabName]="teamListTitle"
+                [templateRef]="teamListTemplate"
+            ></ui-tab-item>
+        </ui-tabs>
+        <ng-template #addTeamTemplate let-content="content">
+            <app-add-team-form></app-add-team-form>
+        </ng-template>
+        <ng-template #deleteTeamTemplate let-content="content">
+            <app-delete-team-form></app-delete-team-form>
+        </ng-template>
+        <ng-template #teamListTemplate let-content="content">
+            <app-team-list></app-team-list>
+        </ng-template>
     </div>
 </div>

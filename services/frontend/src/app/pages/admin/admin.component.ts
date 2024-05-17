@@ -6,6 +6,9 @@ import { DeleteSeasonFormComponent } from '../../components/delete-season-form/d
 import { AddTournamentFormComponent } from '../../components/add-tournament-form/add-tournament-form.component';
 import { DeleteTournamentFormComponent } from '../../components/delete-tournament-form/delete-tournament-form.component';
 import { TournamentListComponent } from '../../components/tournament-list/tournament-list.component';
+import { AddTeamFormComponent } from '../../components/add-team-form/add-team-form.component';
+import { DeleteTeamFormComponent } from '../../components/delete-team-form/delete-team-form.component';
+import { TeamListComponent } from '../../components/team-list/team-list.component';
 
 @Component({
   selector: 'app-admin',
@@ -17,7 +20,10 @@ import { TournamentListComponent } from '../../components/tournament-list/tourna
     DeleteSeasonFormComponent,
     AddTournamentFormComponent,
     DeleteTournamentFormComponent,
-    TournamentListComponent
+    TournamentListComponent,
+    AddTeamFormComponent,
+    DeleteTeamFormComponent,
+    TeamListComponent
   ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss', '../../app.component.scss']
@@ -28,5 +34,9 @@ export class AdminComponent {
 
   addTournamentTitle = 'Add tournament';
   deleteTournamentTitle = 'Delete tournament';
-  tournamentListTitle = 'Tournament List';
+  tournamentListTitle = 'Tournament list';
+
+  addTeamTitle = 'Add team';
+  deleteTeamTitle = 'Delete team';
+  teamListTitle = 'Team list';
 }
