@@ -1,0 +1,113 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0 10px 0;
+
+    div {
+        margin-right: 20px;
+    }
+}
+
+img {
+    height: 30px;
+    width: 30px;
+    margin: 0 10px 0 10px;
+}
+
+.error {
+    margin-top: 15px;
+    color: #C3362B;
+}
+
+.success {
+    margin-top: 15px;
+    color: #4CAF50;
+}
+
+.match {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0 10px 0;
+
+    .tournament {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 10%;
+    }
+
+    .hometeam {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 35%;
+
+        .name {
+            text-align: right;
+            width: 80%;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20%;
+        }
+    }
+
+    .awayteam {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 35%;
+        
+        .name {
+            width: 80%;
+        }
+        
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20%;
+        }
+    }
+
+    .scorebox {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 15%;
+
+        .score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'bold';
+            font-size: 20px;
+            background-color: #272729;
+            padding: 5px;
+            margin: 5px;
+            width: 25px;
+            height: 30px;
+        }
+    }
+
+    .delete {
+        width: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -1,0 +1,21 @@
+<form>
+    <div class="formbox">
+        <div class="inputfield">
+            <div>Select season</div>
+            <select name="match" id="match" (change)="updateMatchList()" [(ngModel)]="selectedSeason" [ngModelOptions]="{standalone: true}">
+                <option value="null" selected disabled>Select tournament</option>
+                <option value="{{season.id}}" *ngFor="let season of seasons">Season {{season.startYear}}-{{season.endYear}}</option>
+            </select>
+        </div>
+        
+        <app-match-list [matches]="matches"></app-match-list>
+
+        <div class="error" *ngIf="error">
+            <div>{{ error }}</div>
+        </div>
+
+        <div class="success" *ngIf="success">
+            <div>Match deleted succesfully</div>
+        </div>
+    </div>
+</form>

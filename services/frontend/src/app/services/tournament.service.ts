@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeleteTournamentRequest } from '../models/request/tournament/deletetournament-request';
-import { GetTournamentRequest } from '../models/request/tournament/gettournament-request';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +19,8 @@ export class TournamentService {
     return this.http.post(this.apiUrl, body,  { withCredentials: true });
   }
 
-  getTournament(body: GetTournamentRequest): Observable<any> {
-    return this.http.post(this.apiUrl + '/' + body.tournamentId, {withCredentials: true});
+  getTournament(tournamentId: number): Observable<any> {
+    return this.http.get(this.apiUrl + '/' + tournamentId, {withCredentials: true});
   }
 
   deleteTournament(body: DeleteTournamentRequest):  Observable<any> {

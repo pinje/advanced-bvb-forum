@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +20,11 @@ public class CreateMatchImpl implements CreateMatchService {
     @Override
     public void createMatch(CreateMatchRequest request) {
         Date matchDate = new Date(request.getMatchDate());
+
+        if(Objects.equals(request.getHomeTeamId(), request.getAwayTeamId())) {
+            throw new RuntimeException("Home team and away team cannot be identical");
+        }
+
         if(matchRepository.existsByHomeTeamIdAndAwayTeamIdAndMatchDate(
                 request.getHomeTeamId(),
                 request.getAwayTeamId(),

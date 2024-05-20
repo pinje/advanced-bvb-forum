@@ -71,5 +71,23 @@
         <ng-template #teamListTemplate let-content="content">
             <app-team-list></app-team-list>
         </ng-template>
+
+        <div class="page-sub-title">Match management</div>
+        <ui-tabs>
+            <ui-tab-item
+                [tabName]="addMatchTitle"
+                [templateRef]="addMatchTemplate"
+            ></ui-tab-item>
+            <ui-tab-item
+                [tabName]="deleteMatchTitle"
+                [templateRef]="deleteMatchTemplate"
+            ></ui-tab-item>
+        </ui-tabs>
+        <ng-template #addMatchTemplate let-content="content">
+            <app-add-match-form></app-add-match-form>
+        </ng-template>
+        <ng-template #deleteMatchTemplate let-content="content">
+            <app-delete-match-form></app-delete-match-form>
+        </ng-template>
     </div>
 </div>

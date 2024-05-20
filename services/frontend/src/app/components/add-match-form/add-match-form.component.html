@@ -1,0 +1,78 @@
+<form>
+    <div class="formbox">
+
+        <div class="inputbox">
+            <div class="inputfield">
+                <div>Home Team</div>
+                <select name="team" id="team" [(ngModel)]="addMatchRequest.homeTeamId" [ngModelOptions]="{standalone: true}">
+                    <option value="null" selected disabled>Select home team</option>
+                    <option value="{{team.id}}" *ngFor="let team of teams">{{team.teamName}}</option>
+                </select>
+            </div>
+
+            <div class="inputfield">
+                <div>Away Team</div>
+                <select name="team" id="team" [(ngModel)]="addMatchRequest.awayTeamId" [ngModelOptions]="{standalone: true}">
+                    <option value="null" selected disabled>Select away team</option>
+                    <option value="{{team.id}}" *ngFor="let team of teams">{{team.teamName}}</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="inputbox">
+            <div class="inputfield">
+                <div>Home Team Score</div>
+                <input type="text" placeholder="Home score" [(ngModel)]="addMatchRequest.homeTeamScore" [ngModelOptions]="{standalone: true}"/>
+            </div>
+    
+            <div class="inputfield">
+                <div>Away Team Score</div>
+                <input type="text" placeholder="Away score" [(ngModel)]="addMatchRequest.awayTeamScore" [ngModelOptions]="{standalone: true}"/>
+            </div>
+        </div>
+
+        <div class="inputbox">
+            <div class="inputfield">
+                <div>Season</div>
+                <select name="season" id="season" [(ngModel)]="addMatchRequest.seasonId" [ngModelOptions]="{standalone: true}">
+                    <option value="null" selected disabled>Select season</option>
+                    <option value="{{season.id}}" *ngFor="let season of seasons">Season {{season.startYear}}-{{season.endYear}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="inputbox">
+            <div class="inputfield">
+                <div>Tournament</div>
+                <select name="tournament" id="tournament" [(ngModel)]="addMatchRequest.tournamentId" [ngModelOptions]="{standalone: true}">
+                    <option value="null" selected disabled>Select tournament</option>
+                    <option value="{{tournament.id}}" *ngFor="let tournament of tournaments">{{tournament.tournamentName}} | {{tournament.category}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="inputbox">
+            <div class="inputfield">
+                <div>Select Date</div>
+                <input type="date" (change)="convertDate()" [(ngModel)]="selectedDate" [ngModelOptions]="{standalone: true}" />
+            </div>
+        </div>
+
+
+        <div class="error" *ngIf="error">
+            <div>{{ error }}</div>
+        </div>
+
+        <div class="error" *ngIf="validationErrors">
+            <div *ngFor="let msg of validationErrors">{{ msg }}</div>
+        </div>
+
+        <div class="success" *ngIf="success">
+            <div>Match added succesfully</div>
+        </div>
+    </div>
+    <div class="submitbox">
+        <app-button-active title="Add Match" (click)="onSubmit()"></app-button-active>
+    </div>
+</form>

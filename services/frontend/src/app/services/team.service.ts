@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GetTeamRequest } from '../models/request/team/getteam-request';
 import { DeleteTeamRequest } from '../models/request/team/deleteteam-request';
 
 @Injectable({
@@ -20,8 +19,8 @@ export class TeamService {
     return this.http.post(this.apiUrl, body,  { withCredentials: true });
   }
 
-  getTeam(body: GetTeamRequest): Observable<any> {
-    return this.http.post(this.apiUrl + '/' + body.teamId, {withCredentials: true});
+  getTeam(teamId: number): Observable<any> {
+    return this.http.get(this.apiUrl + '/' + teamId, {withCredentials: true});
   }
 
   deleteTeam(body: DeleteTeamRequest):  Observable<any> {

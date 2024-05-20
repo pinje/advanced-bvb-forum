@@ -1,0 +1,42 @@
+<div class="box">
+    <div *ngIf="realmatches.length == 0">No matches available.</div>
+    <div *ngFor="let match of realmatches">
+        <div class="match" id="{{match.matchId}}">
+            <div class="tournament">
+                <img src="https://bvbforumblob.blob.core.windows.net/tournaments-logo/{{match.tournamentLogo}}" alt=""/>
+            </div>
+            <div class="hometeam">
+                <div class="name">{{match.homeTeamName}}</div>
+                <div class="logo">
+                    <img src="https://bvbforumblob.blob.core.windows.net/teams-logo/{{match.homeTeamLogo}}" alt=""/>
+                </div>
+            </div>
+            <div class="scorebox">
+                <div class="score">
+                    {{match.homeTeamScore}}
+                </div>
+                <div class="score">
+                    {{match.awayTeamScore}}
+                </div>
+            </div>
+            <div class="awayteam">
+                <div class="logo">
+                    <img src="https://bvbforumblob.blob.core.windows.net/teams-logo/{{match.awayTeamLogo}}" alt=""/>
+                </div>
+                <div class="name">{{match.awayTeamName}}</div>
+            </div>
+            <div class="delete">
+                <button (click)="delete(match.matchId)">
+                    <fa-icon [icon]="trash"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="error" *ngIf="error">
+    <div>{{ error }}</div>
+</div>
+
+<div class="success" *ngIf="success">
+    <div>Match deleted succesfully</div>
+</div>
