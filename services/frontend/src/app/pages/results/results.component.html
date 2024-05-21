@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="inner">
+        <div class="page-title">Results</div>
+        <select name="match" id="match" (change)="updateMatchList()" [(ngModel)]="selectedSeason" [ngModelOptions]="{standalone: true}">
+            <option value="null" selected disabled>Select season</option>
+            <option value="{{season.id}}" *ngFor="let season of seasons">Season {{season.startYear}}-{{season.endYear}}</option>
+        </select>
+
+        <app-result-list [matches]="matches"></app-result-list>
+    </div>
+</div>

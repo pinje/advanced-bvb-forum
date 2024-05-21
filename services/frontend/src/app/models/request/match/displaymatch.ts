@@ -6,5 +6,6 @@ export interface DisplayMatch {
     awayTeamName: string,
     awayTeamLogo: string,
     homeTeamScore: string,
-    awayTeamScore: string
+    awayTeamScore: string,
+    matchDate: string
 }

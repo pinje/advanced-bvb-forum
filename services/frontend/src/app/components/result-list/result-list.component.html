@@ -1,0 +1,33 @@
+<div class="box">
+    <div *ngIf="realmatches.length == 0">No matches available.</div>
+    <div *ngFor="let match of realmatches">
+        <div class="match" id="{{match.matchId}}">
+            <div class="tournament">
+                <img src="https://bvbforumblob.blob.core.windows.net/tournaments-logo/{{match.tournamentLogo}}" alt=""/>
+            </div>
+            <div class="date">
+                {{match.matchDate | date: 'MMM dd'}}
+            </div>
+            <div class="hometeam">
+                <div class="name">{{match.homeTeamName}}</div>
+                <div class="logo">
+                    <img src="https://bvbforumblob.blob.core.windows.net/teams-logo/{{match.homeTeamLogo}}" alt=""/>
+                </div>
+            </div>
+            <div class="scorebox">
+                <div class="score">
+                    {{match.homeTeamScore}}
+                </div>
+                <div class="score">
+                    {{match.awayTeamScore}}
+                </div>
+            </div>
+            <div class="awayteam">
+                <div class="logo">
+                    <img src="https://bvbforumblob.blob.core.windows.net/teams-logo/{{match.awayTeamLogo}}" alt=""/>
+                </div>
+                <div class="name">{{match.awayTeamName}}</div>
+            </div>
+        </div>
+    </div>
+</div>
