@@ -42,6 +42,7 @@ export class MatchListComponent implements OnChanges {
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes['matches']) {
+      this.matches.sort((a: any, b: any) => new Date(a.matchDate).getTime() - new Date(b.matchDate).getTime());
       const tournamentInfoPromises = this.matches.map(async (match: any) => {
         const tournamentInfo = await this.getTournamentInfo(match.tournamentId);
         const homeTeamInfo = await this.getHomeTeamInfo(match.homeTeamId);
