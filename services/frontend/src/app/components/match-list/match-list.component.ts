@@ -8,6 +8,8 @@ import { TeamService } from '../../services/team.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MatchService } from '../../services/match.service';
+import { PopupService } from '../../services/popup.service';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-match-list',
@@ -15,7 +17,8 @@ import { MatchService } from '../../services/match.service';
   imports: [
     CommonModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PopupComponent
   ],
   templateUrl: './match-list.component.html',
   styleUrl: './match-list.component.scss'
@@ -28,7 +31,8 @@ export class MatchListComponent implements OnChanges {
   constructor(
     private tournamentService: TournamentService,
     private teamService: TeamService,
-    private matchService: MatchService
+    private matchService: MatchService,
+    private popupService: PopupService
   ) { }
 
   realmatches: DisplayMatch[] = [];
@@ -89,11 +93,20 @@ export class MatchListComponent implements OnChanges {
   error: Array<string> = [];
   success: boolean = false;
 
+  showPopup() {
+    this.popupService.showPopup();
+  }
+
+  hidePopup() {
+    this.popupService.hidePopup();
+  }
+
   delete(matchId: number) {
     this.error = [];
     this.success = false;
     this.matchService.deleteMatch(matchId).subscribe({
       next: () => {
+        this.hidePopup();
         this.success = true;
         this.realmatches = this.realmatches.filter(match => match.matchId !== matchId);
       },

@@ -5,6 +5,7 @@ import { ButtonActiveComponent } from '../button-active/button-active.component'
 import { MatchService } from '../../services/match.service';
 import { SeasonService } from '../../services/season.service';
 import { MatchListComponent } from '../match-list/match-list.component';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-delete-match-form',
@@ -26,7 +27,8 @@ export class DeleteMatchFormComponent {
 
   constructor(
     private matchService: MatchService,
-    private seasonService: SeasonService
+    private seasonService: SeasonService,
+    private popupService: PopupService
   ) {}
 
   matches: Array<any> = [];
@@ -48,5 +50,9 @@ export class DeleteMatchFormComponent {
         }
       })
     }
+  }
+
+  showPopup() {
+    this.popupService.showPopup();
   }
 }
