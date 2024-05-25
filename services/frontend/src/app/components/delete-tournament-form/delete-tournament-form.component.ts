@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { TournamentService } from '../../services/tournament.service';
 import { ButtonActiveComponent } from '../button-active/button-active.component';
 import { DeleteTournamentRequest } from '../../models/request/tournament/deletetournament-request';
+import { PopupComponent } from '../popup/popup.component';
+import { PopupService } from '../../services/popup.service';
 
 @Component({
   selector: 'app-delete-tournament-form',
@@ -11,7 +13,8 @@ import { DeleteTournamentRequest } from '../../models/request/tournament/deletet
   imports: [
     CommonModule,
     FormsModule,
-    ButtonActiveComponent
+    ButtonActiveComponent,
+    PopupComponent
   ],
   templateUrl: './delete-tournament-form.component.html',
   styleUrl: './delete-tournament-form.component.scss'
@@ -25,7 +28,8 @@ export class DeleteTournamentFormComponent {
   }
 
   constructor(
-    private tournamentService: TournamentService
+    private tournamentService: TournamentService,
+    private popupService: PopupService
   ) {}
 
   tournaments: Array<any> = [];
@@ -38,11 +42,20 @@ export class DeleteTournamentFormComponent {
     })
   }
 
+  showPopup() {
+    this.popupService.showPopup();
+  }
+
+  hidePopup() {
+    this.popupService.hidePopup();
+  }
+
   onSubmit() {
     this.error = [];
     this.success = false;
     this.tournamentService.deleteTournament(this.deleteTournamentRequest).subscribe({
       next: () => {
+        this.hidePopup();
         this.deleteTournamentRequest.tournamentId = -1;
         this.success = true;
         this.ngOnInit();

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonActiveComponent } from '../button-active/button-active.component';
 import { DeleteTeamRequest } from '../../models/request/team/deleteteam-request';
 import { TeamService } from '../../services/team.service';
+import { PopupService } from '../../services/popup.service';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-delete-team-form',
@@ -11,7 +13,8 @@ import { TeamService } from '../../services/team.service';
   imports: [
     CommonModule,
     FormsModule,
-    ButtonActiveComponent
+    ButtonActiveComponent,
+    PopupComponent
   ],
   templateUrl: './delete-team-form.component.html',
   styleUrl: './delete-team-form.component.scss'
@@ -25,7 +28,8 @@ export class DeleteTeamFormComponent {
   }
 
   constructor(
-    private teamService: TeamService
+    private teamService: TeamService,
+    private popupService: PopupService
   ) {}
 
   teams: Array<any> = [];
@@ -38,11 +42,20 @@ export class DeleteTeamFormComponent {
     })
   }
 
+  showPopup() {
+    this.popupService.showPopup();
+  }
+
+  hidePopup() {
+    this.popupService.hidePopup();
+  }
+
   onSubmit() {
     this.error = [];
     this.success = false;
     this.teamService.deleteTeam(this.deleteTeamRequest).subscribe({
       next: () => {
+        this.hidePopup();
         this.deleteTeamRequest.teamId = -1;
         this.success = true;
         this.ngOnInit();

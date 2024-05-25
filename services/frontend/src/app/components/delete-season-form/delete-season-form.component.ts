@@ -4,6 +4,8 @@ import { SeasonService } from '../../services/season.service';
 import { ButtonActiveComponent } from '../button-active/button-active.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PopupService } from '../../services/popup.service';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-delete-season-form',
@@ -11,7 +13,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     ButtonActiveComponent,
     CommonModule,
-    FormsModule
+    FormsModule,
+    PopupComponent
   ],
   templateUrl: './delete-season-form.component.html',
   styleUrl: './delete-season-form.component.scss'
@@ -26,13 +29,13 @@ export class DeleteSeasonFormComponent implements OnInit {
   }
 
   constructor(
-    private seasonService: SeasonService
+    private seasonService: SeasonService,
+    private popupService: PopupService
   ) {}
 
   seasons: Array<any> = [];
 
   ngOnInit(): void {
-    // get list of all seasons
     this.seasonService.getAllSeasons().subscribe({
       next: (res) => {
         this.seasons = res.seasons;
@@ -43,12 +46,20 @@ export class DeleteSeasonFormComponent implements OnInit {
     })
   }
 
+  showPopup() {
+    this.popupService.showPopup();
+  }
+
+  hidePopup() {
+    this.popupService.hidePopup();
+  }
+
   onSubmit() {
     this.error = [];
     this.success = false;
     this.seasonService.deleteSeason(this.deleteSeasonRequest).subscribe({
       next: () => {
-        // what to do when success
+        this.hidePopup();
         this.deleteSeasonRequest.seasonId = -1;
         this.success = true;
         this.ngOnInit();
