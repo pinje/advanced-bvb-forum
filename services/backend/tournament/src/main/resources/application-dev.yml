@@ -15,13 +15,11 @@ spring:
       ddl-auto: none
   cloud:
     azure:
-#      servicebus:
-#        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ermzS9oMHyIPua3lR4mQuSUaV8V5xFXjy+ASbI/3b1s=
-#        consumer:
-#          entity-type: topic
-#          entity-name: bvbforumtopic
+      servicebus:
+        consumer:
+          entity-name: deletetournament
+        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=deletetournament-topicaccess;SharedAccessKey=e/zHZohQCUdlzmKZ74v9hfntFXyaINp0/+ASbMdDbAg=;EntityPath=deletetournament
       storage:
         blob:
           connection-string: DefaultEndpointsProtocol=https;AccountName=bvbforumblob;AccountKey=x4vEF+qO7qUizvObPyTbgyxeeCgAmFIMGO3mQa310w5glVjEk2bJx8mGwCcIx/KEM0yK9A4wyATR+AStr4sI+Q==;EndpointSuffix=core.windows.net
           container-name: tournaments-logo
-

@@ -9,4 +9,6 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
     boolean existsByHomeTeamIdAndAwayTeamIdAndMatchDate(Long homeTeamId, Long awayTeamId, Date matchDate);
     List<Match> findAllMatchesBySeasonId(Long seasonId);
     List<Match> findAllMatchesBySeasonIdAndTournamentId(Long seasonId, Long tournamentId);
+    List<Match> findAllMatchesByHomeTeamIdOrAwayTeamId(Long homeTeamId, Long awayTeamId);
+    List<Match> findAllMatchesByTournamentId(Long tournamentId);
 }
