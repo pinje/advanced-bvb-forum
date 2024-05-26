@@ -3,6 +3,7 @@ variables:
   REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
   ACR: $CI_ACR
   AZ_PASSWORD: $CI_AZ_PASSWORD
+  AZ_EMAIL: $CI_AZ_EMAIL
 
 stages:
   - build
@@ -80,14 +81,12 @@ authentication-deploy-aks:
     - mv ./kubectl /usr/local/bin/kubectl
   script:
     - cd services/backend/authentication
-    - az login -u 498855@student.fontys.nl -p $AZ_PASSWORD
+    - az login -u $AZ_EMAIL -p $AZ_PASSWORD
     - az account set --subscription "Azure for Students"
-    - az aks get-credentials --resource-group BVB_Forum --name SwiftAKS
+    - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
     - kubectl apply -f authentication-deployment.yml
     - kubectl apply -f authentication-service.yml
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         - 'services/backend/authentication/**/*'
-
-
