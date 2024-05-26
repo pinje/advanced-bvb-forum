@@ -106,7 +106,7 @@ export class MatchListComponent implements OnChanges {
     this.success = false;
     this.matchService.deleteMatch(matchId).subscribe({
       next: () => {
-        this.hidePopup('match');
+        this.hidePopup(matchId.toString());
         this.success = true;
         this.realmatches = this.realmatches.filter(match => match.matchId !== matchId);
       },
