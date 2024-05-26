@@ -93,12 +93,12 @@ export class MatchListComponent implements OnChanges {
   error: Array<string> = [];
   success: boolean = false;
 
-  showPopup() {
-    this.popupService.showPopup();
+  showPopup(id: string) {
+    this.popupService.showPopup(id);
   }
 
-  hidePopup() {
-    this.popupService.hidePopup();
+  hidePopup(id: string) {
+    this.popupService.hidePopup(id);
   }
 
   delete(matchId: number) {
@@ -106,7 +106,7 @@ export class MatchListComponent implements OnChanges {
     this.success = false;
     this.matchService.deleteMatch(matchId).subscribe({
       next: () => {
-        this.hidePopup();
+        this.hidePopup('match');
         this.success = true;
         this.realmatches = this.realmatches.filter(match => match.matchId !== matchId);
       },

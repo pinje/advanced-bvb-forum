@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="submitbox">
-        <app-button-active title="Delete Season" (click)="showPopup()"></app-button-active>
-        <app-popup title="Confirm Season Deletion">
+        <app-button-active title="Delete Season" (click)="showPopup('season')"></app-button-active>
+        <app-popup id="season" title="Confirm Season Deletion">
             <div>
                 Are you sure you want to delete this season? <br>
                 This action will remove: <br>
@@ -29,7 +29,7 @@
                 This cannot be undone. Please confirm if you wish to proceed.
             </div>
             <div class="popup-button-box">
-                <button class="cancel" (click)="hidePopup()">
+                <button class="cancel" (click)="hidePopup('season')">
                     Cancel
                 </button>
                 <button class="submit" (click)="onSubmit()">

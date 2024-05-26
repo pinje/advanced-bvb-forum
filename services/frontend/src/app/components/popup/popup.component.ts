@@ -3,6 +3,7 @@ import { PopupService } from '../../services/popup.service';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-popup',
@@ -16,23 +17,20 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 })
 export class PopupComponent implements OnInit {
   @Input() title: string = 'Default Title';
-  visible = false;
+  @Input() id: string = '';
   xmark = faXmark;
 
-  constructor(
-    private popupService: PopupService
-  ) {}
+  visible$: Observable<boolean> | undefined;
 
-  ngOnInit(): void {
-    this.popupService.popupVisible$.subscribe(visible => {
-      this.visible = visible;
-    });
+  constructor(private popupService: PopupService) { }
+
+  ngOnInit() {
+    if (this.id) {
+      this.visible$ = this.popupService.getPopupVisibility$(this.id);
+    }
   }
 
   close() {
-    this.popupService.hidePopup();
+    this.popupService.hidePopup(this.id);
   }
-
-
-
 }

@@ -1,10 +1,9 @@
-<div *ngIf="visible" class="popup-overlay" (click)="close()">
-    <div class="popup-content" (click)="$event.stopPropagation()">
-      <button class="close-btn" (click)="close()">
-        <fa-icon [icon]="xmark"></fa-icon>
-      </button>
-      <h2>{{ title }}</h2>
-      <ng-content></ng-content>
-    </div>
+<div *ngIf="(visible$ | async)" class="popup-overlay" (click)="close()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="close()">
+      <fa-icon [icon]="xmark"></fa-icon>
+    </button>
+    <h2>{{ title }}</h2>
+    <ng-content></ng-content>
   </div>
-  
+</div>

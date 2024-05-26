@@ -27,8 +27,7 @@ export class DeleteMatchFormComponent {
 
   constructor(
     private matchService: MatchService,
-    private seasonService: SeasonService,
-    private popupService: PopupService
+    private seasonService: SeasonService
   ) {}
 
   matches: Array<any> = [];
@@ -50,9 +49,5 @@ export class DeleteMatchFormComponent {
         }
       })
     }
-  }
-
-  showPopup() {
-    this.popupService.showPopup();
   }
 }

@@ -46,12 +46,12 @@ export class DeleteSeasonFormComponent implements OnInit {
     })
   }
 
-  showPopup() {
-    this.popupService.showPopup();
+  showPopup(id: string) {
+    this.popupService.showPopup(id);
   }
 
-  hidePopup() {
-    this.popupService.hidePopup();
+  hidePopup(id: string) {
+    this.popupService.hidePopup(id);
   }
 
   onSubmit() {
@@ -59,7 +59,7 @@ export class DeleteSeasonFormComponent implements OnInit {
     this.success = false;
     this.seasonService.deleteSeason(this.deleteSeasonRequest).subscribe({
       next: () => {
-        this.hidePopup();
+        this.hidePopup('season');
         this.deleteSeasonRequest.seasonId = -1;
         this.success = true;
         this.ngOnInit();

@@ -42,12 +42,12 @@ export class DeleteTeamFormComponent {
     })
   }
 
-  showPopup() {
-    this.popupService.showPopup();
+  showPopup(id: string) {
+    this.popupService.showPopup(id);
   }
 
-  hidePopup() {
-    this.popupService.hidePopup();
+  hidePopup(id: string) {
+    this.popupService.hidePopup(id);
   }
 
   onSubmit() {
@@ -55,7 +55,7 @@ export class DeleteTeamFormComponent {
     this.success = false;
     this.teamService.deleteTeam(this.deleteTeamRequest).subscribe({
       next: () => {
-        this.hidePopup();
+        this.hidePopup('team');
         this.deleteTeamRequest.teamId = -1;
         this.success = true;
         this.ngOnInit();

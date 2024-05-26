@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="submitbox">
-        <app-button-active title="Delete Team" (click)="showPopup()"></app-button-active>
-        <app-popup title="Confirm Team Deletion">
+        <app-button-active title="Delete Team" (click)="showPopup('team')"></app-button-active>
+        <app-popup id="team" title="Confirm Team Deletion">
             <div>
                 Are you sure you want to delete this team? <br>
                 This action will remove: <br>
@@ -29,7 +29,7 @@
                 This cannot be undone. Please confirm if you wish to proceed.
             </div>
             <div class="popup-button-box">
-                <button class="cancel" (click)="hidePopup()">
+                <button class="cancel" (click)="hidePopup('team')">
                     Cancel
                 </button>
                 <button class="submit" (click)="onSubmit()">

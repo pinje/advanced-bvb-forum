@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
 
-  private popupVisibleSubject = new BehaviorSubject<boolean>(false);
-  popupVisible$ = this.popupVisibleSubject.asObservable();
+  private popupVisibilityMap = new Map<string, BehaviorSubject<boolean>>();
 
-  showPopup() {
-    this.popupVisibleSubject.next(true);
+  private getPopupSubject(id: string): BehaviorSubject<boolean> {
+    if (!this.popupVisibilityMap.has(id)) {
+      this.popupVisibilityMap.set(id, new BehaviorSubject<boolean>(false));
+    }
+    return this.popupVisibilityMap.get(id)!;
   }
 
-  hidePopup() {
-    this.popupVisibleSubject.next(false);
+  getPopupVisibility$(id: string): Observable<boolean> {
+    return this.getPopupSubject(id).asObservable();
+  }
+
+  showPopup(id: string) {
+    this.getPopupSubject(id).next(true);
+  }
+
+  hidePopup(id: string) {
+    this.getPopupSubject(id).next(false);
   }
 }

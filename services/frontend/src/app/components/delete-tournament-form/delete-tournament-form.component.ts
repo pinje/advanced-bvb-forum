@@ -42,12 +42,12 @@ export class DeleteTournamentFormComponent {
     })
   }
 
-  showPopup() {
-    this.popupService.showPopup();
+  showPopup(id: string) {
+    this.popupService.showPopup(id);
   }
 
-  hidePopup() {
-    this.popupService.hidePopup();
+  hidePopup(id: string) {
+    this.popupService.hidePopup(id);
   }
 
   onSubmit() {
@@ -55,7 +55,7 @@ export class DeleteTournamentFormComponent {
     this.success = false;
     this.tournamentService.deleteTournament(this.deleteTournamentRequest).subscribe({
       next: () => {
-        this.hidePopup();
+        this.hidePopup('tournament');
         this.deleteTournamentRequest.tournamentId = -1;
         this.success = true;
         this.ngOnInit();

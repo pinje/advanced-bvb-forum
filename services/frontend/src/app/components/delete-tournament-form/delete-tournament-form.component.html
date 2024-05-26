@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="submitbox">
-        <app-button-active title="Delete Tournament" (click)="showPopup()"></app-button-active>
-        <app-popup title="Confirm Tournament Deletion">
+        <app-button-active title="Delete Tournament" (click)="showPopup('tournament')"></app-button-active>
+        <app-popup id="tournament" title="Confirm Tournament Deletion">
             <div>
                 Are you sure you want to delete this tournament? <br>
                 This action will remove: <br>
@@ -29,7 +29,7 @@
                 This cannot be undone. Please confirm if you wish to proceed.
             </div>
             <div class="popup-button-box">
-                <button class="cancel" (click)="hidePopup()">
+                <button class="cancel" (click)="hidePopup('tournament')">
                     Cancel
                 </button>
                 <button class="submit" (click)="onSubmit()">
