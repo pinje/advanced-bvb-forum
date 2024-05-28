@@ -15,11 +15,10 @@ spring:
       ddl-auto: none
   cloud:
     azure:
-      #      servicebus:
-      #        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ermzS9oMHyIPua3lR4mQuSUaV8V5xFXjy+ASbI/3b1s=
-      #        consumer:
-      #          entity-type: topic
-      #          entity-name: bvbforumtopic
+      servicebus:
+        consumer:
+          entity-name: deleteteam
+        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=deleteteam-topicaccess;SharedAccessKey=erFc/KvhEflS3q7ZXKebeTcFFd3Ww4Ozs+ASbEefswk=;EntityPath=deleteteam
       storage:
         blob:
           connection-string: DefaultEndpointsProtocol=https;AccountName=bvbforumblob;AccountKey=x4vEF+qO7qUizvObPyTbgyxeeCgAmFIMGO3mQa310w5glVjEk2bJx8mGwCcIx/KEM0yK9A4wyATR+AStr4sI+Q==;EndpointSuffix=core.windows.net

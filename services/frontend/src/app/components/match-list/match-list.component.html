@@ -26,9 +26,29 @@
                 <div class="name">{{match.awayTeamName}}</div>
             </div>
             <div class="delete">
-                <button (click)="delete(match.matchId)">
+                <button (click)="showPopup(match.matchId.toString())">
                     <fa-icon [icon]="trash"></fa-icon>
                 </button>
+                <app-popup id="{{match.matchId}}" title="Confirm Match Deletion">
+                    <div>
+                        {{match.matchId}}
+                        Are you sure you want to delete this match? <br>
+                        This action will remove: <br>
+                        <ul>
+                            <li>>> the match</li>
+                            <li>>> all user posts reviewing this match</li>
+                        </ul>
+                        This cannot be undone. Please confirm if you wish to proceed.
+                    </div>
+                    <div class="popup-button-box">
+                        <button class="cancel" (click)="hidePopup(match.matchId.toString())">
+                            Cancel
+                        </button>
+                        <button class="submit" (click)="delete(match.matchId)">
+                            Yes, Delete
+                        </button>
+                    </div>
+                </app-popup>
             </div>
         </div>
     </div>

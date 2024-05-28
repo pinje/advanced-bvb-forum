@@ -34,11 +34,9 @@ public class MediaImpl implements MediaService {
         try (InputStream dataStream = file.getInputStream()) {
             containerClient.getBlobClient(blobName).upload(dataStream, file.getSize());
         } catch (BlobStorageException ex) {
-            System.err.println("Error uploading blob: " + ex.getMessage());
-            throw ex;
+            throw new RuntimeException("Error uploading blob: " + ex.getMessage());
         } catch (IOException ex) {
-            ex.printStackTrace();
-            throw ex;
+            throw new RuntimeException("Error uploading file: " + ex.getMessage());
         }
 
         return blobName;
@@ -54,7 +52,7 @@ public class MediaImpl implements MediaService {
         try {
             containerClient.getBlobClient(blobName).delete();
         } catch (Exception e) {
-            System.err.println("Error deleting blob: " + e.getMessage());
+            throw new RuntimeException("Error deleting blob: " + e.getMessage());
         }
     }
 }

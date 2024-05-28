@@ -28,7 +28,7 @@ public class CreateTeamImpl implements CreateTeamService {
         try {
             id = mediaService.uploadImage(request.getLogo());
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Failed to upload logo", e);
         }
 
         var team = Team.builder()
