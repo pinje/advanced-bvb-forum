@@ -38,6 +38,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                             .mutate()
                             .header("username", jwtService.extractUsername(authHeader))
                             .header("authorities", jwtService.extractAuthorities(authHeader))
+                            .header("id", jwtService.extractUserId(authHeader))
                             .build();
                 }
             } catch (Exception e) {

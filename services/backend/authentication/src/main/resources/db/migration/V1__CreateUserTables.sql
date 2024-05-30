@@ -12,10 +12,10 @@ CREATE TABLE user_account_roles
 (
     roles_id    int NOT NULL,
     users_id    int NOT NULL
-)
+);
 
 CREATE TABLE role
 (
     id          SERIAL  PRIMARY KEY,
     role_name   varchar(20) NOT NULL
-)
+);

@@ -25,6 +25,10 @@ public class JwtService {
         return extractClaim(token, claims -> claims.get("authorities")).toString();
     }
 
+    public String extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("id")).toString();
+    }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

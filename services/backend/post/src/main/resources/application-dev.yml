@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/post
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          autocommit: false
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  cloud:
+    azure:
+      servicebus:
+        consumer:
+          entity-name: deleteseason
+        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=deleteseason-topicaccess;SharedAccessKey=gm5XM7swLdlQlWLWBrA/q2YrhWiyaQHif+ASbClyXW8=;EntityPath=deleteseason
