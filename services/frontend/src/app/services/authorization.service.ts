@@ -15,12 +15,19 @@ export class AuthorizationService {
   private isAdminSubject = new BehaviorSubject<boolean>(false);
   isAdmin$: Observable<boolean> = this.isAdminSubject.asObservable();
 
+  private userIdSubject = new BehaviorSubject<string>('');
+  userId$: Observable<string> = this.userIdSubject.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
 
   getUserRole(): Observable<any> {
     return this.http.post(this.apiUrl + 'authorities', {}, {withCredentials: true});
+  }
+
+  getUserId(): Observable<any> {
+    return this.http.post(this.apiUrl + 'userid', {}, {withCredentials: true});
   }
 
   checkUserRole() {
@@ -36,11 +43,23 @@ export class AuthorizationService {
     })
   }
 
+  checkUserId() {
+    this.getUserId().subscribe({
+      next: (res) => {
+        this.updateUserId(res.userInfo);
+      }
+    })
+  }
+
   updateAuthenticationStatus(isAuthenticated: boolean) {
     this.isAuthenticatedSubject.next(isAuthenticated);
   }
 
   updateAdminStatus(isAdmin: boolean) {
     this.isAdminSubject.next(isAdmin);
+  }
+
+  updateUserId(userId: string) {
+    this.userIdSubject.next(userId);
   }
 }

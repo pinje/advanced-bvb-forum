@@ -103,6 +103,17 @@ public class AuthenticationService {
         return AuthorizationResponse.builder().userInfo(username).build();
     }
 
+    public AuthorizationResponse getUserId(HttpServletRequest request) {
+        if (request.getCookies() == null || request.getCookies().length == 0) {
+            return AuthorizationResponse.builder().userInfo("").build();
+        }
+
+        String token = request.getCookies()[0].getValue();
+        String userid = jwtService.extractUserId(token);
+
+        return AuthorizationResponse.builder().userInfo(userid).build();
+    }
+
     public AuthenticationResponse logout() {
         ResponseCookie jwtCookie = ResponseCookie.from("jwtToken", "")
                 .httpOnly(true)

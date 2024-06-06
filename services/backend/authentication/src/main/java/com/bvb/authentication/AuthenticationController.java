@@ -47,6 +47,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.getUsername(request));
     }
 
+    @PostMapping("/userid")
+    public ResponseEntity<AuthorizationResponse> userid(HttpServletRequest request) {
+        return ResponseEntity.ok(authenticationService.getUserId(request));
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<AuthenticationResponse> logout(HttpServletResponse response) {
         response.addHeader(HttpHeaders.SET_COOKIE, authenticationService.logout().getJwtCookie().toString());

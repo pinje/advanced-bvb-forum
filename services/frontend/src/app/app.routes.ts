@@ -6,6 +6,8 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { HomeComponent } from './pages/home/home.component';
 import { CreatePostComponent } from './pages/create-post/create-post.component';
+import { UserComponent } from './pages/user/user.component';
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
     { path: 'signup', component: SignupComponent},
@@ -13,5 +15,6 @@ export const routes: Routes = [
     { path: 'results', component: ResultsComponent},
     { path: 'admin', component: AdminComponent, canActivate: [adminGuard]},
     { path: '', component: HomeComponent},
-    { path: 'create-review', component: CreatePostComponent}
+    { path: 'create-review', component: CreatePostComponent},
+    { path: 'user/:id', component: UserComponent, canActivate: [authGuard, adminGuard]}
 ];

@@ -9,14 +9,25 @@ import { MomentModule } from 'ngx-moment';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { RouterLink } from '@angular/router';
+import { PopupComponent } from '../popup/popup.component';
+import { PopupService } from '../../services/popup.service';
+import { PostService } from '../../services/post.service';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
+import { ButtonPassiveComponent } from '../button-passive/button-passive.component';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MomentModule,
-    RouterLink
+    RouterLink,
+    PopupComponent,
+    FontAwesomeModule,
+    ButtonPassiveComponent
   ],
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.scss'
@@ -24,23 +35,37 @@ import { RouterLink } from '@angular/router';
 export class PostListComponent {
   @Input() posts: any;
 
+  trash = faTrash;
+
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
+  userId: string = '';
 
   constructor(
     private tournamentService: TournamentService,
     private teamService: TeamService,
     private matchService: MatchService,
     private authorizationService: AuthorizationService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private popupService: PopupService,
+    private postService: PostService
   ) { }
 
 
   displayPosts: DisplayPost[] = [];
 
+  showPopup(id: string) {
+    this.popupService.showPopup(id);
+  }
+
+  hidePopup(id: string) {
+    this.popupService.hidePopup(id);
+  }
+
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes['posts']) {
       this.authorizationService.checkUserRole();
+      this.authorizationService.checkUserId();
 
       this.authorizationService.isAuthenticated$.subscribe((isAuthenticated: boolean) => {
         this.isAuthenticated = isAuthenticated;
@@ -48,6 +73,10 @@ export class PostListComponent {
 
       this.authorizationService.isAdmin$.subscribe((isAdmin: boolean) => {
         this.isAdmin = isAdmin;
+      });
+
+      this.authorizationService.userId$.subscribe((userId: string) => {
+        this.userId = userId;
       });
 
       this.posts.sort((a: any, b: any) => new Date(a.postDate).getTime() - new Date(b.postDate).getTime());
@@ -59,7 +88,7 @@ export class PostListComponent {
         const awayTeamInfo = await this.getAwayTeamInfo(matchInfo.awayTeamId);
 
         return {
-          postId: post.postId,
+          postId: post.id,
           userId: post.userId,
           username: post.username,
           postDate: post.postDate,
@@ -114,5 +143,25 @@ export class PostListComponent {
       homeTeamScore: res.homeTeamScore,
       awayTeamScore: res.awayTeamScore
     }
+  }
+
+  error: Array<string> = [];
+  success: boolean = false;
+
+  delete(postId: number) {
+    this.error = [];
+    this.success = false;
+    this.postService.deletePost(postId).subscribe({
+      next: () => {
+        this.hidePopup(postId.toString());
+        this.success = true;
+        this.displayPosts = this.displayPosts.filter(post => post.postId !== postId);
+      },
+      error: (err) => {
+        if (err.error) {
+          this.error = err.error.error
+        }
+      }
+    })
   }
 }
