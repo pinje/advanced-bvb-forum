@@ -2,7 +2,6 @@
     <nav>
         <div class="logo"><img src="../../../assets/images/bvb.png"/></div>
         <div class="navbox">
-            <!-- <div class="navelement" *ngIf="getUserRole() === 'MEMBER' then member else admin"></div> -->
             <div class="navelement">
                     <li><a routerLink="/">Home</a></li>
                     <li *ngIf="!isAuthenticated"><a routerLink="/signup">Signup</a></li>
@@ -15,9 +14,6 @@
             <div class="searchbox">
                 <!-- <SearchBar/> -->
             </div>
-        </div>
-        <div class="auth">
-            <!-- <li><NavLink onClickCapture={logout}>Logout <img src={out} className={styles.navicon}/></NavLink></li> -->
         </div>
     </nav>
 </div>

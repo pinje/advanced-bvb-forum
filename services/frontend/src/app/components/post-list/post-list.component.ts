@@ -79,7 +79,7 @@ export class PostListComponent {
         this.userId = userId;
       });
 
-      this.posts.sort((a: any, b: any) => new Date(a.postDate).getTime() - new Date(b.postDate).getTime());
+      this.posts.sort((a: any, b: any) => new Date(b.postDate).getTime() - new Date(a.postDate).getTime());
       const infoPromises = this.posts.map(async (post: any) => {
         
         const matchInfo = await this.getMatchInfo(post.matchId);
