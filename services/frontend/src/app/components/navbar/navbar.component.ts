@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
+  userId: string = '';
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.authorizationService.checkUserRole();
+    this.authorizationService.checkUserId();
 
     this.authorizationService.isAuthenticated$.subscribe((isAuthenticated: boolean) => {
       this.isAuthenticated = isAuthenticated;
@@ -31,6 +33,10 @@ export class NavbarComponent implements OnInit {
     this.authorizationService.isAdmin$.subscribe((isAdmin: boolean) => {
       this.isAdmin = isAdmin;
     });
+
+    this.authorizationService.userId$.subscribe((userId: string) => {
+      this.userId = userId;
+    })
   }
 
   logout() {

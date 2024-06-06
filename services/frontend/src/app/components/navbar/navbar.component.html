@@ -9,7 +9,7 @@
                     <li *ngIf="!isAuthenticated"><a routerLink="/login">Login</a></li>
                     <li *ngIf="isAuthenticated"><a routerLink="/results">Results</a></li>
                     <li *ngIf="isAuthenticated && isAdmin"><a routerLink="/admin">Admin</a></li>
-                    <li *ngIf="isAuthenticated && !isAdmin"><a routerLink="/member">Member</a></li>
+                    <li *ngIf="isAuthenticated"><a routerLink="/user/{{userId}}">Profile</a></li>
                     <li *ngIf="isAuthenticated" (click)="logout()"><a routerLink="/login">logout</a></li>
             </div>
             <div class="searchbox">

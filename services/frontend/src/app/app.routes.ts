@@ -16,5 +16,5 @@ export const routes: Routes = [
     { path: 'admin', component: AdminComponent, canActivate: [adminGuard]},
     { path: '', component: HomeComponent},
     { path: 'create-review', component: CreatePostComponent},
-    { path: 'user/:id', component: UserComponent, canActivate: [authGuard, adminGuard]}
+    { path: 'user/:id', component: UserComponent, canActivate: [authGuard]}
 ];
