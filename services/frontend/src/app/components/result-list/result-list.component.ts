@@ -4,14 +4,12 @@ import { DisplayMatch } from '../../models/request/match/displaymatch';
 import { firstValueFrom } from 'rxjs';
 import { TournamentService } from '../../services/tournament.service';
 import { TeamService } from '../../services/team.service';
-import { MatchService } from '../../services/match.service';
 
 @Component({
   selector: 'app-result-list',
   standalone: true,
   imports: [
-    CommonModule,
-
+    CommonModule
   ],
   templateUrl: './result-list.component.html',
   styleUrl: './result-list.component.scss'
@@ -21,8 +19,7 @@ export class ResultListComponent {
 
   constructor(
     private tournamentService: TournamentService,
-    private teamService: TeamService,
-    private matchService: MatchService
+    private teamService: TeamService
   ) { }
 
   realmatches: DisplayMatch[] = [];

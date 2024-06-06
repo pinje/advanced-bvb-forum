@@ -12,18 +12,18 @@ export class TournamentService {
   constructor(private http: HttpClient) {}
 
   getAllTournaments(): Observable<any> {
-    return this.http.get(this.apiUrl, {withCredentials: true});
+    return this.http.get(this.apiUrl + '/protected', {withCredentials: true});
   }
 
   addTournament(body: FormData): Observable<any> {
-    return this.http.post(this.apiUrl, body,  { withCredentials: true });
+    return this.http.post(this.apiUrl + '/protected', body,  { withCredentials: true });
   }
 
   getTournament(tournamentId: number): Observable<any> {
-    return this.http.get(this.apiUrl + '/' + tournamentId, {withCredentials: true});
+    return this.http.get(this.apiUrl + '/get/' + tournamentId, {withCredentials: true});
   }
 
   deleteTournament(body: DeleteTournamentRequest):  Observable<any> {
-    return this.http.delete(this.apiUrl + '/' + body.tournamentId, {withCredentials: true});
+    return this.http.delete(this.apiUrl + '/protected/' + body.tournamentId, {withCredentials: true});
   }
 }

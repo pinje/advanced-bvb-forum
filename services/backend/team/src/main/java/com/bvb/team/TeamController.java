@@ -27,26 +27,25 @@ public class TeamController {
     private final GetTeamService getTeamService;
 
     @PreAuthorize("hasAuthority('[ADMIN]')")
-    @PostMapping()
+    @PostMapping("protected")
     public ResponseEntity<Void> createTeam(@ModelAttribute @Valid CreateTeamRequest request) {
         createTeamService.createTeam(request);
         return ResponseEntity.accepted().build();
     }
 
     @PreAuthorize("hasAuthority('[ADMIN]')")
-    @GetMapping
+    @GetMapping("protected")
     public ResponseEntity<GetAllTeamsResponse> getAllTeams() {
         return ResponseEntity.ok(getAllTeamsService.getAllTeams());
     }
 
-    @PreAuthorize("hasAnyAuthority('[MEMBER]','[ADMIN]')")
-    @GetMapping("{teamId}")
+    @GetMapping("get/{teamId}")
     public ResponseEntity<Optional<Team>> getTeam(@PathVariable(value = "teamId") final long teamId) {
         return ResponseEntity.ok(getTeamService.getTeam(teamId));
     }
 
     @PreAuthorize("hasAuthority('[ADMIN]')")
-    @DeleteMapping("{teamId}")
+    @DeleteMapping("protected/{teamId}")
     public ResponseEntity<Void> deleteTeam(@PathVariable long teamId) {
         deleteTeamService.deleteTeam(teamId);
         return ResponseEntity.ok().build();

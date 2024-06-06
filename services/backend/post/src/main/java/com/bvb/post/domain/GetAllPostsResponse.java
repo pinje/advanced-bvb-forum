@@ -1,6 +1,6 @@
 package com.bvb.post.domain;
 
-import com.bvb.post.persistence.PostDTO;
+import com.bvb.post.persistence.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAllPostsResponse {
-    private List<PostDTO> posts;
+    private List<Post> posts;
 }

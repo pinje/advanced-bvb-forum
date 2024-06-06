@@ -4,6 +4,7 @@
         <div class="navbox">
             <!-- <div class="navelement" *ngIf="getUserRole() === 'MEMBER' then member else admin"></div> -->
             <div class="navelement">
+                    <li><a routerLink="/">Home</a></li>
                     <li *ngIf="!isAuthenticated"><a routerLink="/signup">Signup</a></li>
                     <li *ngIf="!isAuthenticated"><a routerLink="/login">Login</a></li>
                     <li *ngIf="isAuthenticated"><a routerLink="/results">Results</a></li>

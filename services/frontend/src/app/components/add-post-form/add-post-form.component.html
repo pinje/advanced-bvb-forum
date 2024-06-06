@@ -1,0 +1,41 @@
+<form>
+    <div class="formbox">
+        <div class="inputfield">
+            <div>Select season</div>
+            <select name="match" id="match" (change)="updateMatchList()" [(ngModel)]="selectedSeason" [ngModelOptions]="{standalone: true}">
+                <option value="null" selected disabled>Select season</option>
+                <option value="{{season.id}}" *ngFor="let season of seasons">Season {{season.startYear}}-{{season.endYear}}</option>
+            </select>
+        </div>
+
+        <div class="inputfield">
+            <div>Select match</div>
+            <select name="match" id="match" [(ngModel)]="addPostRequest.matchId" [ngModelOptions]="{standalone: true}">
+                <option value="-1" selected disabled>Select match</option>
+                <option value="{{match.id}}" *ngFor="let match of matches">{{match.matchDate | date: 'MMM dd'}} | 
+                    {{match.homeTeamId}} {{match.homeTeamScore}}-{{match.awayTeamScore}} {{match.awayTeamId}}</option>
+            </select>
+        </div>
+
+        <div class="inputfield">
+            <div>Write a review</div>
+            <textarea type="text" placeholder="Start reviewing the match you watched... (Max. 2000 characters)" 
+            [(ngModel)]="addPostRequest.review" [ngModelOptions]="{standalone: true}"></textarea>
+        </div>
+
+        <div class="error" *ngIf="error">
+            <div>{{ error }}</div>
+        </div>
+
+        <div class="error" *ngIf="validationErrors">
+            <div *ngFor="let msg of validationErrors">{{ msg }}</div>
+        </div>
+
+        <div class="success" *ngIf="success">
+            <div>Review posted succesfully</div>
+        </div>
+    </div>
+    <div class="submitbox">
+        <app-button-active title="Post my review!" (click)="onSubmit()"></app-button-active>
+    </div>
+</form>

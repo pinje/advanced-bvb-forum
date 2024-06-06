@@ -22,6 +22,7 @@ public class CreatePostImpl implements CreatePostService {
         var post = Post.builder()
                 .matchId(request.getMatchId())
                 .userId(Long.valueOf(SecurityContextHolder.getContext().getAuthentication().getCredentials().toString()))
+                .username(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString())
                 .postDate(new Timestamp(System.currentTimeMillis()))
                 .review_text(request.getReview())
                 .vote(0L)

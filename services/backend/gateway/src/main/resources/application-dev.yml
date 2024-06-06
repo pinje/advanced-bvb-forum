@@ -22,27 +22,47 @@ spring:
         - id: tournament
           uri: http://localhost:8083
           predicates:
-            - Path=/api/v1/tournament/**
+            - Path=/api/v1/tournament/protected/**
           filters:
             - AuthFilter
+        - id: get-tournament
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v1/tournament/get/**
         - id: team
           uri: http://localhost:8084
           predicates:
-            - Path=/api/v1/team/**
+            - Path=/api/v1/team/protected/**
           filters:
             - AuthFilter
+        - id: get-team
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/v1/team/get/**
         - id: match
           uri: http://localhost:8085
           predicates:
-            - Path=/api/v1/match/**
+            - Path=/api/v1/match/protected/**
           filters:
             - AuthFilter
+        - id: get-match
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/v1/match/get/**
+        - id: get-all-match
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/v1/match/getall/**
         - id: post
           uri: http://localhost:8086
           predicates:
-            - Path=/api/v1/post/**
+            - Path=/api/v1/post/protected/**
           filters:
             - AuthFilter
+        - id: get-all-posts
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/v1/post/get
         - id: authentication
           uri: http://localhost:8081
           predicates:

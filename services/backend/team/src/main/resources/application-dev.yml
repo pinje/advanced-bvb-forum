@@ -23,4 +23,3 @@ spring:
         blob:
           connection-string: DefaultEndpointsProtocol=https;AccountName=bvbforumblob;AccountKey=x4vEF+qO7qUizvObPyTbgyxeeCgAmFIMGO3mQa310w5glVjEk2bJx8mGwCcIx/KEM0yK9A4wyATR+AStr4sI+Q==;EndpointSuffix=core.windows.net
           container-name: teams-logo
-

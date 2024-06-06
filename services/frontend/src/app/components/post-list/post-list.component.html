@@ -1,0 +1,43 @@
+<div class="box">
+    <div *ngIf="displayPosts.length == 0">No posts available.</div>
+        <div *ngFor="let post of displayPosts">
+            <div class="post" id="{{post.matchId}}">
+                <div class="postbox">
+                    <div class="author">
+                        <div class="header">
+                            <div><a routerLink="/user/{{post.userId}}">&#64;{{post.username}}</a> reviewed {{post.postDate | amTimeAgo}}</div>
+                            <div>{{post.postDate | date: 'hh:mm a - dd MMM yyyy'}}</div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        {{post.review}}
+                    </div>
+                    <div class="match">
+                        <div class="left">
+                            <div class="date">{{post.matchDate | date: 'MMM dd'}} - {{post.tournamentName}}</div>
+                            <div>{{post.homeTeamName}} v {{post.awayTeamName}}</div>
+                        </div>
+                        <div class="right">
+                            <div class="matchbox">
+                                <div class="logo">
+                                    <img src="https://bvbforumblob.blob.core.windows.net/teams-logo/{{post.homeTeamLogo}}"
+                                        alt="" />
+                                </div>
+                                <div class="score">
+                                    {{post.homeTeamScore}} - {{post.awayTeamScore}}
+                                </div>
+                                <div class="logo">
+                                    <img src="https://bvbforumblob.blob.core.windows.net/teams-logo/{{post.awayTeamLogo}}"
+                                        alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="deletion">
+                        <div *ngIf="isAuthenticated">delete user</div>
+                        <div *ngIf="isAdmin">delete admin</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

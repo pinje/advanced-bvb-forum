@@ -24,17 +24,19 @@ public class JwtFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
-        final String username = request.getHeader("username");
-        final String authorities = request.getHeader("authorities");
-        final String id = request.getHeader("id");
+        if (request.getHeader("username") != null) {
+            final String username = request.getHeader("username");
+            final String authorities = request.getHeader("authorities");
+            final String id = request.getHeader("id");
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                username, id, List.of(new SimpleGrantedAuthority(authorities))
-        );
-        authToken.setDetails(
-                new WebAuthenticationDetailsSource().buildDetails(request)
-        );
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                    username, id, List.of(new SimpleGrantedAuthority(authorities))
+            );
+            authToken.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+        }
 
         filterChain.doFilter(request, response);
     }

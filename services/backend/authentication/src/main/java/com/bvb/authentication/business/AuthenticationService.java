@@ -83,7 +83,7 @@ public class AuthenticationService {
 
     public AuthorizationResponse getUserRole(HttpServletRequest request) {
         if (request.getCookies() == null || request.getCookies().length == 0) {
-            throw new RuntimeException("Missing cookie");
+            return AuthorizationResponse.builder().userInfo("GUEST").build();
         }
 
         String token = request.getCookies()[0].getValue();
@@ -94,7 +94,7 @@ public class AuthenticationService {
 
     public AuthorizationResponse getUsername(HttpServletRequest request) {
         if (request.getCookies() == null || request.getCookies().length == 0) {
-            throw new RuntimeException("Missing cookie");
+            return AuthorizationResponse.builder().userInfo("").build();
         }
 
         String token = request.getCookies()[0].getValue();

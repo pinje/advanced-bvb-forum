@@ -27,26 +27,25 @@ public class TournamentController {
     private final GetTournamentService getTournamentService;
 
     @PreAuthorize("hasAuthority('[ADMIN]')")
-    @PostMapping()
+    @PostMapping("protected")
     public ResponseEntity<Void> createTournament(@ModelAttribute @Valid CreateTournamentRequest request) {
         createTournamentService.createTournament(request);
         return ResponseEntity.accepted().build();
     }
 
     @PreAuthorize("hasAnyAuthority('[MEMBER]','[ADMIN]')")
-    @GetMapping
+    @GetMapping("protected")
     public ResponseEntity<GetAllTournamentsResponse> getAllTournaments() {
         return ResponseEntity.ok(getAllTournamentsService.getAllTournaments());
     }
 
-    @PreAuthorize("hasAnyAuthority('[MEMBER]','[ADMIN]')")
-    @GetMapping("{tournamentId}")
+    @GetMapping("get/{tournamentId}")
     public ResponseEntity<Optional<Tournament>> getTournament(@PathVariable(value = "tournamentId") final long tournamentId) {
         return ResponseEntity.ok(getTournamentService.getTournament(tournamentId));
     }
 
     @PreAuthorize("hasAuthority('[ADMIN]')")
-    @DeleteMapping("{tournamentId}")
+    @DeleteMapping("protected/{tournamentId}")
     public ResponseEntity<Void> deleteTournament(@PathVariable long tournamentId) {
         deleteTournamentService.deleteTournament(tournamentId);
         return ResponseEntity.ok().build();
