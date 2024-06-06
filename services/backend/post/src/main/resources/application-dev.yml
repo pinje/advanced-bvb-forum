@@ -13,3 +13,10 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+  jms:
+    servicebus:
+      connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ermzS9oMHyIPua3lR4mQuSUaV8V5xFXjy+ASbI/3b1s=
+      topic-client-id: 63f9ab9f-f9ea-4c5f-baba-8fc33dd7e287
+      pricing-tier: standard
+    listener:
+      receive-timeout: 60000

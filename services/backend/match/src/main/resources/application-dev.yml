@@ -13,6 +13,12 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+  cloud:
+    azure:
+      servicebus:
+        consumer:
+          entity-name: deletematch
+        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=access;SharedAccessKey=lhN/GTHPytzu9beNpcs0BgRaBiPnssVUC+ASbAxrjKQ=;EntityPath=deletematch
   jms:
     servicebus:
       connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ermzS9oMHyIPua3lR4mQuSUaV8V5xFXjy+ASbI/3b1s=
