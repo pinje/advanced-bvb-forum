@@ -50,13 +50,14 @@ authentication-package:
     - export VERSION_TAG=$(cat pom.xml | grep -m1 "<version>" | sed -E 's/.*<version>(.+)<\/version>.*/\1/')
     - echo "Building version $VERSION_TAG"
   script:
-    - ls
     - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$VERSION_TAG .
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
   after_script:
     - echo $VERSION_TAG > services/backend/authentication/authentication_version.txt
+    - cat services/backend/authentication/authentication_version.txt
+    - echo services/backend/authentication/authentication_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
@@ -84,14 +85,13 @@ authentication-security-scan:
     entrypoint: [""]
   dependencies:
     - authentication-package
-  script:
+  before_script:
     - cd services/backend/authentication
-    - export VERSION_TAG=$(cat authentication_version.txt)
-    - ls
-    - echo authentication_version.txt
-    - echo $VERSION_TAG
-    - cat $VERSION_TAG
     - cat authentication_version.txt
+  script:
+    - ls
+    - export VERSION_TAG=$(cat authentication_version.txt)
+    - echo "Scanning version $VERSION_TAG" # Debug statement
     - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
 
 authentication-deploy-acr:
