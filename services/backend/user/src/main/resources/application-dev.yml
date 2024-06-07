@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  cloud:
+    azure:
+      servicebus:
+        consumer:
+          entity-name: deleteuser
+        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=access;SharedAccessKey=8friEZw+pijA1bKvt1RRrbIui+BG7qeGM+ASbGEr0oc=;EntityPath=deleteuser

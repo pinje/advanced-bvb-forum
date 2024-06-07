@@ -1,5 +1,27 @@
 <div class="container">
     <div class="inner">
         <div class="page-title">Profile</div>
+        <div *ngIf="userId == activeUserId">
+            <app-button-active title="Delete Account" (click)="showPopup('user')"></app-button-active>
+            <app-popup id="user" title="Confirm Account Deletion">
+                <div>
+                    Are you sure you want to delete your account? <br>
+                    This action will remove: <br>
+                    <ul>
+                        <li>>> your account and all your data</li>
+                        <li>>> all of your match review posts</li>
+                    </ul>
+                    This cannot be undone. Please confirm if you wish to proceed.
+                </div>
+                <div class="popup-button-box">
+                    <button class="cancel" (click)="hidePopup('user')">
+                        Cancel
+                    </button>
+                    <button class="submit" (click)="onSubmit()">
+                        Yes, Delete my account forever
+                    </button>
+                </div>
+            </app-popup>
+        </div>
     </div>
 </div>
