@@ -18,6 +18,9 @@ export class AuthorizationService {
   private userIdSubject = new BehaviorSubject<string>('');
   userId$: Observable<string> = this.userIdSubject.asObservable();
 
+  private usernameSubject = new BehaviorSubject<string>('');
+  username$: Observable<string> = this.usernameSubject.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
@@ -28,6 +31,10 @@ export class AuthorizationService {
 
   getUserId(): Observable<any> {
     return this.http.post(this.apiUrl + 'userid', {}, {withCredentials: true});
+  }
+
+  getUsername(): Observable<any> {
+    return this.http.post(this.apiUrl + 'username', {}, {withCredentials: true});
   }
 
   checkUserRole() {
@@ -51,6 +58,14 @@ export class AuthorizationService {
     })
   }
 
+  checkUsername() {
+    this.getUsername().subscribe({
+      next: (res) => {
+        this.updateUsername(res.userInfo);
+      }
+    })
+  }
+
   updateAuthenticationStatus(isAuthenticated: boolean) {
     this.isAuthenticatedSubject.next(isAuthenticated);
   }
@@ -61,5 +76,9 @@ export class AuthorizationService {
 
   updateUserId(userId: string) {
     this.userIdSubject.next(userId);
+  }
+
+  updateUsername(username: string) {
+    this.usernameSubject.next(username);
   }
 }

@@ -26,6 +26,7 @@ export class UserComponent implements OnInit {
   success: boolean = false;
   
   userId: string = '';
+  username: string = '';
   activeUserId: string | null = null;
 
   constructor(
@@ -39,19 +40,22 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.authorizationService.checkUserId();
+    this.authorizationService.checkUsername();
 
     this.authorizationService.userId$.subscribe((userId: string) => {
       this.userId = userId;
     });
 
+    this.authorizationService.username$.subscribe((username: string) => {
+      this.username = username;
+    });
+
     // Using snapshot
     this.activeUserId = this.route.snapshot.paramMap.get('id');
-    console.log(this.activeUserId);
 
     // Using paramMap observable
     this.route.paramMap.subscribe(params => {
       this.activeUserId = params.get('id');
-      console.log(this.activeUserId);
     });
   }
 
