@@ -61,21 +61,30 @@ authentication-package:
       changes:
         - 'services/backend/authentication/**/*'
 
-authentication-security-scan:
+authentication-dependency-scan:
   stage: security-scan
   tags:
     - docker
   image:
-#    name: aquasec/trivy:latest
-    name: maven:3.9.6-jdk-17
+    name: maven:3.9.6-eclipse-temurin-17-alpine
     entrypoint: [""]
   dependencies:
     - authentication-package
   script:
     - mvn org.owasp:dependency-check-maven:6.2.1:check
-#    - export VERSION_TAG=$(cat authentication_version.txt)
-#    - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
 
+authentication-security-scan:
+  stage: security-scan
+  tags:
+    - docker
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  dependencies:
+    - authentication-package
+  script:
+    - export VERSION_TAG=$(cat authentication_version.txt)
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL services/backend/authentication/authentication:$VERSION_TAG
 
 authentication-deploy-acr:
   stage: deploy
