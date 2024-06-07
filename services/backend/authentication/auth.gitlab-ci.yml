@@ -87,6 +87,8 @@ authentication-security-scan:
   script:
     - cd services/backend/authentication
     - export VERSION_TAG=$(cat authentication_version.txt)
+    - ls
+    - echo $VERSION_TAG
     - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
 
 authentication-deploy-acr:
