@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseCookie;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
@@ -137,8 +138,10 @@ class AuthenticationControllerTest {
 
     @Test
     void loginUser_ShouldReturn200_WhenUserIsLoggedIn() throws Exception {
+
+        ResponseCookie responseCookie = ResponseCookie.fromClientResponse("a","a").build();
         AuthenticationResponse response = AuthenticationResponse.builder()
-                        .token("token")
+                        .jwtCookie(responseCookie)
                         .build();
         when(authenticationService.authenticate(any(AuthenticationRequest.class))).thenReturn(response);
 
