@@ -54,9 +54,9 @@ authentication-package:
     - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$VERSION_TAG .
   artifacts:
     paths:
-      - authentication_version.txt
+      - services/backend/authentication/authentication_version.txt
   after_script:
-    - echo $VERSION_TAG > authentication_version.txt
+    - echo $VERSION_TAG > services/backend/authentication/authentication_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
