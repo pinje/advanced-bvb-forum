@@ -50,7 +50,7 @@ authentication-package:
     - export VERSION_TAG=$(cat pom.xml | grep -m1 "<version>" | sed -E 's/.*<version>(.+)<\/version>.*/\1/')
     - echo "Building version $VERSION_TAG"
   script:
-    - cd services/backend/authentication
+    - ls
     - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$VERSION_TAG .
   artifacts:
     paths:
