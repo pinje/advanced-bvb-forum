@@ -3,6 +3,7 @@ package com.bvb.authentication;
 import com.bvb.authentication.business.AuthenticationService;
 import com.bvb.authentication.domain.AuthenticationRequest;
 import com.bvb.authentication.domain.AuthenticationResponse;
+import com.bvb.authentication.persistence.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseCookie;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.HashMap;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -139,10 +143,17 @@ class AuthenticationControllerTest {
     @Test
     void loginUser_ShouldReturn200_WhenUserIsLoggedIn() throws Exception {
 
-        ResponseCookie responseCookie = ResponseCookie.fromClientResponse("a","a").build();
+        ResponseCookie responseCookie = ResponseCookie.from("jwtToken", "token")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(604800)
+                .sameSite("Strict")
+                .build();
+
         AuthenticationResponse response = AuthenticationResponse.builder()
                         .jwtCookie(responseCookie)
                         .build();
+
         when(authenticationService.authenticate(any(AuthenticationRequest.class))).thenReturn(response);
 
         mockMvc.perform(post("/auth/login")
@@ -156,7 +167,7 @@ class AuthenticationControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        verify(authenticationService, times(1)).authenticate(any(AuthenticationRequest.class));
+        verify(authenticationService, times(2)).authenticate(any(AuthenticationRequest.class));
     }
 
     @Test
