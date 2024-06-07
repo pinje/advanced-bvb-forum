@@ -71,7 +71,7 @@ authentication-security-scan:
   dependencies:
     - authentication-package
   script:
-    - export VERSION_TAG=$(cat services/backend/authentication/authentication_version.txt)
+    - export VERSION_TAG=$(cat authentication_version.txt)
     - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
 
 authentication-deploy-acr:
