@@ -71,6 +71,7 @@ authentication-dependency-scan:
   dependencies:
     - authentication-package
   script:
+    - cd services/backend/authentication
     - mvn org.owasp:dependency-check-maven:6.2.1:check
 
 authentication-security-scan:
@@ -83,8 +84,9 @@ authentication-security-scan:
   dependencies:
     - authentication-package
   script:
+    - cd services/backend/authentication
     - export VERSION_TAG=$(cat authentication_version.txt)
-    - trivy image --exit-code 1 --severity HIGH,CRITICAL services/backend/authentication/authentication:$VERSION_TAG
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
 
 authentication-deploy-acr:
   stage: deploy
