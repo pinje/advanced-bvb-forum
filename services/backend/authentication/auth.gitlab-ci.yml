@@ -56,6 +56,19 @@ authentication-package:
       changes:
         - 'services/backend/authentication/**/*'
 
+authentication-security-scan:
+  stage: security-scan
+  tags:
+    - docker
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  dependencies:
+    - authentication-package
+  script:
+    - export VERSION_TAG=$(cat services/backend/authentication/authentication_version.txt)
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
+
 authentication-deploy-acr:
   stage: deploy
   tags:
