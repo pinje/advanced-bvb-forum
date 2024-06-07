@@ -56,7 +56,6 @@ authentication-package:
     paths:
       - authentication_version.txt
   after_script:
-    - cd services/backend/authentication
     - echo $VERSION_TAG > authentication_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'

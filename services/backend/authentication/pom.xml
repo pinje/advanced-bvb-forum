@@ -139,6 +139,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<nvdApiKey>
+						ad75de98-151f-4867-8632-5a7155416ef9
+					</nvdApiKey>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
