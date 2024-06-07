@@ -90,6 +90,7 @@ authentication-security-scan:
     - ls
     - echo authentication_version.txt
     - echo $VERSION_TAG
+    - cat $VERSION_TAG
     - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
 
 authentication-deploy-acr:
