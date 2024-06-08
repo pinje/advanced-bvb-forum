@@ -23,8 +23,6 @@ authentication-build:
     - docker
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
-    - export TEST=$(git rev-parse --short HEAD)
-    - echo "Commit hash $TEST"
     - cd services/backend/authentication
     - mvn clean compile
 
@@ -42,7 +40,7 @@ authentication-package:
   stage: package
   tags:
     - docker
-  image: docker:20.10.12
+  image: docker:20.10.12-git
   services:
     - docker:20.10.12-dind
   variables:
