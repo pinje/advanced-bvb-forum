@@ -84,19 +84,13 @@ authentication-security-scan:
     - authentication-package
   before_script:
     - cd services/backend/authentication
-    - echo "Listing files for debug purposes"
-    - ls -la
-    - echo "Contents of authentication_version.txt"
-    - cat authentication_version.txt
   script:
-    - ls
     - export VERSION_TAG=$(cat authentication_version.txt)
     - echo "Scanning version $VERSION_TAG" # Debug statement
     - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
-    expire_in: 1 hour
 
 authentication-deploy-acr:
   stage: deploy
