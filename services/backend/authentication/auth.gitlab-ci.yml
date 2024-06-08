@@ -101,11 +101,16 @@ authentication-deploy-acr:
     - docker:20.10.12-dind
   dependencies:
     - authentication-package
+  before_script:
+    - cd services/backend/authentication
   script:
-    - export VERSION_TAG=$(cat services/backend/authentication/authentication_version.txt)
+    - export VERSION_TAG=$(cat authentication_version.txt)
     - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
     - docker tag authentication:$VERSION_TAG $ACR/authentication:$VERSION_TAG
     - docker push $ACR/authentication:$VERSION_TAG
+  artifacts:
+    paths:
+      - services/backend/authentication/authentication_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
