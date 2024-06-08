@@ -16,6 +16,6 @@ spec:
         - name: authentication-container
           image: bvbforum.azurecr.io/authentication
           ports:
-            - containerPort: 80
+            - containerPort: 8081
       imagePullSecrets:
         - name: acr-secret-bvb
