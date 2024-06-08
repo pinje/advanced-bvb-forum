@@ -11,6 +11,9 @@ FROM eclipse-temurin:17-alpine
 ARG PROFILE=dev
 ARG APP_VERSION=1.0.0
 
+WORKDIR /build
+RUN ls /build/target/
+
 WORKDIR /app
 COPY --from=build /build/target/authentication-${APP_VERSION}.jar /app/
 

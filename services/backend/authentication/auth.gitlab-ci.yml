@@ -47,7 +47,7 @@ authentication-package:
     PROFILE: "prod"
   before_script:
     - cd services/backend/authentication
-    - export VERSION_TAG=$(cat pom.xml | grep -m1 "<version>" | grep -v "<parent>" | sed -E 's/.*<version>(.+)<\/version>.*/\1/')
+    - export VERSION_TAG=$(awk '/<artifactId>authentication<\/artifactId>/ {getline; getline; print $1}' pom.xml | sed -E 's/<version>(.+)<\/version>/\1/')
     - echo "Building version $VERSION_TAG"
     - echo $VERSION_TAG > authentication_version.txt
   script:
