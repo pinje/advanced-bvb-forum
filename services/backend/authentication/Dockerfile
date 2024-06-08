@@ -18,6 +18,5 @@ EXPOSE 8081
 
 ENV DB_URL=jdbc:postgresql://postgresql:5432/user
 ENV ACTIVE_PROFILE=${PROFILE}
-ENV JAR_VERSION=${APP_VERSION}
 
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} authentication-${JAR_VERSION}.jar
+CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} authentication-${APP_VERSION}.jar
