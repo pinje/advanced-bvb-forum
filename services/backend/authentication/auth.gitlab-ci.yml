@@ -48,10 +48,12 @@ authentication-package:
   before_script:
     - cd services/backend/authentication
     - export VERSION_TAG=$(cat pom.xml | grep -m1 "<version>" | sed -E 's/.*<version>(.+)<\/version>.*/\1/')
-    - echo "Building version $VERSION_TAG"
-    - echo $VERSION_TAG > authentication_version.txt
+    - export COMMIT_HASH=$(git rev-parse --short HEAD)
+    - export FULL_TAG="${VERSION_TAG}-${COMMIT_HASH}"
+    - echo "Building version $FULL_TAG"
+    - echo $FULL_TAG > authentication_version.txt
   script:
-    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$VERSION_TAG .
+    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$FULL_TAG .
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
@@ -86,7 +88,7 @@ authentication-security-scan:
     - cd services/backend/authentication
   script:
     - export VERSION_TAG=$(cat authentication_version.txt)
-    - echo "Scanning version $VERSION_TAG" # Debug statement
+    - echo "Scanning version $VERSION_TAG"
     - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
   artifacts:
     paths:
