@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bvb</groupId>
 	<artifactId>authentication</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>authentication</name>
 	<description>Authentication Service</description>
 	<properties>
