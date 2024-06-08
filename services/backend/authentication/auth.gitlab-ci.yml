@@ -11,13 +11,7 @@ stages:
   - package
   - deploy
 
-.auth-common:
-  rules:
-    - changes:
-        - 'services/backend/authentication/**/*'
-
 authentication-build:
-  extends: .auth-common
   stage: build
   tags:
     - docker
@@ -25,9 +19,12 @@ authentication-build:
   script:
     - cd services/backend/authentication
     - mvn clean compile
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-test:
-  extends: .auth-common
   stage: test
   tags:
     - docker
@@ -35,6 +32,10 @@ authentication-test:
   script:
     - cd services/backend/authentication
     - mvn clean test
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-package:
   stage: package
@@ -74,6 +75,10 @@ authentication-dependency-scan:
   script:
     - cd services/backend/authentication
     - mvn org.owasp:dependency-check-maven:9.2.0:check
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-security-scan:
   stage: security-scan
@@ -93,6 +98,10 @@ authentication-security-scan:
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-deploy-acr:
   stage: deploy
