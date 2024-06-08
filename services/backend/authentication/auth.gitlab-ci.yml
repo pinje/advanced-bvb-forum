@@ -54,11 +54,9 @@ authentication-package:
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
-    expire_in: 1 hour
   after_script:
+    - echo "Building version $VERSION_TAG"
     - echo $VERSION_TAG > services/backend/authentication/authentication_version.txt
-    - cat services/backend/authentication/authentication_version.txt
-    - echo services/backend/authentication/authentication_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
