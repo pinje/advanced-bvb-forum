@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: authentication-container
-          image: bvbforum.azurecr.io/authentication
+          image: bvbforum.azurecr.io/authentication:3.2.5-c999613
           ports:
             - containerPort: 8081
       imagePullSecrets:
