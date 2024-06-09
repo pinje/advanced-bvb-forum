@@ -47,7 +47,7 @@ authentication-package:
     PROFILE: "prod"
   before_script:
     - cd services/backend/authentication
-    - export VERSION_TAG=$(xmlstarlet sel -t -v "/_:project/_:version" pom.xml)
+    - export VERSION_TAG=$(grep '<version>' pom.xml | sed -n '2s:.*<version>\(.*\)</version>.*:\1:p')
     - echo "Extracted version $VERSION_TAG"
     - echo $VERSION_TAG > authentication_version.txt
   script:
