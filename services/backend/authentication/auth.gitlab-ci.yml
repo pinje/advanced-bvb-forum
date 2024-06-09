@@ -52,7 +52,7 @@ authentication-package:
     - echo "Building version $VERSION_TAG"
     - echo $VERSION_TAG > authentication_version.txt
   script:
-    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$VERSION_TAG .
+    - docker build --build-arg PROFILE=prod --build-arg APP_VERSION=1.0.0 -t authentication:1.0.0 .
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
