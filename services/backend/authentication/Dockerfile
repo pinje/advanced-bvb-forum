@@ -19,4 +19,4 @@ EXPOSE 8081
 ENV PROFILE=${PROFILE}
 ENV VERSION_TAG=${APP_VERSION}
 
-CMD java -jar -Dspring.profiles.active=${PROFILE} authentication-${VERSION_TAG}.jar
+CMD ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "/app/authentication-${VERSION_TAG}.jar"]
