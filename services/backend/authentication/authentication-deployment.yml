@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: authentication-container
-          image: bvbacr.azurecr.io/authentication:1.0.0
+          image: bvbacr.azurecr.io/authentication:latest
           ports:
-            - containerPort: 8081
+            - containerPort: 80
           resources:
             limits:
               memory: "512Mi"
