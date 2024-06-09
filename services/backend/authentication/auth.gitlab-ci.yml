@@ -48,7 +48,6 @@ authentication-package:
   before_script:
     - cd services/backend/authentication
     - export VERSION_TAG=1.0.0
-    - echo "Building version $VERSION_TAG"
     - echo $VERSION_TAG > authentication_version.txt
   script:
     - docker build --build-arg PROFILE=prod --build-arg APP_VERSION=1.0.0 -t authentication:1.0.0 .
@@ -104,10 +103,10 @@ authentication-deploy-acr:
   before_script:
     - cd services/backend/authentication
   script:
-    - export VERSION_TAG=$(cat authentication_version.txt)
+    - export VERSION_TAG=1.0.0
     - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
-    - docker tag authentication:$VERSION_TAG $ACR/authentication:$VERSION_TAG
-    - docker push $ACR/authentication:$VERSION_TAG
+    - docker tag authentication:1.0.0 $ACR/authentication:1.0.0
+    - docker push $ACR/authentication:1.0.0
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
