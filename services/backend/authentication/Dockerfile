@@ -12,7 +12,7 @@ ARG PROFILE=prod
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
-COPY --from=build /build/target/authentication-*.jar app.jar
+COPY --from=build /build/target/authentication-${APP_VERSION}.jar app.jar
 
 EXPOSE 8081
 
