@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: bvbforum-postgres.postgres.database.azure.com/user
+    url: jdbc:postgresql://bvbforum-postgres.postgres.database.azure.com:5432/user?sslmode=require
     username: bvbforumadmin
     password: Mcz0fFRZneHbfqtg
     driver-class-name: org.postgresql.Driver

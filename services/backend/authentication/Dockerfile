@@ -12,11 +12,12 @@ ARG PROFILE=dev
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
-COPY --from=build /build/target/authentication-${APP_VERSION}.jar /app/
+COPY --from=build /build/target/authentication-1.0.0.jar /app/
 
 EXPOSE 8081
 
-ENV DB_URL=jdbc:postgresql://postgresql:5432/user
+#ENV DB_URL=jdbc:postgresql://postgresql:5432/user
 ENV ACTIVE_PROFILE=${PROFILE}
 
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} authentication-${APP_VERSION}.jar
+#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} authentication-1.0.0.jar
+CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} authentication-1.0.0.jar
