@@ -12,8 +12,11 @@ ARG PROFILE=prod
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
-COPY --from=build /build/target/authentication-${APP_VERSION}.jar app.jar
+COPY --from=build /build/target/authentication-${APP_VERSION}.jar /app/
 
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "/app.jar"]
+ENV PROFILE=${PROFILE}
+ENV VERSION_TAG=${APP_VERSION}
+
+CMD java -jar -Dspring.profiles.active=${PROFILE} authentication-${VERSION_TAG}.jar
