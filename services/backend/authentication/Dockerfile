@@ -8,11 +8,11 @@ RUN mvn clean package -DskipTests
 
 # Runtime stage
 FROM eclipse-temurin:17-alpine
-ARG PROFILE=dev
+ARG PROFILE=prod
 ARG APP_VERSION=1.0.0
 
 WORKDIR /app
-COPY --from=build /build/target/authentication-1.0.0.jar /app/
+COPY --from=build /build/target/authentication-1.0.0.jar /app/authentication-1.0.0.jar
 
 EXPOSE 8081
 
@@ -20,4 +20,5 @@ EXPOSE 8081
 ENV ACTIVE_PROFILE=${PROFILE}
 
 #CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} authentication-1.0.0.jar
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} authentication-1.0.0.jar
+#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} authentication-1.0.0.jar
+ENTRYPOINT java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} authentication-1.0.0.jar
