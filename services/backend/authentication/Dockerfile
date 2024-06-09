@@ -16,9 +16,4 @@ COPY --from=build /build/target/authentication-1.0.0.jar /app/authentication-1.0
 
 EXPOSE 8081
 
-#ENV DB_URL=jdbc:postgresql://postgresql:5432/user
-ENV ACTIVE_PROFILE=${PROFILE}
-
-#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} -Dspring.datasource.url=${DB_URL} authentication-1.0.0.jar
-#CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} authentication-1.0.0.jar
-ENTRYPOINT java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} authentication-1.0.0.jar
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "authentication-1.0.0.jar"]
