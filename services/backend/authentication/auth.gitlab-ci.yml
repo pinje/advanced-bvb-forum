@@ -9,12 +9,8 @@ stages:
   - build
   - test
   - package
+  - security-scan
   - deploy
-
-.auth-common:
-  rules:
-    - changes:
-        - 'services/backend/authentication/**/*'
 
 authentication-build:
   extends: .auth-common
@@ -25,6 +21,10 @@ authentication-build:
   script:
     - cd services/backend/authentication
     - mvn clean compile
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-test:
   extends: .auth-common
@@ -35,6 +35,10 @@ authentication-test:
   script:
     - cd services/backend/authentication
     - mvn clean test
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-package:
   stage: package
