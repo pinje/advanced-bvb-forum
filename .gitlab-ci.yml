@@ -13,3 +13,4 @@ include:
   - local: '/services/backend/team/team.gitlab-ci.yml'
   - local: '/services/backend/tournament/tournament.gitlab-ci.yml'
   - local: '/services/backend/user/user.gitlab-ci.yml'
+  - local: '/services/backend/gateway/gateway.gitlab-ci.yml'
