@@ -99,6 +99,23 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>9.2.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<nvdApiKey>
+						ad75de98-151f-4867-8632-5a7155416ef9
+					</nvdApiKey>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
