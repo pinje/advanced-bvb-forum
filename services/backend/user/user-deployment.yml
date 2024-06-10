@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user-container
+          image: bvbacr.azurecr.io/user:1.0.0
+          ports:
+            - containerPort: 8087
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+      imagePullSecrets:
+        - name: acr-secret-bvb
