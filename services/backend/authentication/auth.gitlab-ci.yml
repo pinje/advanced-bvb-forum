@@ -128,8 +128,8 @@ authentication-deploy-aks:
     - mv ./kubectl /usr/local/bin/kubectl
   script:
     - cd services/backend/authentication
-    - az login -u $AZ_EMAIL -p $AZ_PASSWORD
-    - az account set --subscription "Azure for Students"
+    - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+    - az account set --subscription $AZURE_SUBSCRIPTION_ID
     - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
     - kubectl apply -f authentication-deployment.yml
     - kubectl apply -f authentication-service.yml
