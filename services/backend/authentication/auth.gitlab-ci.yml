@@ -13,7 +13,6 @@ stages:
   - deploy
 
 authentication-build:
-  extends: .auth-common
   stage: build
   tags:
     - docker
@@ -27,7 +26,6 @@ authentication-build:
         - 'services/backend/authentication/**/*'
 
 authentication-test:
-  extends: .auth-common
   stage: test
   tags:
     - docker
