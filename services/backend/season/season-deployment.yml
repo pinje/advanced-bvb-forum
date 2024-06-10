@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: season
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: season
+  template:
+    metadata:
+      labels:
+        app: season
+    spec:
+      containers:
+        - name: season-container
+          image: bvbacr.azurecr.io/season:1.0.0
+          ports:
+            - containerPort: 8082
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+      imagePullSecrets:
+        - name: acr-secret-bvb
