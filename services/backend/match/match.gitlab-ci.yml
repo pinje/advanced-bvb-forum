@@ -12,33 +12,33 @@ stages:
   - security-scan
   - deploy
 
-authentication-build:
+match-build:
   stage: build
   tags:
     - docker
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
-    - cd services/backend/authentication
+    - cd services/backend/match
     - mvn clean compile
   rules:
     - if: '$CI_COMMIT_BRANCH != "main"'
       changes:
-        - 'services/backend/authentication/**/*'
+        - 'services/backend/match/**/*'
 
-authentication-test:
+match-test:
   stage: test
   tags:
     - docker
   image: maven:3.9.6-eclipse-temurin-17-alpine
   script:
-    - cd services/backend/authentication
+    - cd services/backend/match
     - mvn clean test
   rules:
     - if: '$CI_COMMIT_BRANCH != "main"'
       changes:
-        - 'services/backend/authentication/**/*'
+        - 'services/backend/match/**/*'
 
-authentication-package:
+match-package:
   stage: package
   tags:
     - docker
@@ -48,21 +48,21 @@ authentication-package:
   variables:
     PROFILE: "prod"
   before_script:
-    - cd services/backend/authentication
+    - cd services/backend/match
     - export VERSION_TAG=$(grep '<version>' pom.xml | sed -n '2s:.*<version>\(.*\)</version>.*:\1:p')
     - echo "Extracted version $VERSION_TAG"
-    - echo $VERSION_TAG > authentication_version.txt
+    - echo $VERSION_TAG > match_version.txt
   script:
-    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t authentication:$VERSION_TAG .
+    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t match:$VERSION_TAG .
   artifacts:
     paths:
-      - services/backend/authentication/authentication_version.txt
+      - services/backend/match/match_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
-        - 'services/backend/authentication/**/*'
+        - 'services/backend/match/**/*'
 
-#authentication-dependency-scan:
+#match-dependency-scan:
 #  stage: security-scan
 #  tags:
 #    - docker
@@ -70,16 +70,16 @@ authentication-package:
 #    name: maven:3.9.6-eclipse-temurin-17-alpine
 #    entrypoint: [""]
 #  dependencies:
-#    - authentication-package
+#    - match-package
 #  script:
-#    - cd services/backend/authentication
+#    - cd services/backend/match
 #    - mvn org.owasp:dependency-check-maven:9.2.0:check
 #  rules:
 #    - if: '$CI_COMMIT_BRANCH == "dev"'
 #      changes:
-#        - 'services/backend/authentication/**/*'
+#        - 'services/backend/match/**/*'
 #
-#authentication-security-scan:
+#match-security-scan:
 #  stage: security-scan
 #  tags:
 #    - docker
@@ -87,22 +87,22 @@ authentication-package:
 #    name: aquasec/trivy:latest
 #    entrypoint: [""]
 #  dependencies:
-#    - authentication-package
+#    - match-package
 #  before_script:
-#    - cd services/backend/authentication
+#    - cd services/backend/match
 #  script:
-#    - export VERSION_TAG=$(cat authentication_version.txt)
+#    - export VERSION_TAG=$(cat match_version.txt)
 #    - echo "Scanning version $VERSION_TAG"
-#    - trivy image --exit-code 1 --severity HIGH,CRITICAL authentication:$VERSION_TAG
+#    - trivy image --exit-code 1 --severity HIGH,CRITICAL match:$VERSION_TAG
 #  artifacts:
 #    paths:
-#      - services/backend/authentication/authentication_version.txt
+#      - services/backend/match/match_version.txt
 #  rules:
 #    - if: '$CI_COMMIT_BRANCH == "dev"'
 #      changes:
-#        - 'services/backend/authentication/**/*'
+#        - 'services/backend/match/**/*'
 
-authentication-deploy-acr:
+match-deploy-acr:
   stage: deploy
   tags:
     - docker
@@ -110,23 +110,23 @@ authentication-deploy-acr:
   services:
     - docker:20.10.12-dind
   dependencies:
-    - authentication-package
+    - match-package
   before_script:
-    - cd services/backend/authentication
+    - cd services/backend/match
   script:
-    - export VERSION_TAG=$(cat authentication_version.txt)
+    - export VERSION_TAG=$(cat match_version.txt)
     - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
-    - docker tag authentication:$VERSION_TAG $ACR/authentication:$VERSION_TAG
-    - docker push $ACR/authentication:$VERSION_TAG
+    - docker tag match:$VERSION_TAG $ACR/match:$VERSION_TAG
+    - docker push $ACR/match:$VERSION_TAG
   artifacts:
     paths:
-      - services/backend/authentication/authentication_version.txt
+      - services/backend/match/match_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
-        - 'services/backend/authentication/**/*'
+        - 'services/backend/match/**/*'
 
-authentication-deploy-aks:
+match-deploy-aks:
   stage: deploy
   tags:
     - docker
@@ -137,13 +137,13 @@ authentication-deploy-aks:
     - chmod +x ./kubectl
     - mv ./kubectl /usr/local/bin/kubectl
   script:
-    - cd services/backend/authentication
+    - cd services/backend/match
     - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
     - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
-    - kubectl apply -f authentication-deployment.yml
-    - kubectl apply -f authentication-service.yml
+    - kubectl apply -f match-deployment.yml
+    - kubectl apply -f match-service.yml
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - 'services/backend/authentication/**/*'
+        - 'services/backend/match/**/*'
