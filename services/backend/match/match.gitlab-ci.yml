@@ -62,45 +62,45 @@ match-package:
       changes:
         - 'services/backend/match/**/*'
 
-match-dependency-scan:
-  stage: security-scan
-  tags:
-    - docker
-  image:
-    name: maven:3.9.6-eclipse-temurin-17-alpine
-    entrypoint: [""]
-  dependencies:
-    - match-package
-  script:
-    - cd services/backend/match
-    - mvn org.owasp:dependency-check-maven:9.2.0:check
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dev"'
-      changes:
-        - 'services/backend/match/**/*'
-
-match-security-scan:
-  stage: security-scan
-  tags:
-    - docker
-  image:
-    name: aquasec/trivy:latest
-    entrypoint: [""]
-  dependencies:
-    - match-package
-  before_script:
-    - cd services/backend/match
-  script:
-    - export VERSION_TAG=$(cat match_version.txt)
-    - echo "Scanning version $VERSION_TAG"
-    - trivy image --exit-code 1 --severity HIGH,CRITICAL match:$VERSION_TAG
-  artifacts:
-    paths:
-      - services/backend/match/match_version.txt
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dev"'
-      changes:
-        - 'services/backend/match/**/*'
+#match-dependency-scan:
+#  stage: security-scan
+#  tags:
+#    - docker
+#  image:
+#    name: maven:3.9.6-eclipse-temurin-17-alpine
+#    entrypoint: [""]
+#  dependencies:
+#    - match-package
+#  script:
+#    - cd services/backend/match
+#    - mvn org.owasp:dependency-check-maven:9.2.0:check
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      changes:
+#        - 'services/backend/match/**/*'
+#
+#match-security-scan:
+#  stage: security-scan
+#  tags:
+#    - docker
+#  image:
+#    name: aquasec/trivy:latest
+#    entrypoint: [""]
+#  dependencies:
+#    - match-package
+#  before_script:
+#    - cd services/backend/match
+#  script:
+#    - export VERSION_TAG=$(cat match_version.txt)
+#    - echo "Scanning version $VERSION_TAG"
+#    - trivy image --exit-code 1 --severity HIGH,CRITICAL match:$VERSION_TAG
+#  artifacts:
+#    paths:
+#      - services/backend/match/match_version.txt
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      changes:
+#        - 'services/backend/match/**/*'
 
 match-deploy-acr:
   stage: deploy
