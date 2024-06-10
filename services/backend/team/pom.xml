@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bvb</groupId>
 	<artifactId>team</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>team</name>
 	<description>Team Management Service</description>
 	<properties>
@@ -97,6 +97,23 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>9.2.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<nvdApiKey>
+						ad75de98-151f-4867-8632-5a7155416ef9
+					</nvdApiKey>
 				</configuration>
 			</plugin>
 		</plugins>
