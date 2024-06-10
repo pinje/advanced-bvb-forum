@@ -17,5 +17,12 @@ spec:
           image: bvbacr.azurecr.io/authentication:1.0.1
           ports:
             - containerPort: 8081
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
       imagePullSecrets:
         - name: acr-secret-bvb
