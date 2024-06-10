@@ -144,7 +144,6 @@ gateway-deploy-aks:
     - kubectl apply -f gateway-deployment.yml
     - kubectl apply -f gateway-service.yml
     - kubectl apply -f gateway-hpa.yml
-    - echo ""
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
