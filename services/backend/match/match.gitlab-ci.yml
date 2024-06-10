@@ -1,0 +1,149 @@
+variables:
+  REGISTRY_USER: $CI_REGISTRY_USER
+  REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  ACR: $CI_ACR
+  AZ_PASSWORD: $CI_AZ_PASSWORD
+  AZ_EMAIL: $CI_AZ_EMAIL
+
+stages:
+  - build
+  - test
+  - package
+  - security-scan
+  - deploy
+
+match-build:
+  stage: build
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/match
+    - mvn clean compile
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/match/**/*'
+
+match-test:
+  stage: test
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/match
+    - mvn clean test
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/match/**/*'
+
+match-package:
+  stage: package
+  tags:
+    - docker
+  image: docker:20.10.12-git
+  services:
+    - docker:20.10.12-dind
+  variables:
+    PROFILE: "prod"
+  before_script:
+    - cd services/backend/match
+    - export VERSION_TAG=$(grep '<version>' pom.xml | sed -n '2s:.*<version>\(.*\)</version>.*:\1:p')
+    - echo "Extracted version $VERSION_TAG"
+    - echo $VERSION_TAG > match_version.txt
+  script:
+    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t match:$VERSION_TAG .
+  artifacts:
+    paths:
+      - services/backend/match/match_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/match/**/*'
+
+match-dependency-scan:
+  stage: security-scan
+  tags:
+    - docker
+  image:
+    name: maven:3.9.6-eclipse-temurin-17-alpine
+    entrypoint: [""]
+  dependencies:
+    - match-package
+  script:
+    - cd services/backend/match
+    - mvn org.owasp:dependency-check-maven:9.2.0:check
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/match/**/*'
+
+match-security-scan:
+  stage: security-scan
+  tags:
+    - docker
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
+  dependencies:
+    - match-package
+  before_script:
+    - cd services/backend/match
+  script:
+    - export VERSION_TAG=$(cat match_version.txt)
+    - echo "Scanning version $VERSION_TAG"
+    - trivy image --exit-code 1 --severity HIGH,CRITICAL match:$VERSION_TAG
+  artifacts:
+    paths:
+      - services/backend/match/match_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/match/**/*'
+
+match-deploy-acr:
+  stage: deploy
+  tags:
+    - docker
+  image: docker:20.10.12
+  services:
+    - docker:20.10.12-dind
+  dependencies:
+    - match-package
+  before_script:
+    - cd services/backend/match
+  script:
+    - export VERSION_TAG=$(cat match_version.txt)
+    - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    - docker tag match:$VERSION_TAG $ACR/match:$VERSION_TAG
+    - docker push $ACR/match:$VERSION_TAG
+  artifacts:
+    paths:
+      - services/backend/match/match_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/match/**/*'
+
+match-deploy-aks:
+  stage: deploy
+  tags:
+    - docker
+  image: mcr.microsoft.com/azure-cli
+  before_script:
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+  script:
+    - cd services/backend/match
+    - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+    - az account set --subscription $AZURE_SUBSCRIPTION_ID
+    - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
+    - kubectl apply -f match-deployment.yml
+    - kubectl apply -f match-service.yml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 'services/backend/match/**/*'
