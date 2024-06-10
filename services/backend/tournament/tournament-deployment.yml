@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tournament
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tournament
+  template:
+    metadata:
+      labels:
+        app: tournament
+    spec:
+      containers:
+        - name: post-container
+          image: bvbacr.azurecr.io/tournament:1.0.0
+          ports:
+            - containerPort: 8083
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+      imagePullSecrets:
+        - name: acr-secret-bvb
