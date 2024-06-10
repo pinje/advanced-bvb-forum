@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://bvbforum-postgres.postgres.database.azure.com:5432/team?sslmode=require
+    username: bvbforumadmin
+    password: Mcz0fFRZneHbfqtg
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          autocommit: false
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  cloud:
+    azure:
+      servicebus:
+        consumer:
+          entity-name: deleteteam
+        connection-string: Endpoint=sb://bvbforum.servicebus.windows.net/;SharedAccessKeyName=deleteteam-topicaccess;SharedAccessKey=erFc/KvhEflS3q7ZXKebeTcFFd3Ww4Ozs+ASbEefswk=;EntityPath=deleteteam
+      storage:
+        blob:
+          connection-string: DefaultEndpointsProtocol=https;AccountName=bvbforumblob;AccountKey=x4vEF+qO7qUizvObPyTbgyxeeCgAmFIMGO3mQa310w5glVjEk2bJx8mGwCcIx/KEM0yK9A4wyATR+AStr4sI+Q==;EndpointSuffix=core.windows.net
+          container-name: teams-logo

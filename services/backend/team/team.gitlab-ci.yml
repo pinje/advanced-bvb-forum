@@ -1,0 +1,150 @@
+variables:
+  REGISTRY_USER: $CI_REGISTRY_USER
+  REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  ACR: $CI_ACR
+  AZ_PASSWORD: $CI_AZ_PASSWORD
+  AZ_EMAIL: $CI_AZ_EMAIL
+
+stages:
+  - build
+  - test
+  - package
+  - security-scan
+  - deploy
+
+team-build:
+  stage: build
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/team
+    - mvn clean compile
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/team/**/*'
+
+team-test:
+  stage: test
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/team
+    - mvn clean test
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/team/**/*'
+
+team-package:
+  stage: package
+  tags:
+    - docker
+  image: docker:20.10.12-git
+  services:
+    - docker:20.10.12-dind
+  variables:
+    PROFILE: "prod"
+  before_script:
+    - cd services/backend/team
+    - export VERSION_TAG=$(grep '<version>' pom.xml | sed -n '2s:.*<version>\(.*\)</version>.*:\1:p')
+    - echo "Extracted version $VERSION_TAG"
+    - echo $VERSION_TAG > team_version.txt
+  script:
+    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t team:$VERSION_TAG .
+  artifacts:
+    paths:
+      - services/backend/team/team_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/team/**/*'
+
+#team-dependency-scan:
+#  stage: security-scan
+#  tags:
+#    - docker
+#  image:
+#    name: maven:3.9.6-eclipse-temurin-17-alpine
+#    entrypoint: [""]
+#  dependencies:
+#    - team-package
+#  script:
+#    - cd services/backend/team
+#    - mvn org.owasp:dependency-check-maven:9.2.0:check
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      changes:
+#        - 'services/backend/team/**/*'
+#
+#team-security-scan:
+#  stage: security-scan
+#  tags:
+#    - docker
+#  image:
+#    name: aquasec/trivy:latest
+#    entrypoint: [""]
+#  dependencies:
+#    - team-package
+#  before_script:
+#    - cd services/backend/team
+#  script:
+#    - export VERSION_TAG=$(cat team_version.txt)
+#    - echo "Scanning version $VERSION_TAG"
+#    - trivy image --exit-code 1 --severity HIGH,CRITICAL team:$VERSION_TAG
+#  artifacts:
+#    paths:
+#      - services/backend/team/team_version.txt
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      changes:
+#        - 'services/backend/team/**/*'
+
+team-deploy-acr:
+  stage: deploy
+  tags:
+    - docker
+  image: docker:20.10.12
+  services:
+    - docker:20.10.12-dind
+  dependencies:
+    - team-package
+  before_script:
+    - cd services/backend/team
+  script:
+    - export VERSION_TAG=$(cat team_version.txt)
+    - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    - docker tag team:$VERSION_TAG $ACR/team:$VERSION_TAG
+    - docker push $ACR/team:$VERSION_TAG
+  artifacts:
+    paths:
+      - services/backend/team/team_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/team/**/*'
+
+team-deploy-aks:
+  stage: deploy
+  tags:
+    - docker
+  image: mcr.microsoft.com/azure-cli
+  before_script:
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+  script:
+    - cd services/backend/team
+    - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+    - az account set --subscription $AZURE_SUBSCRIPTION_ID
+    - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
+    - kubectl apply -f team-deployment.yml
+    - kubectl apply -f team-service.yml
+    - kubectl apply -f team-hpa.yml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 'services/backend/team/**/*'
