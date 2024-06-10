@@ -72,6 +72,10 @@ authentication-dependency-scan:
   script:
     - cd services/backend/authentication
     - mvn org.owasp:dependency-check-maven:9.2.0:check
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-security-scan:
   stage: security-scan
@@ -91,6 +95,10 @@ authentication-security-scan:
   artifacts:
     paths:
       - services/backend/authentication/authentication_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/authentication/**/*'
 
 authentication-deploy-acr:
   stage: deploy
