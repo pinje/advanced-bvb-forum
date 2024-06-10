@@ -143,6 +143,7 @@ match-deploy-aks:
     - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
     - kubectl apply -f match-deployment.yml
     - kubectl apply -f match-service.yml
+    - kubectl apply -f match-hpa.yml
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
