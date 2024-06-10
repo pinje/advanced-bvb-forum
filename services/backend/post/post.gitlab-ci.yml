@@ -1,0 +1,150 @@
+variables:
+  REGISTRY_USER: $CI_REGISTRY_USER
+  REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  ACR: $CI_ACR
+  AZ_PASSWORD: $CI_AZ_PASSWORD
+  AZ_EMAIL: $CI_AZ_EMAIL
+
+stages:
+  - build
+  - test
+  - package
+  - security-scan
+  - deploy
+
+post-build:
+  stage: build
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/post
+    - mvn clean compile
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/post/**/*'
+
+post-test:
+  stage: test
+  tags:
+    - docker
+  image: maven:3.9.6-eclipse-temurin-17-alpine
+  script:
+    - cd services/backend/post
+    - mvn clean test
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+      changes:
+        - 'services/backend/post/**/*'
+
+post-package:
+  stage: package
+  tags:
+    - docker
+  image: docker:20.10.12-git
+  services:
+    - docker:20.10.12-dind
+  variables:
+    PROFILE: "prod"
+  before_script:
+    - cd services/backend/post
+    - export VERSION_TAG=$(grep '<version>' pom.xml | sed -n '2s:.*<version>\(.*\)</version>.*:\1:p')
+    - echo "Extracted version $VERSION_TAG"
+    - echo $VERSION_TAG > post_version.txt
+  script:
+    - docker build --build-arg PROFILE=$PROFILE --build-arg APP_VERSION=$VERSION_TAG -t post:$VERSION_TAG .
+  artifacts:
+    paths:
+      - services/backend/post/post_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/post/**/*'
+
+#post-dependency-scan:
+#  stage: security-scan
+#  tags:
+#    - docker
+#  image:
+#    name: maven:3.9.6-eclipse-temurin-17-alpine
+#    entrypoint: [""]
+#  dependencies:
+#    - post-package
+#  script:
+#    - cd services/backend/post
+#    - mvn org.owasp:dependency-check-maven:9.2.0:check
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      changes:
+#        - 'services/backend/post/**/*'
+#
+#post-security-scan:
+#  stage: security-scan
+#  tags:
+#    - docker
+#  image:
+#    name: aquasec/trivy:latest
+#    entrypoint: [""]
+#  dependencies:
+#    - post-package
+#  before_script:
+#    - cd services/backend/post
+#  script:
+#    - export VERSION_TAG=$(cat post_version.txt)
+#    - echo "Scanning version $VERSION_TAG"
+#    - trivy image --exit-code 1 --severity HIGH,CRITICAL post:$VERSION_TAG
+#  artifacts:
+#    paths:
+#      - services/backend/post/post_version.txt
+#  rules:
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      changes:
+#        - 'services/backend/post/**/*'
+
+post-deploy-acr:
+  stage: deploy
+  tags:
+    - docker
+  image: docker:20.10.12
+  services:
+    - docker:20.10.12-dind
+  dependencies:
+    - post-package
+  before_script:
+    - cd services/backend/post
+  script:
+    - export VERSION_TAG=$(cat post_version.txt)
+    - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+    - docker tag post:$VERSION_TAG $ACR/post:$VERSION_TAG
+    - docker push $ACR/post:$VERSION_TAG
+  artifacts:
+    paths:
+      - services/backend/post/post_version.txt
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      changes:
+        - 'services/backend/post/**/*'
+
+post-deploy-aks:
+  stage: deploy
+  tags:
+    - docker
+  image: mcr.microsoft.com/azure-cli
+  before_script:
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x ./kubectl
+    - mv ./kubectl /usr/local/bin/kubectl
+  script:
+    - cd services/backend/post
+    - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+    - az account set --subscription $AZURE_SUBSCRIPTION_ID
+    - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
+    - kubectl apply -f post-deployment.yml
+    - kubectl apply -f post-service.yml
+    - kubectl apply -f post-hpa.yml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - 'services/backend/post/**/*'

@@ -8,3 +8,4 @@ stages:
 include:
   - local: '/services/backend/authentication/auth.gitlab-ci.yml'
   - local: '/services/backend/match/match.gitlab-ci.yml'
+  - local: '/services/backend/post/post.gitlab-ci.yml'
