@@ -144,7 +144,6 @@ post-deploy-aks:
     - kubectl apply -f post-deployment.yml
     - kubectl apply -f post-service.yml
     - kubectl apply -f post-hpa.yml
-    - echo ""
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
