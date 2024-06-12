@@ -5,7 +5,7 @@ spring:
         cors-configurations:
           '[/**]':
             allow-credentials: true
-            allowed-origins: "http://57.153.40.240:80"
+            allowed-origins: "http://57.153.40.240:4200"
             allowed-headers: "*"
             allowed-methods:
               - GET

@@ -16,7 +16,7 @@ spec:
         - name: frontend-container
           image: bvbacr.azurecr.io/frontend:1.0.0
           ports:
-            - containerPort: 80
+            - containerPort: 4200
           resources:
             limits:
               memory: "777Mi"
