@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeleteTournamentRequest } from '../models/request/tournament/deletetournament-request';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TournamentService {
-  private apiUrl = 'http://localhost:8222/api/v1/tournament';
+  private apiUrl = environment + 'tournament';
   
   constructor(private http: HttpClient) {}
 

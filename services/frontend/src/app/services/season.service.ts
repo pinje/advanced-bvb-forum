@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddSeasonRequest } from '../models/request/addseason-request';
 import { DeleteSeasonRequest } from '../models/request/deleteseason-request';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeasonService {
 
-  private apiUrl = 'http://localhost:8222/api/v1/season';
+  private apiUrl = environment + 'season';
 
   constructor(private http: HttpClient) {}
 

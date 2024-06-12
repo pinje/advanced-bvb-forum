@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeleteTeamRequest } from '../models/request/team/deleteteam-request';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
-  private apiUrl = 'http://localhost:8222/api/v1/team';
+  private apiUrl = environment + 'team';
   
   constructor(private http: HttpClient) {}
 

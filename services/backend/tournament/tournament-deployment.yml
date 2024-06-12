@@ -13,7 +13,7 @@ spec:
         app: tournament
     spec:
       containers:
-        - name: post-container
+        - name: tournament-container
           image: bvbacr.azurecr.io/tournament:1.0.0
           ports:
             - containerPort: 8083
@@ -22,7 +22,7 @@ spec:
               memory: "100Mi"
               cpu: "128m"
             limits:
-              memory: "896Mi"
-              cpu: "250m"
+              memory: "777Mi"
+              cpu: "222m"
       imagePullSecrets:
         - name: acr-secret-bvb
