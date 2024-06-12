@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AddMatchRequest } from '../models/request/match/addmatch-request';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MatchService {
-  private apiUrl = 'http://localhost:8222/api/v1/match';
+  private apiUrl = environment + 'match';
   
   constructor(private http: HttpClient) {}
 

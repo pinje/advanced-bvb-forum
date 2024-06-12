@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
 
-  private apiUrl = 'http://localhost:8222/api/v1/auth/';
+  private apiUrl = environment + 'auth/';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
