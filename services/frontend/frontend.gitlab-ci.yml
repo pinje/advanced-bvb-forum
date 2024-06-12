@@ -18,13 +18,13 @@ frontend-build:
     - docker
   image: node:22-alpine
   script:
-    - cd services/backend/frontend
+    - cd services/frontend
     - npm install
     - npm run build
   rules:
     - if: '$CI_COMMIT_BRANCH != "main"'
       changes:
-        - 'services/backend/frontend/**/*'
+        - 'services/frontend/**/*'
 
 frontend-package:
   stage: package
@@ -34,7 +34,7 @@ frontend-package:
   services:
     - docker:20.10.12-dind
   before_script:
-    - cd services/backend/frontend
+    - cd services/frontend
     - export VERSION_TAG=$(jq -r '.version' package.json)
     - echo "Extracted version $VERSION_TAG"
     - echo $VERSION_TAG > frontend_version.txt
@@ -42,11 +42,11 @@ frontend-package:
     - docker build -t frontend:$VERSION_TAG .
   artifacts:
     paths:
-      - services/backend/frontend/frontend_version.txt
+      - services/frontend/frontend_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
-        - 'services/backend/frontend/**/*'
+        - 'services/frontend/**/*'
 
 #frontend-dependency-scan:
 #  stage: security-scan
@@ -58,12 +58,12 @@ frontend-package:
 #  dependencies:
 #    - frontend-package
 #  script:
-#    - cd services/backend/frontend
+#    - cd services/frontend
 #    - mvn org.owasp:dependency-check-maven:9.2.0:check
 #  rules:
 #    - if: '$CI_COMMIT_BRANCH == "dev"'
 #      changes:
-#        - 'services/backend/frontend/**/*'
+#        - 'services/frontend/**/*'
 #
 #frontend-security-scan:
 #  stage: security-scan
@@ -75,18 +75,18 @@ frontend-package:
 #  dependencies:
 #    - frontend-package
 #  before_script:
-#    - cd services/backend/frontend
+#    - cd services/frontend
 #  script:
 #    - export VERSION_TAG=$(cat frontend_version.txt)
 #    - echo "Scanning version $VERSION_TAG"
 #    - trivy image --exit-code 1 --severity HIGH,CRITICAL frontend:$VERSION_TAG
 #  artifacts:
 #    paths:
-#      - services/backend/frontend/frontend_version.txt
+#      - services/frontend/frontend_version.txt
 #  rules:
 #    - if: '$CI_COMMIT_BRANCH == "dev"'
 #      changes:
-#        - 'services/backend/frontend/**/*'
+#        - 'services/frontend/**/*'
 
 frontend-deploy-acr:
   stage: deploy
@@ -98,7 +98,7 @@ frontend-deploy-acr:
   dependencies:
     - frontend-package
   before_script:
-    - cd services/backend/frontend
+    - cd services/frontend
   script:
     - export VERSION_TAG=$(cat frontend_version.txt)
     - docker login $ACR -u $REGISTRY_USER -p $REGISTRY_PASSWORD
@@ -106,11 +106,11 @@ frontend-deploy-acr:
     - docker push $ACR/frontend:$VERSION_TAG
   artifacts:
     paths:
-      - services/backend/frontend/frontend_version.txt
+      - services/frontend/frontend_version.txt
   rules:
     - if: '$CI_COMMIT_BRANCH == "dev"'
       changes:
-        - 'services/backend/frontend/**/*'
+        - 'services/frontend/**/*'
 
 frontend-deploy-aks:
   stage: deploy
@@ -123,7 +123,7 @@ frontend-deploy-aks:
     - chmod +x ./kubectl
     - mv ./kubectl /usr/local/bin/kubectl
   script:
-    - cd services/backend/frontend
+    - cd services/frontend
     - az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
     - az account set --subscription $AZURE_SUBSCRIPTION_ID
     - az aks get-credentials --resource-group BVB_Forum --name BVBAKS
@@ -133,4 +133,4 @@ frontend-deploy-aks:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        - 'services/backend/frontend/**/*'
+        - 'services/frontend/**/*'
