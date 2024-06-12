@@ -35,9 +35,10 @@ frontend-package:
     - docker:20.10.12-dind
   before_script:
     - cd services/frontend
-    - VERSION_TAG=$(grep -o '"version": *"[^"]*"' package.json | cut -d '"' -f 4)
-    - echo "Extracted version $VERSION_TAG"
-    - echo $VERSION_TAG > frontend_version.txt
+    - |
+    VERSION_TAG=$(grep -o '"version": *"[^"]*"' package.json | cut -d '"' -f 4)
+    echo "Extracted version $VERSION_TAG"
+    echo $VERSION_TAG > frontend_version.txt
   script:
     - docker build -t frontend:$VERSION_TAG .
   artifacts:
