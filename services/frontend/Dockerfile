@@ -22,6 +22,9 @@ FROM nginx:1.27.0
 # Copy the built Angular application from the previous stage to the Nginx html folder
 COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
+# Copy the custom Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Expose port 4200
 EXPOSE 4200
 
