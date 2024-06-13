@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class MatchService {
-  private apiUrl = environment + 'match';
+  private apiUrl = environment.baseUrl + 'match';
   
   constructor(private http: HttpClient) {}
 

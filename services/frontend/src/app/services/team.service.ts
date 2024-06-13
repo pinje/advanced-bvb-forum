@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class TeamService {
-  private apiUrl = environment + 'team';
+  private apiUrl = environment.baseUrl + 'team';
   
   constructor(private http: HttpClient) {}
 

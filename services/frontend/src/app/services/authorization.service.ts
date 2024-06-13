@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class AuthorizationService {
 
-  private apiUrl = environment + 'auth/';
+  private apiUrl = environment.baseUrl + 'auth/';
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
