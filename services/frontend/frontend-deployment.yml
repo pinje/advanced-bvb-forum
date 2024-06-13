@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend-container
-          image: bvbacr.azurecr.io/frontend:1.0.2
+          image: bvbacr.azurecr.io/frontend:1.0.3
           ports:
             - containerPort: 80
           resources:
