@@ -14,61 +14,61 @@ spring:
               - DELETE
       routes:
         - id: season
-          uri: http://10.0.157.131:8082
+          uri: "10.0.157.131:8082"
           predicates:
             - Path=/api/v1/season/**
           filters:
             - AuthFilter
         - id: tournament
-          uri: http://10.0.140.238:8083
+          uri: "10.0.140.238:8083"
           predicates:
             - Path=/api/v1/tournament/protected/**
           filters:
             - AuthFilter
         - id: get-tournament
-          uri: http://10.0.140.238:8083
+          uri: "10.0.140.238:8083"
           predicates:
             - Path=/api/v1/tournament/get/**
         - id: team
-          uri: http://10.0.42.240:8084
+          uri: "10.0.42.240:8084"
           predicates:
             - Path=/api/v1/team/protected/**
           filters:
             - AuthFilter
         - id: get-team
-          uri: http://10.0.42.240:8084
+          uri: "10.0.42.240:8084"
           predicates:
             - Path=/api/v1/team/get/**
         - id: match
-          uri: http://10.0.107.64:8085
+          uri: "10.0.107.64:8085"
           predicates:
             - Path=/api/v1/match/protected/**
           filters:
             - AuthFilter
         - id: get-match
-          uri: http://10.0.107.64:8085
+          uri: "10.0.107.64:8085"
           predicates:
             - Path=/api/v1/match/get/**
         - id: get-all-match
-          uri: http://10.0.107.64:8085
+          uri: "10.0.107.64:8085"
           predicates:
             - Path=/api/v1/match/getall/**
         - id: post
-          uri: http://10.0.223.225:8086
+          uri: "10.0.223.225:8086"
           predicates:
             - Path=/api/v1/post/protected/**
           filters:
             - AuthFilter
         - id: get-all-posts
-          uri: http://10.0.223.225:8086
+          uri: "10.0.223.225:8086"
           predicates:
             - Path=/api/v1/post/get
         - id: authentication
-          uri: http://10.0.148.27:8081
+          uri: "10.0.148.27:8081"
           predicates:
             - Path=/api/v1/auth/**
         - id: user
-          uri: http://10.0.217.26:8087
+          uri: "10.0.217.26:8087"
           predicates:
             - Path=/api/v1/user/protected/**
           filters:
