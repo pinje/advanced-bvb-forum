@@ -35,7 +35,7 @@ frontend-package:
     - docker:20.10.12-dind
   before_script:
     - cd services/frontend
-    - export VERSION_TAG=1.0.5
+    - export VERSION_TAG=1.0.6
     - echo "Extracted version $VERSION_TAG"
     - echo $VERSION_TAG > frontend_version.txt
   script:
