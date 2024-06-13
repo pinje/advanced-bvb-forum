@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: gateway-container
-          image: bvbacr.azurecr.io/gateway:1.0.1
+          image: bvbacr.azurecr.io/gateway:1.0.2
           ports:
             - containerPort: 8222
           resources:
