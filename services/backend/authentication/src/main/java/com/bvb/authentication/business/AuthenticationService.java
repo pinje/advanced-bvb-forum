@@ -73,7 +73,7 @@ public class AuthenticationService {
 //                .secure(true)
                 .path("/")
                 .maxAge(604800)
-                .sameSite("Strict")
+//                .sameSite("Strict")
                 .build();
 
         return AuthenticationResponse.builder()
@@ -120,7 +120,7 @@ public class AuthenticationService {
 //                .secure(true)
                 .path("/")
                 .maxAge(0)
-                .sameSite("Strict")
+//                .sameSite("Strict")
                 .build();
 
         return AuthenticationResponse.builder()
