@@ -26,7 +26,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the built Angular application from the previous stage to the Nginx html folder
-COPY --from=build /app/dist/frontend/browser/**/* /usr/share/nginx/html/
+COPY --from=build /app/dist/frontend /usr/share/nginx/html/
 
 # Expose port 80
 EXPOSE 80
