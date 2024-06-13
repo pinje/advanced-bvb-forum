@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 })
 export class SeasonService {
 
-  private apiUrl = environment + 'season';
+  private apiUrl = environment.baseUrl + 'season';
 
   constructor(private http: HttpClient) {}
 

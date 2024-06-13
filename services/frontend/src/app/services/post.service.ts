@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class PostService {
 
-  private apiUrl = environment + 'post';
+  private apiUrl = environment.baseUrl + 'post';
 
   constructor(private http: HttpClient) {}
 
