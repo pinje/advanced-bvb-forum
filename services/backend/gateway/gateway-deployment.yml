@@ -19,10 +19,10 @@ spec:
             - containerPort: 8222
           resources:
             requests:
-              cpu: "50m"
-              memory: "128Mi"
+              cpu: "250m"
+              memory: "250Mi"
             limits:
-              cpu: "150m"
+              cpu: "500m"
               memory: "512Mi"
       imagePullSecrets:
         - name: acr-secret-bvb
